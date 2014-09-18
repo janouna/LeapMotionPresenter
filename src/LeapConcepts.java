@@ -5,8 +5,11 @@ import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Listener;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -22,15 +25,16 @@ import javafx.stage.Stage;
  * Modified to support controlling multiple circles
  */
 public class LeapConcepts extends Application {
-
-	private int numCircles;
+	
 	private List<DoubleProperty> centerY = new ArrayList<DoubleProperty>();
 	private List<DoubleProperty> centerX = new ArrayList<DoubleProperty>();
 	private List<DoubleProperty> radius = new ArrayList<DoubleProperty>();
+	private List<Circle> circleObjects = new ArrayList<Circle>();
 
-	Listener listener;
+	MyLeapListener listener;
 	Controller c;
 	private StackPane root;
+	private Button btn;
 
 	public DoubleProperty centerX(int i) {
 		return centerX.get(i);
@@ -43,15 +47,18 @@ public class LeapConcepts extends Application {
 	public DoubleProperty radius(int i) {
 		return radius.get(i);
 	}
+	
+	public boolean overButton(int i) {
+		return btn.contains(circleObjects.get(i).getTranslateX(), circleObjects.get(i).getTranslateY());
+	}
 
 	public int countCircles() {
-		return numCircles;
+		return circleObjects.size();
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
-		numCircles = 0;
-		Button btn = new Button();
+		btn = new Button();
 		btn.setText("Say 'Hello World'");
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -62,6 +69,8 @@ public class LeapConcepts extends Application {
 		});
 
 		root = new StackPane();
+		
+		root.getChildren().add(btn);
 
 		Scene scene = new Scene(root, 1000, 500);
 
@@ -70,6 +79,17 @@ public class LeapConcepts extends Application {
 		primaryStage.show();
 		c = new Controller();
 		listener = new MyLeapListener(this);
+        listener.keyTapProperty().addListener(new ChangeListener<Boolean>(){
+            @Override public void changed(ObservableValue<? extends Boolean> ov, Boolean t, final Boolean t1) {
+                if(t1.booleanValue()){
+                    Platform.runLater(new Runnable(){
+                        @Override public void run() {
+                            btn.fire();
+                        }
+                    });
+                }
+            }
+        });
 		c.addListener(listener);
 	}
 
@@ -80,11 +100,11 @@ public class LeapConcepts extends Application {
 		Circle newCircle = new Circle(20);
 		newCircle.setFill(Color.rgb((int) (Math.random() * 255),
 				(int) (Math.random() * 255), (int) (Math.random() * 255)));
-		newCircle.translateXProperty().bind(centerX.get(numCircles));
-		newCircle.translateYProperty().bind(centerY.get(numCircles));
-		newCircle.radiusProperty().bind(radius.get(numCircles));
+		newCircle.translateXProperty().bind(centerX.get(countCircles()));
+		newCircle.translateYProperty().bind(centerY.get(countCircles()));
+		newCircle.radiusProperty().bind(radius.get(countCircles()));
 		root.getChildren().add(newCircle);
-		numCircles++;
+		circleObjects.add(newCircle);
 	}
 
 	/**
