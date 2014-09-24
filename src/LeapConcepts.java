@@ -72,7 +72,7 @@ public class LeapConcepts extends Application {
 		
 		root.getChildren().add(btn);
 
-		Scene scene = new Scene(root, MyLeapListener.SCREEN_WIDTH, MyLeapListener.SCREEN_HEIGHT);
+		Scene scene = new Scene(root, MyLeapListener.SCREEN_HEIGHT, MyLeapListener.SCREEN_WIDTH);
 
 		primaryStage.setTitle("Hello World!");
 		primaryStage.setScene(scene);
