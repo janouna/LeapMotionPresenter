@@ -72,7 +72,7 @@ public class LeapConcepts extends Application {
 		
 		root.getChildren().add(btn);
 
-		Scene scene = new Scene(root, 1000, 500);
+		Scene scene = new Scene(root, MyLeapListener.SCREEN_WIDTH, MyLeapListener.SCREEN_HEIGHT);
 
 		primaryStage.setTitle("Hello World!");
 		primaryStage.setScene(scene);
@@ -103,6 +103,7 @@ public class LeapConcepts extends Application {
 		newCircle.translateXProperty().bind(centerX.get(countCircles()));
 		newCircle.translateYProperty().bind(centerY.get(countCircles()));
 		newCircle.radiusProperty().bind(radius.get(countCircles()));
+		newCircle.setOpacity(0.4);
 		root.getChildren().add(newCircle);
 		circleObjects.add(newCircle);
 	}

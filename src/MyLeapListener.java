@@ -1,27 +1,28 @@
 import com.leapmotion.leap.Controller;
+
+import com.leapmotion.leap.FingerList;
 import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Gesture;
 import com.leapmotion.leap.GestureList;
-import com.leapmotion.leap.Hand;
-import com.leapmotion.leap.HandList;
+import com.leapmotion.leap.InteractionBox;
 import com.leapmotion.leap.Listener;
-import com.leapmotion.leap.Screen;
 import com.leapmotion.leap.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.geometry.Point2D;
 
 /**
  * 
  * @author johan Modified to track multiple hands
  */
 public class MyLeapListener extends Listener {
+
+	public final static int SCREEN_HEIGHT = 1024;
+	public final static int SCREEN_WIDTH = 720;
 
 	int cnt = 0;
 	long start = 0;
@@ -38,26 +39,41 @@ public class MyLeapListener extends Listener {
 
 	@Override
 	public void onConnect(Controller controller) {
-		controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
+		// Enable the gestures you intend to use onConnect
+		controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
 		System.out.println("connected");
 	}
 
 	@Override
 	public void onFrame(Controller controller) {
 		Frame frame = controller.frame();
-		final HandList hands = frame.hands();
-		if (!hands.isEmpty()) {
+		final FingerList fingers = frame.fingers();
+		// locatedScreens() to calibrate on to screen cords is deprecated or
+		// shoddy at best
+		// A little research into this shows InteractionBox from the frame to be
+		// the most
+		// Accurate way of mapping leap coordinates on screen
+		InteractionBox screen = controller.frame().interactionBox();
+		if (!fingers.isEmpty()) {
 			final List<Float> xPos = new ArrayList<Float>();
 			final List<Float> yPos = new ArrayList<Float>();
 			final List<Float> zPos = new ArrayList<Float>();
-			for (int i = 0; i < hands.count(); i++) {
-				Hand hand = hands.get(i);
-				final float x = hand.palmPosition().getX();
-				final float y = hand.palmPosition().getY();
-				final float z = hand.palmPosition().getZ();
-				xPos.add(x);
-				yPos.add(y);
-				zPos.add(z);
+			for (int i = 0; i < fingers.count(); i++) {
+				if (fingers.get(i).isValid() && fingers.get(i).isExtended()) {
+					// Better to not have this one stabilized for responsiveness
+					// Multiply by -1 so it gets smaller the closer we get (Much
+					// like Touchless for Windows/Mac)
+					float z = fingers.get(i).tipPosition().getZ() * -1;
+					Vector intersect = screen.normalizePoint(fingers.get(i)
+							.stabilizedTipPosition());
+					// These formulas may need a little work for better mapping,
+					// its somewhat acceptable at this state
+					xPos.add(((Math.min(1, Math.max(0, intersect.getX())) - 0.5f) * 1.7f)
+							* SCREEN_WIDTH);
+					yPos.add(((Math.min(1, Math.max(0, intersect.getY())) - 0.5f))
+							* -SCREEN_HEIGHT);
+					zPos.add(z);
+				}
 			}
 
 			Platform.runLater(new Runnable() {
@@ -65,14 +81,18 @@ public class MyLeapListener extends Listener {
 				@Override
 				public void run() {
 
-					while (app.countCircles() < hands.count()) {
+					while (app.countCircles() < xPos.size()) {
 						app.addCircle();
 					}
 
-					for (int i = 0; i < hands.count(); i++) {
+					for (int i = 0; i < xPos.size(); i++) {
 						app.centerX(i).set(xPos.get(i));
-						app.centerY(i).set(zPos.get(i));
-						app.radius(i).set(50. - yPos.get(i) / 6);
+						app.centerY(i).set(yPos.get(i));
+						app.radius(i).set(50 - zPos.get(i) / 6);
+						/*
+						 * System.out.println("X: " + xPos.get(i) + " Y: " +
+						 * yPos.get(i) + " Z: " + zPos.get(i));
+						 */
 					}
 
 				}
@@ -80,14 +100,16 @@ public class MyLeapListener extends Listener {
 			});
 
 		}
-		
-        keyTap.set(false);
-        GestureList gestures = frame.gestures();
-        for (int i = 0; i < gestures.count(); i++) {
-            if(gestures.get(i).type()==Gesture.Type.TYPE_KEY_TAP && app.overButton(0)){
-                keyTap.set(true); break;
-            }
-        }
+
+		keyTap.set(false);
+		GestureList gestures = frame.gestures();
+		for (int i = 0; i < gestures.count(); i++) {
+			if (gestures.get(i).type() == Gesture.Type.TYPE_SCREEN_TAP
+					&& app.overButton(0)) {
+				keyTap.set(true);
+				break;
+			}
+		}
 
 		// float f = frame.currentFramesPerSecond();
 		// // System.out.println("got frame! "+controller.frame());
