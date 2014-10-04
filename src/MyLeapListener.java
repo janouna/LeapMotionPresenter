@@ -1,9 +1,10 @@
 import com.leapmotion.leap.Controller;
-
 import com.leapmotion.leap.FingerList;
 import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Gesture;
 import com.leapmotion.leap.GestureList;
+import com.leapmotion.leap.Hand;
+import com.leapmotion.leap.HandList;
 import com.leapmotion.leap.InteractionBox;
 import com.leapmotion.leap.Listener;
 import com.leapmotion.leap.Vector;
@@ -21,13 +22,14 @@ import javafx.beans.property.SimpleBooleanProperty;
  */
 public class MyLeapListener extends Listener {
 
-	public final static int SCREEN_HEIGHT = 1024;
-	public final static int SCREEN_WIDTH = 720;
+	public final static int SCREEN_HEIGHT = 1080;
+	public final static int SCREEN_WIDTH = 1920;
 
 	int cnt = 0;
 	long start = 0;
 	private BooleanProperty keyTap = new SimpleBooleanProperty(false);
 	private final LeapConcepts app;
+	private boolean isGrabbed = false;
 
 	public MyLeapListener(LeapConcepts main) {
 		this.app = main;
@@ -48,12 +50,14 @@ public class MyLeapListener extends Listener {
 	public void onFrame(Controller controller) {
 		Frame frame = controller.frame();
 		final FingerList fingers = frame.fingers();
+		final HandList hands = frame.hands();
 		// locatedScreens() to calibrate on to screen cords is deprecated or
 		// shoddy at best
 		// A little research into this shows InteractionBox from the frame to be
 		// the most
 		// Accurate way of mapping leap coordinates on screen
-		InteractionBox screen = controller.frame().interactionBox();
+		InteractionBox screen = frame.interactionBox();
+		
 		if (!fingers.isEmpty()) {
 			final List<Float> xPos = new ArrayList<Float>();
 			final List<Float> yPos = new ArrayList<Float>();
@@ -68,7 +72,7 @@ public class MyLeapListener extends Listener {
 							.stabilizedTipPosition());
 					// These formulas may need a little work for better mapping,
 					// its somewhat acceptable at this state
-					xPos.add(((Math.min(1, Math.max(0, intersect.getX())) - 0.5f) * 1.7f)
+					xPos.add(((Math.min(1, Math.max(0, intersect.getX())) - 0.5f))
 							* SCREEN_WIDTH);
 					yPos.add(((Math.min(1, Math.max(0, intersect.getY())) - 0.5f))
 							* -SCREEN_HEIGHT);
@@ -84,15 +88,15 @@ public class MyLeapListener extends Listener {
 					while (app.countCircles() < xPos.size()) {
 						app.addCircle();
 					}
+					
+					while (app.countCircles() > xPos.size()) {
+						app.removeCircle();
+					}
 
 					for (int i = 0; i < xPos.size(); i++) {
 						app.centerX(i).set(xPos.get(i));
 						app.centerY(i).set(yPos.get(i));
 						app.radius(i).set(50 - zPos.get(i) / 6);
-						/*
-						 * System.out.println("X: " + xPos.get(i) + " Y: " +
-						 * yPos.get(i) + " Z: " + zPos.get(i));
-						 */
 					}
 
 				}
@@ -100,15 +104,36 @@ public class MyLeapListener extends Listener {
 			});
 
 		}
+		if (!hands.isEmpty()) {
+			Hand thisHand = hands.get(0);
+			Vector intersect = screen.normalizePoint(thisHand.stabilizedPalmPosition());
+			
+			final float x = (Math.min(1, Math.max(0, intersect.getX()) - 0.5f))
+			* SCREEN_WIDTH;
+			final float y = (Math.min(1, Math.max(0, intersect.getY()) - 0.5f))
+			* -SCREEN_HEIGHT;
+			
+			Platform.runLater(new Runnable() {
 
-		keyTap.set(false);
-		GestureList gestures = frame.gestures();
-		for (int i = 0; i < gestures.count(); i++) {
-			if (gestures.get(i).type() == Gesture.Type.TYPE_SCREEN_TAP
-					&& app.overButton(0)) {
-				keyTap.set(true);
-				break;
+				@Override
+				public void run() {
+
+						app.palmX().set(x);
+						app.palmY().set(y);
+
+				}
+
+			});
+			
+			if (thisHand.isValid() && thisHand.sphereRadius() <= 50) {
+				if (app.dragImage(x, y)) {
+					app.setPolliceBind();
+				}
+			} else {
+				app.setPolliceUnBind();
 			}
+		} else {
+			app.setPolliceUnBind();
 		}
 
 		// float f = frame.currentFramesPerSecond();
@@ -135,5 +160,4 @@ public class MyLeapListener extends Listener {
 		// }
 		//
 	}
-
 }

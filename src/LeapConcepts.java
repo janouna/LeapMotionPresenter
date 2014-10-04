@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.leapmotion.leap.Controller;
-import com.leapmotion.leap.Listener;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -14,9 +13,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 /**
@@ -26,16 +27,39 @@ import javafx.stage.Stage;
  */
 public class LeapConcepts extends Application {
 	
+	// These control the position of the fingers circles
 	private List<DoubleProperty> centerY = new ArrayList<DoubleProperty>();
 	private List<DoubleProperty> centerX = new ArrayList<DoubleProperty>();
 	private List<DoubleProperty> radius = new ArrayList<DoubleProperty>();
+	// List of actual circle objects
 	private List<Circle> circleObjects = new ArrayList<Circle>();
+	
+	// These control the position of the palm
+	private DoubleProperty palmX = new SimpleDoubleProperty(10);
+	private DoubleProperty palmY = new SimpleDoubleProperty(10);
+	private DoubleProperty palmZ = new SimpleDoubleProperty(0);
+	// Palm cursor rectangle
+	private Rectangle rectangleObject;
 
 	MyLeapListener listener;
 	Controller c;
 	private StackPane root;
 	private Button btn;
+	private ImageView img;
 
+	public DoubleProperty palmX() {
+		return palmX;
+	}
+	
+	public DoubleProperty palmY() {
+		return palmY;
+	}
+	
+	public DoubleProperty palmZ() {
+		return palmZ;
+	}
+	
+	
 	public DoubleProperty centerX(int i) {
 		return centerX.get(i);
 	}
@@ -48,8 +72,27 @@ public class LeapConcepts extends Application {
 		return radius.get(i);
 	}
 	
-	public boolean overButton(int i) {
-		return btn.contains(circleObjects.get(i).getTranslateX(), circleObjects.get(i).getTranslateY());
+	public boolean dragImage(double handX, double handY) {
+		double x = img.getTranslateX();
+		double y = img.getTranslateY();
+		double width = img.getImage().getWidth();
+		double height = img.getImage().getHeight();
+		if ((handX > x-(width/2) && handX < x+(width/2)) && (handY > y-(height/2) && handY < y+(height/2))) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	public void setPolliceBind() {
+		img.translateXProperty().bind(palmX);
+		img.translateYProperty().bind(palmY);
+	}
+	
+	public void setPolliceUnBind() {
+		img.translateXProperty().unbind();
+		img.translateYProperty().unbind();
 	}
 
 	public int countCircles() {
@@ -59,6 +102,12 @@ public class LeapConcepts extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		btn = new Button();
+		img = new ImageView("file:gary.JPG");
+		rectangleObject = new Rectangle(40, 40);
+		rectangleObject.translateXProperty().bind(palmX);
+		rectangleObject.translateYProperty().bind(palmY);
+		rectangleObject.setFill(Color.rgb((int) (Math.random() * 255),
+				(int) (Math.random() * 255), (int) (Math.random() * 255)));
 		btn.setText("Say 'Hello World'");
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -70,9 +119,10 @@ public class LeapConcepts extends Application {
 
 		root = new StackPane();
 		
-		root.getChildren().add(btn);
+		root.getChildren().add(img);
+		root.getChildren().add(rectangleObject);
 
-		Scene scene = new Scene(root, MyLeapListener.SCREEN_HEIGHT, MyLeapListener.SCREEN_WIDTH);
+		Scene scene = new Scene(root, MyLeapListener.SCREEN_WIDTH, MyLeapListener.SCREEN_HEIGHT);
 
 		primaryStage.setTitle("Hello World!");
 		primaryStage.setScene(scene);
@@ -106,6 +156,11 @@ public class LeapConcepts extends Application {
 		newCircle.setOpacity(0.4);
 		root.getChildren().add(newCircle);
 		circleObjects.add(newCircle);
+	}
+	
+	public void removeCircle() {
+		root.getChildren().remove(circleObjects.get(circleObjects.size()-1));
+		circleObjects.remove(circleObjects.size()-1);
 	}
 
 	/**
