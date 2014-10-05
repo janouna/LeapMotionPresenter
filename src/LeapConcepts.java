@@ -40,8 +40,13 @@ public class LeapConcepts extends Application {
 	private DoubleProperty palmZ = new SimpleDoubleProperty(0);
 	// Palm cursor rectangle
 	private Rectangle rectangleObject;
+	
+	// For resizing pollice
+	private DoubleProperty imgWidth = new SimpleDoubleProperty();
+	private DoubleProperty imgHeight = new SimpleDoubleProperty();
 
 	MyLeapListener listener;
+	ResizeListener resizer;
 	Controller c;
 	private StackPane root;
 	private Button btn;
@@ -59,6 +64,13 @@ public class LeapConcepts extends Application {
 		return palmZ;
 	}
 	
+	public DoubleProperty imgWidth() {
+		return imgWidth;
+	}
+	
+	public DoubleProperty imgHeight() {
+		return imgHeight;
+	}
 	
 	public DoubleProperty centerX(int i) {
 		return centerX.get(i);
@@ -85,6 +97,11 @@ public class LeapConcepts extends Application {
 		
 	}
 	
+	public void resizeImage(double percentageChange) {
+		imgWidth.set((img.getImage().getWidth()*percentageChange)/100);
+		imgHeight.set((img.getImage().getHeight()*percentageChange)/100);
+	}
+	
 	public void setPolliceBind() {
 		img.translateXProperty().bind(palmX);
 		img.translateYProperty().bind(palmY);
@@ -103,11 +120,16 @@ public class LeapConcepts extends Application {
 	public void start(Stage primaryStage) {
 		btn = new Button();
 		img = new ImageView("file:gary.JPG");
+		
+		img.fitWidthProperty().bind(imgWidth);
+		img.fitHeightProperty().bind(imgHeight);
+		
 		rectangleObject = new Rectangle(40, 40);
 		rectangleObject.translateXProperty().bind(palmX);
 		rectangleObject.translateYProperty().bind(palmY);
 		rectangleObject.setFill(Color.rgb((int) (Math.random() * 255),
 				(int) (Math.random() * 255), (int) (Math.random() * 255)));
+		rectangleObject.setOpacity(0.7);
 		btn.setText("Say 'Hello World'");
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -140,7 +162,9 @@ public class LeapConcepts extends Application {
                 }
             }
         });
+        resizer = new ResizeListener(this);
 		c.addListener(listener);
+		c.addListener(resizer);
 	}
 
 	public void addCircle() {
