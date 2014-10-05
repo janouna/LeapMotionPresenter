@@ -42,8 +42,8 @@ public class LeapConcepts extends Application {
 	private Rectangle rectangleObject;
 	
 	// For resizing pollice
-	private DoubleProperty imgWidth = new SimpleDoubleProperty();
-	private DoubleProperty imgHeight = new SimpleDoubleProperty();
+	private DoubleProperty imgWidth;
+	private DoubleProperty imgHeight;
 
 	MyLeapListener listener;
 	ResizeListener resizer;
@@ -87,8 +87,8 @@ public class LeapConcepts extends Application {
 	public boolean dragImage(double handX, double handY) {
 		double x = img.getTranslateX();
 		double y = img.getTranslateY();
-		double width = img.getImage().getWidth();
-		double height = img.getImage().getHeight();
+		double width = imgWidth.doubleValue();
+		double height = imgHeight.doubleValue();
 		if ((handX > x-(width/2) && handX < x+(width/2)) && (handY > y-(height/2) && handY < y+(height/2))) {
 			return true;
 		} else {
@@ -98,8 +98,8 @@ public class LeapConcepts extends Application {
 	}
 	
 	public void resizeImage(double percentageChange) {
-		imgWidth.set((img.getImage().getWidth()*percentageChange)/100);
-		imgHeight.set((img.getImage().getHeight()*percentageChange)/100);
+		imgWidth.set((imgWidth.doubleValue()*percentageChange)/100);
+		imgHeight.set((imgHeight.doubleValue()*percentageChange)/100);
 	}
 	
 	public void setPolliceBind() {
@@ -120,7 +120,10 @@ public class LeapConcepts extends Application {
 	public void start(Stage primaryStage) {
 		btn = new Button();
 		img = new ImageView("file:gary.JPG");
-		
+		// Properly set height and width
+		imgWidth = new SimpleDoubleProperty(img.getImage().getWidth());
+		imgHeight = new SimpleDoubleProperty(img.getImage().getHeight());
+		// Now bind it to the image view and use it later to resize
 		img.fitWidthProperty().bind(imgWidth);
 		img.fitHeightProperty().bind(imgHeight);
 		

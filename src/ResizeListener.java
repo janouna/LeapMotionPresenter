@@ -1,3 +1,4 @@
+import com.leapmotion.leap.CircleGesture;
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Finger;
 import com.leapmotion.leap.FingerList;
@@ -44,7 +45,7 @@ public class ResizeListener extends Listener {
 	@Override
 	public void onConnect(Controller controller) {
 		// Enable the gestures you intend to use onConnect
-		controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
+		controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
 		System.out.println("connected");
 	}
 
@@ -53,19 +54,23 @@ public class ResizeListener extends Listener {
 		Frame frame = controller.frame();
 		final FingerList fingers = frame.fingers();
 		final HandList hands = frame.hands();
-		
-		if (hands.count() == 2) {
-			double xPos1 = hands.get(0).palmPosition().getX();
-			double xPos2 = hands.get(1).palmPosition().getX();
-			
+		final GestureList gestures = frame.gestures();
+
+		// This portion resizes with the both hands, the reason I use two
+		// fingers is due to how bad the extended check is
+		if (hands.count() == 2
+				&& hands.get(0).fingers().extended().count() <= 2
+				&& hands.get(1).fingers().extended().count() <= 2) {
+			double xPos1 = hands.get(0).fingers().get(0).tipPosition().getX();
+			double xPos2 = hands.get(1).fingers().get(0).tipPosition().getX();
+
 			// Wasn't resizing before, new initial space needed
 			if (!isResizing) {
-				initialSpace = Math.abs(xPos2-xPos1);
+				initialSpace = Math.abs(xPos2 - xPos1);
 			}
-			double newSize = Math.abs(xPos2-xPos1);
-			
-			final double percentageChange = (newSize*100)/initialSpace;
-			
+			double newSize = Math.abs(xPos2 - xPos1);
+
+			final double percentageChange = (newSize * 100) / initialSpace;
 			isResizing = true;
 
 			Platform.runLater(new Runnable() {
@@ -77,8 +82,32 @@ public class ResizeListener extends Listener {
 
 			});
 
+			initialSpace = newSize;
+
 		} else {
 			isResizing = false;
+		}
+
+		// Implementing circle gesture for resizing
+		/*
+		 * Interestingly enough, since each finger counts itself as a different
+		 * gesture, more fingers you have open the greater the change. Makes
+		 * this a lot more feasible
+		 */
+		if (!gestures.isEmpty()) {
+			for (int i = 0; i < gestures.count(); i++) {
+				switch (gestures.get(i).type()) {
+				case TYPE_CIRCLE:
+					CircleGesture circle = new CircleGesture(gestures.get(i));
+					if (circle.pointable().direction().angleTo(circle.normal()) <= Math.PI / 2) {
+						// Clockwise if angle is less than 90 degrees
+						app.resizeImage(101);
+					} else {
+						app.resizeImage(99);
+					}
+				default:
+				}
+			}
 		}
 
 		// float f = frame.currentFramesPerSecond();
