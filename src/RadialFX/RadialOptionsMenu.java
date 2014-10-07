@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
-package com.mrlonee.radialfx.optionsmenu;
+package RadialFX;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
