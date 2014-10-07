@@ -1,3 +1,5 @@
+package src;
+
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.FingerList;
 import com.leapmotion.leap.Frame;

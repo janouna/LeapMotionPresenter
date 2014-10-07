@@ -1,3 +1,5 @@
+package src;
+
 import com.leapmotion.leap.CircleGesture;
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Finger;
@@ -14,6 +16,7 @@ import com.leapmotion.leap.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
+import src.LeapConcepts;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

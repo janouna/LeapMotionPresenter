@@ -1,3 +1,5 @@
+package src;
+
 /******************************************************************************\
 * Copyright (C) 2012-2013 Leap Motion, Inc. All rights reserved.               *
 * Leap Motion proprietary and confidential. Not for distribution.              *
@@ -8,6 +10,7 @@
 
 import java.io.IOException;
 import java.lang.Math;
+
 import com.leapmotion.leap.*;
 import com.leapmotion.leap.Gesture.State;
 
