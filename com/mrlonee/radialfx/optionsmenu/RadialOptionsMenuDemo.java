@@ -55,11 +55,13 @@ public class RadialOptionsMenuDemo extends Application {
 		primaryStage.setWidth(450);
 		primaryStage.setHeight(480);
 		primaryStage.centerOnScreen();
-		primaryStage.setTitle("Radial Movie Menu Demo");
+		primaryStage.setTitle("Radial Options Menu Demo");
 		primaryStage.show();
 
-		final double itemInnerRadius = 60;
-		final double itemRadius = 95;
+		// 60
+		final double itemInnerRadius = 100;
+		// 95
+		final double itemRadius = 180;
 		final double centerClosedRadius = 28;
 		final double centerOpenedRadius = 40;
 

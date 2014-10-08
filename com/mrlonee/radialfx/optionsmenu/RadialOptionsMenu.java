@@ -437,8 +437,10 @@ public class RadialOptionsMenu extends Group {
 						- distanceToCenter) < 20) {
 					// Entering by the center of the menu
 					enteredByInner = true;
+					System.out.println("Inner");
 					colorItemSel.setOpacity(1.0);
 				} else {
+					System.out.println("Outer");
 					enteredByInner = false;
 				}
 			} else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
