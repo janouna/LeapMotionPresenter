@@ -1,5 +1,3 @@
-package src;
-
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.FingerList;
 import com.leapmotion.leap.Frame;
@@ -24,8 +22,8 @@ import javafx.beans.property.SimpleBooleanProperty;
  */
 public class MyLeapListener extends Listener {
 
-	public final static int SCREEN_HEIGHT = 1080;
-	public final static int SCREEN_WIDTH = 1920;
+	public final static int SCREEN_HEIGHT = 800;
+	public final static int SCREEN_WIDTH = 1280;
 
 	int cnt = 0;
 	long start = 0;
@@ -59,7 +57,7 @@ public class MyLeapListener extends Listener {
 		// the most
 		// Accurate way of mapping leap coordinates on screen
 		InteractionBox screen = frame.interactionBox();
-		
+
 		if (!fingers.isEmpty()) {
 			final List<Float> xPos = new ArrayList<Float>();
 			final List<Float> yPos = new ArrayList<Float>();
@@ -90,7 +88,7 @@ public class MyLeapListener extends Listener {
 					while (app.countCircles() < xPos.size()) {
 						app.addCircle();
 					}
-					
+
 					while (app.countCircles() > xPos.size()) {
 						app.removeCircle();
 					}
@@ -107,35 +105,41 @@ public class MyLeapListener extends Listener {
 
 		}
 		if (!hands.isEmpty()) {
-			Hand thisHand = hands.get(0);
-			Vector intersect = screen.normalizePoint(thisHand.stabilizedPalmPosition());
-			
+			final Hand thisHand = hands.get(0);
+			Vector intersect = screen.normalizePoint(thisHand
+					.stabilizedPalmPosition());
+
 			final float x = (Math.min(1, Math.max(0, intersect.getX()) - 0.5f))
-			* SCREEN_WIDTH;
+					* SCREEN_WIDTH;
 			final float y = (Math.min(1, Math.max(0, intersect.getY()) - 0.5f))
-			* -SCREEN_HEIGHT;
-			
+					* -SCREEN_HEIGHT;
+
 			Platform.runLater(new Runnable() {
 
 				@Override
 				public void run() {
 
-						app.palmX().set(x);
-						app.palmY().set(y);
+					app.palmX().set(x);
+					app.palmY().set(y);
 
+					if (thisHand.isValid() && thisHand.sphereRadius() <= 50
+							&& fingers.extended().isEmpty()) {
+						if (app.dragImage(x, y)) {
+							app.setPolliceBind();
+						}
+					} else {
+						app.setPolliceUnBind();
+					}
 				}
 
 			});
-			
-			if (thisHand.isValid() && thisHand.sphereRadius() <= 50) {
-				if (app.dragImage(x, y)) {
-					app.setPolliceBind();
-				}
-			} else {
-				app.setPolliceUnBind();
-			}
 		} else {
-			app.setPolliceUnBind();
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					app.setPolliceUnBind();
+				}
+			});
 		}
 
 		// float f = frame.currentFramesPerSecond();

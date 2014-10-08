@@ -1,5 +1,3 @@
-package src;
-
 import com.leapmotion.leap.CircleGesture;
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Finger;
@@ -16,7 +14,6 @@ import com.leapmotion.leap.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.LeapConcepts;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -97,21 +94,26 @@ public class ResizeListener extends Listener {
 		 * gesture, more fingers you have open the greater the change. Makes
 		 * this a lot more feasible
 		 */
-		if (!gestures.isEmpty()) {
-			for (int i = 0; i < gestures.count(); i++) {
-				switch (gestures.get(i).type()) {
-				case TYPE_CIRCLE:
-					CircleGesture circle = new CircleGesture(gestures.get(i));
-					if (circle.pointable().direction().angleTo(circle.normal()) <= Math.PI / 2) {
-						// Clockwise if angle is less than 90 degrees
-						app.resizeImage(101);
-					} else {
-						app.resizeImage(99);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				if (!gestures.isEmpty()) {
+					for (int i = 0; i < gestures.count(); i++) {
+						switch (gestures.get(i).type()) {
+						case TYPE_CIRCLE:
+							CircleGesture circle = new CircleGesture(gestures.get(i));
+							if (circle.pointable().direction().angleTo(circle.normal()) <= Math.PI / 2) {
+								// Clockwise if angle is less than 90 degrees
+								app.resizeImage(101);
+							} else {
+								app.resizeImage(99);
+							}
+						default:
+						}
 					}
-				default:
 				}
 			}
-		}
+		});
 
 		// float f = frame.currentFramesPerSecond();
 		// // System.out.println("got frame! "+controller.frame());
