@@ -15,16 +15,19 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.mrlonee.radialfx.optionsmenu;
+package RadialFX;
 
 import java.io.File;
 import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -34,9 +37,13 @@ import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 
-import com.mrlonee.radialfx.optionsmenu.RadialOptionsMenu;
+import com.leapmotion.leap.Controller;
+import com.sun.glass.ui.Cursor;
 
 public class RadialOptionsMenuDemo extends Application {
+	
+	Controller c;
+	MouseController mouseController;
 
 	public static void main(final String[] args) {
 		launch(args);
@@ -52,8 +59,8 @@ public class RadialOptionsMenuDemo extends Application {
 		scene.setFill(Color.LIGHTBLUE);
 		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
-		primaryStage.setWidth(450);
-		primaryStage.setHeight(480);
+		primaryStage.setWidth(1920);
+		primaryStage.setHeight(1080);
 		primaryStage.centerOnScreen();
 		primaryStage.setTitle("Radial Options Menu Demo");
 		primaryStage.show();
@@ -71,9 +78,17 @@ public class RadialOptionsMenuDemo extends Application {
 		radialMenu = new RadialOptionsMenu(menus, itemInnerRadius, itemRadius,
 				centerClosedRadius, centerOpenedRadius);
 
-		radialMenu.setTranslateX(200);
-		radialMenu.setTranslateY(200);
+		radialMenu.setTranslateX(1920/2);
+		radialMenu.setTranslateY(1080/2);
 		container.getChildren().addAll(radialMenu);
+		// Mouse controlling
+		c = new Controller();
+		mouseController = new MouseController();
+		c.addListener(mouseController);
+		
+		Image handCursor = new Image("file:hand_cursor.png");
+		
+		scene.setCursor(new ImageCursor(handCursor));
 
 		scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
 

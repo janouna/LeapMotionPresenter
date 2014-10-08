@@ -50,9 +50,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import com.mrlonee.radialfx.core.RadialMenuItem;
-import com.mrlonee.radialfx.core.RadialMenuItemBuilder;
-
 public class RadialOptionsMenu extends Group {
 
 	private double itemInnerRadius = 60;
