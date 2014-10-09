@@ -51,6 +51,8 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class RadialOptionsMenu extends Group {
+	
+	private RadialOptionsMenuDemo callingObjetct;
 
 	private double itemInnerRadius = 60;
 	private double itemRadius = 95;
@@ -85,9 +87,11 @@ public class RadialOptionsMenu extends Group {
 	private Animation openTransition;
 	private final Map<RadialMenuItem, List<Text>> itemToTexts;
 
-	public RadialOptionsMenu(final String[] itemNames, final double innerRadius,
+	public RadialOptionsMenu(RadialOptionsMenuDemo caller, final String[] itemNames, final double innerRadius,
 			final double radius, final double centerClosedRadius,
 			final double centerOpenedRadius) {
+		
+		callingObjetct = caller;
 
 		menus = itemNames;
 		itemInnerRadius = innerRadius;

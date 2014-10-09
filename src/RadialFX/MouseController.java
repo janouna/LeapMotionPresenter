@@ -67,7 +67,7 @@ public class MouseController extends Listener {
 			final float x = (Math.min(1, Math.max(0, intersect.getX()) - 0.5f))
 					* SCREEN_WIDTH * 2;
 			final float y = (Math.min(1, Math.max(0, intersect.getY()) - 0.5f))
-					* -SCREEN_HEIGHT;
+					* -SCREEN_HEIGHT * 2;
 
 			mouse.mouseMove((int) x, (int) y);
 		}

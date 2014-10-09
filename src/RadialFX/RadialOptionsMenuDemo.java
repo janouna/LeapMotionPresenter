@@ -75,7 +75,7 @@ public class RadialOptionsMenuDemo extends Application {
 		final String[] menus = new String[] { "DOWLOADS", "SYNOPSIS", "VIDEO",
 				"PHOTO", "GAME", "CAST & CREW" };
 
-		radialMenu = new RadialOptionsMenu(menus, itemInnerRadius, itemRadius,
+		radialMenu = new RadialOptionsMenu(this, menus, itemInnerRadius, itemRadius,
 				centerClosedRadius, centerOpenedRadius);
 
 		radialMenu.setTranslateX(1920/2);
