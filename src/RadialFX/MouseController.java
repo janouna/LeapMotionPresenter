@@ -30,8 +30,6 @@ public class MouseController extends Listener {
 
 	int cnt = 0;
 	long start = 0;
-	private BooleanProperty keyTap = new SimpleBooleanProperty(false);
-	private boolean isGrabbed = false;
 
 	public MouseController() {
 	}
