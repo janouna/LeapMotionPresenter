@@ -21,46 +21,30 @@ public class LeapToolBarGroup extends VBox {
 
 		instance = this;
 
-		// Instantiate main bar
-		mainBar = new LeapToolBar(new String[] { "File", "Add", "Present" });
-		addBar = new LeapToolBar(new String[] { "Slide", "Text", "Image",
-				"Video" });
-		this.getChildren().add(mainBar);
-		// Set main bar button controls
-		mainBar.getButton("File").setOnMouseEntered(
-				new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent arg0) {
-						instance.getChildren().remove(addBar);
-					}
-				});
-		
-		mainBar.getButton("File").setOnMouseExited(new EventHandler<MouseEvent>() {
-
+		// Instantiate main bar and behavior
+		mainBar = new LeapToolBar(new String[] { "File", "Add", "Present" }, 0);
+		mainBar.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
-				if (arg0.getY() > mainBar.getButton("File").getLayoutY() + mainBar.getButton("File").getHeight()) {
-					instance.getChildren().add(addBar);
+				if (mainBar.isHidden()) {
+					mainBar.transitionIn();
 				}
 			}
-			
 		});
 
-		mainBar.getButton("Add").setOnMouseEntered(
-				new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent arg0) {
-						// Record the mouse enter of the add submenu
-					}
-				});
-
-		mainBar.getButton("Present").setOnMouseEntered(
-				new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent arg0) {
-						// Record rthe mouse enter of the present submenu
-					}
-				});
+		// Instantiate other bars
+		addBar = new LeapToolBar(new String[] { "Slide", "Text", "Image",
+				"Video" }, 1);
+		fileBar = new LeapToolBar(new String[] {"Open", "Save", "Save As", "Exit"}, 1);
+		this.getChildren().add(mainBar);
+		
+		// Set main bar button controls
+		mainBar.getButton("File").setOnMouseExited(
+				new LeapToolBarSubMenuHandler(mainBar.getButton("File"),
+						this, mainBar, fileBar));
+		mainBar.getButton("Add").setOnMouseExited(
+				new LeapToolBarSubMenuHandler(mainBar.getButton("Add"),
+						this, mainBar, addBar));
 	}
 
 }

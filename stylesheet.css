@@ -6,6 +6,8 @@
 	-dark-black: rgb(39, 40, 40);
 	-darkest-black: rgb(5, 5, 5);
 	-mid-gray: rgb(216, 222, 227);
+	-light-orange: rgb(255, 127, 0);
+	-dark-orange: rgb(255, 170, 0);
 	-fx-background-color: -mid-gray;
 }
 
@@ -20,7 +22,7 @@
 	-fx-effect: dropshadow(two-pass-box, black, 5, .2, 0, 0);
 }
 
-.segmented-button-bar .button {
+.segmented-button-bar .toggle-button {
 	-fx-background-color: -darkest-black, -dark-highlight,
 		linear-gradient(to bottom, -light-black 2%, -dark-black 98%);
 	-fx-background-insets: 0, 0 1 0 0, 0 1 0 1;
@@ -28,22 +30,22 @@
 	-fx-padding: 0.4em 1.833333em 0.4em 1.833333em;
 }
 
-.segmented-button-bar .button.first {
+.segmented-button-bar .toggle-button.first {
 	-fx-background-insets: 0, 1, 2 1 1 1;
 	-fx-background-radius: 3 0 0 3, 2 0 0 2, 2 0 0 2;
 }
 
-.segmented-button-bar .button.last {
+.segmented-button-bar .toggle-button.last {
 	-fx-background-insets: 0, 1 1 1 0, 2 1 1 1;
 	-fx-background-radius: 0 3 3 0, 0 2 2 0, 0 2 2 0;
 }
 
-.segmented-button-bar .button:pressed {
+.segmented-button-bar .toggle-button:selected {
 	-fx-background-color: -darkest-black, rgb(55, 57, 58),
-		linear-gradient(to top, -light-black 2%, -dark-black 98%);
+		linear-gradient(to top, -light-orange 2%, -dark-orange 98%);
 }
 
-.segmented-button-bar .button:hover {
+.segmented-button-bar .toggle-button:hover {
 	-fx-background-color: -darkest-black, rgb(55, 57, 58),
-		linear-gradient(to top, -light-black 2%, -dark-black 98%);
+		linear-gradient(to top, -light-orange 2%, -dark-orange 98%);
 }
