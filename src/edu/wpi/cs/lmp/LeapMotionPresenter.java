@@ -1,5 +1,9 @@
 package edu.wpi.cs.lmp;
 
+import RadialFX.MouseController;
+
+import com.leapmotion.leap.Controller;
+
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -8,11 +12,18 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class LeapMotionPresenter extends Application {
+	
+	Controller c;
+	MouseController mouseController;
 
 	@Override
 	public void start(Stage stage) throws Exception {	
         StackPane root = new StackPane();
         root.setId("background");
+        
+        c = new Controller();
+        mouseController = new MouseController();
+        c.addListener(mouseController);
         
         final LeapToolBarGroup topBar = new LeapToolBarGroup();
         

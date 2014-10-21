@@ -12,7 +12,9 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToolBar;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.LinearGradient;
 import javafx.util.Duration;
 
 public class LeapToolBar extends ToolBar {
@@ -27,7 +29,7 @@ public class LeapToolBar extends ToolBar {
 
 	public LeapToolBar(String[] menuNames, int menuLevel) {
 		super();
-		
+
 		this.menuLevel = menuLevel;
 
 		instance = this;
@@ -35,7 +37,7 @@ public class LeapToolBar extends ToolBar {
 		animationIn = TranslateTransitionBuilder.create()
 				.duration(new Duration(1 * 1000)).node(this).fromY(-2).toY(0)
 				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
-		
+
 		animationIn.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -47,7 +49,7 @@ public class LeapToolBar extends ToolBar {
 		animationOut = TranslateTransitionBuilder.create()
 				.duration(new Duration(1 * 1000)).node(this).fromY(0).toY(-100)
 				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
-		
+
 		animationOut.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -61,7 +63,19 @@ public class LeapToolBar extends ToolBar {
 		buttonBar.getStyleClass().setAll("segmented-button-bar");
 
 		for (int i = 0; i < menuNames.length; i++) {
-			ToggleButton newButton = new ToggleButton(menuNames[i]);
+			final ToggleButton newButton = new ToggleButton(menuNames[i]);
+			newButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					double percentSelected = (event.getY() * 100)
+							/ (newButton.getLayoutY() + newButton.getHeight());
+					System.out.println(percentSelected);
+					newButton.setStyle("-selected-percent: "
+							+ "linear-gradient(to bottom, -light-orange "
+							+ (percentSelected) + "%, -dark-black "
+							+ (percentSelected) + "%);");
+				}
+			});
 			if (i == 0) {
 				newButton.getStyleClass().addAll("first");
 			} else if (i == menuNames.length - 1) {
@@ -99,7 +113,8 @@ public class LeapToolBar extends ToolBar {
 
 	public ToggleButton getButton(String name) {
 		for (int i = 0; i < buttonBar.getChildren().size(); i++) {
-			ToggleButton thisButton = (ToggleButton) buttonBar.getChildren().get(i);
+			ToggleButton thisButton = (ToggleButton) buttonBar.getChildren()
+					.get(i);
 			if (thisButton.getText() == name) {
 				return thisButton;
 			}
@@ -107,19 +122,19 @@ public class LeapToolBar extends ToolBar {
 
 		return null;
 	}
-	
+
 	public List<ToggleButton> getAllButton() {
 		List<ToggleButton> buttons = new ArrayList<ToggleButton>();
-		for (int i=0; i < buttonBar.getChildren().size(); i++) {
+		for (int i = 0; i < buttonBar.getChildren().size(); i++) {
 			buttons.add((ToggleButton) buttonBar.getChildren().get(i));
 		}
 		return buttons;
 	}
-	
+
 	public boolean isHidden() {
 		return isHidden;
 	}
-	
+
 	public int getMenuLevel() {
 		return menuLevel;
 	}
