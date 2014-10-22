@@ -16,14 +16,15 @@
 		linear-gradient(to top, -light-orange 2%, -dark-black 98%);
 }
 
-.tool-bar {
+.leap-tool-bar {
 	-fx-base: -dark-black;
-	-fx-font-size: 2.2em;
+	-fx-font-size: 2.5em;
 	-fx-background-color: linear-gradient(to bottom, derive(-fx-base, -30%),
 		derive(-fx-base, -60%)),
 		linear-gradient(to bottom, -light-black 2%, -dark-black 98%);
 	-fx-background-insets: 0, 0 0 1 0;
 	-fx-effect: dropshadow(two-pass-box, black, 5, .2, 0, 0);
+	-fx-padding: 0 0 0.4em 0;
 }
 
 .segmented-button-bar .toggle-button {

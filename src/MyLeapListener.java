@@ -22,8 +22,8 @@ import javafx.beans.property.SimpleBooleanProperty;
  */
 public class MyLeapListener extends Listener {
 
-	public final static int SCREEN_HEIGHT = 800;
-	public final static int SCREEN_WIDTH = 1280;
+	public final static int SCREEN_HEIGHT = 1080;
+	public final static int SCREEN_WIDTH = 1920;
 
 	int cnt = 0;
 	long start = 0;

@@ -9,15 +9,19 @@ import javafx.animation.TranslateTransitionBuilder;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToolBar;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.LinearGradient;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
 import javafx.util.Duration;
 
-public class LeapToolBar extends ToolBar {
+public class LeapToolBar extends StackPane {
+	
+	// Size of the button based on percentage ofthe screen
+	private static final double BUTTON_HEIGHT = 0.15;
+	// Number of seconds for slide in/out animations for the toolbar
+	private static final int ANIMATION_TIME = 1;
 
 	private LeapToolBar instance;
 	private HBox buttonBar;
@@ -31,11 +35,12 @@ public class LeapToolBar extends ToolBar {
 		super();
 
 		this.menuLevel = menuLevel;
+		this.getStyleClass().add("leap-tool-bar");
 
 		instance = this;
 
 		animationIn = TranslateTransitionBuilder.create()
-				.duration(new Duration(1 * 1000)).node(this).fromY(-2).toY(0)
+				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(-2).toY(0)
 				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
 
 		animationIn.onFinishedProperty().set(new EventHandler<ActionEvent>() {
@@ -47,7 +52,7 @@ public class LeapToolBar extends ToolBar {
 		});
 
 		animationOut = TranslateTransitionBuilder.create()
-				.duration(new Duration(1 * 1000)).node(this).fromY(0).toY(-100)
+				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(0).toY(-100)
 				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
 
 		animationOut.onFinishedProperty().set(new EventHandler<ActionEvent>() {
@@ -64,32 +69,34 @@ public class LeapToolBar extends ToolBar {
 
 		for (int i = 0; i < menuNames.length; i++) {
 			final ToggleButton newButton = new ToggleButton(menuNames[i]);
+			newButton.setPrefHeight(Screen.getPrimary().getVisualBounds().getHeight()*BUTTON_HEIGHT);
 			newButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
 					double percentSelected = (event.getY() * 100)
 							/ (newButton.getLayoutY() + newButton.getHeight());
-					System.out.println(percentSelected);
 					newButton.setStyle("-selected-percent: "
 							+ "linear-gradient(to bottom, -light-orange "
 							+ (percentSelected) + "%, -dark-black "
 							+ (percentSelected) + "%);");
 				}
 			});
+			/*
 			if (i == 0) {
 				newButton.getStyleClass().addAll("first");
 			} else if (i == menuNames.length - 1) {
 				newButton.getStyleClass().addAll("last", "capsule");
 			}
+			*/
 			buttonBar.getChildren().addAll(newButton);
 		}
-		this.getItems().addAll(buttonBar);
+		this.getChildren().add(buttonBar);
 
 		// Set items to be centered and animation elements
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				animationIn.setFromY(-80);
+				animationIn.setFromY(-instance.getLayoutBounds().getHeight());
 				animationOut.setToY(-instance.getLayoutBounds().getHeight());
 			}
 		});
