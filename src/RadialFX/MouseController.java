@@ -68,18 +68,26 @@ public class MouseController extends Listener {
 			Vector intersect = screen.normalizePoint(thisHand
 					.stabilizedPalmPosition());
 
+			/*
 			final float x = (Math.min(1, Math.max(0, intersect.getX()) - 0.5f))
 					* SCREEN_WIDTH * 2;
 			final float y = (Math.min(1, Math.max(0, intersect.getY()) - 0.5f))
 					* -SCREEN_HEIGHT * 2;
+			*/
+			
+			final float x = intersect.getX() * SCREEN_WIDTH;
+			final float y = (1 - intersect.getY()) * SCREEN_HEIGHT;
 
 			if (oldX == -1 && oldY == -1) {
 				oldX = x;
 				oldY = y;
 			}
-
+			/*
 			mouse.mouseMove((int) (x + ((x + oldX) / 2)) / 2,
 					(int) (y + ((y + oldY) / 2)) / 2);
+					*/
+			mouse.mouseMove((int) x, (int) y);
+			System.out.println("X Position: " + intersect.getX() + " Y Position: " + intersect.getY());
 			oldX = x;
 			oldY = y;
 		}

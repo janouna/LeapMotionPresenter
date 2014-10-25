@@ -22,7 +22,7 @@ public class LeapToolBarGroup extends VBox {
 		instance = this;
 
 		// Instantiate main bar and behavior
-		mainBar = new LeapToolBar(new String[] { "File", "Add", "Present" }, 0);
+		mainBar = new LeapToolBar(new String[] { "File", "Add", "Present" }, 0, false);
 		mainBar.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
@@ -34,8 +34,8 @@ public class LeapToolBarGroup extends VBox {
 
 		// Instantiate other bars
 		addBar = new LeapToolBar(new String[] { "Slide", "Text", "Image",
-				"Video" }, 1);
-		fileBar = new LeapToolBar(new String[] {"Open", "Save", "Save As", "Exit"}, 1);
+				"Video" }, 1, false);
+		fileBar = new LeapToolBar(new String[] {"Open", "Save", "Save As", "Exit"}, 1, false);
 		this.getChildren().add(mainBar);
 		
 		// Set main bar button controls
@@ -45,6 +45,7 @@ public class LeapToolBarGroup extends VBox {
 		mainBar.getButton("Add").setOnMouseExited(
 				new LeapToolBarSubMenuHandler(mainBar.getButton("Add"),
 						this, mainBar, addBar));
+		
 	}
 
 }

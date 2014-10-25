@@ -31,11 +31,16 @@ public class LeapToolBar extends StackPane {
 	private boolean isHidden;
 	private int menuLevel;
 
-	public LeapToolBar(String[] menuNames, int menuLevel) {
+	public LeapToolBar(String[] menuNames, int menuLevel, boolean isHidden) {
 		super();
 
 		this.menuLevel = menuLevel;
 		this.getStyleClass().add("leap-tool-bar");
+		this.isHidden = isHidden;
+		
+		if (this.isHidden == true) {
+			this.setOpacity(0);
+		}
 
 		instance = this;
 
@@ -47,7 +52,7 @@ public class LeapToolBar extends StackPane {
 			@Override
 			public void handle(ActionEvent arg0) {
 				isAnimating = false;
-				isHidden = false;
+				instance.isHidden = false;
 			}
 		});
 
@@ -59,7 +64,7 @@ public class LeapToolBar extends StackPane {
 			@Override
 			public void handle(ActionEvent arg0) {
 				isAnimating = false;
-				isHidden = true;
+				instance.isHidden = true;
 				instance.setOpacity(0);
 			}
 		});
