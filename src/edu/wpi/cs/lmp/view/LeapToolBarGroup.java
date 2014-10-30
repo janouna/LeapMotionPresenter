@@ -35,7 +35,7 @@ public class LeapToolBarGroup extends VBox {
 
 		// Instantiate other bars
 		addBar = new LeapToolBar(new String[] { "Slide", "Text", "Image",
-				"Video" }, 1, false);
+				"Video", "Pollice" }, 1, false);
 		fileBar = new LeapToolBar(new String[] {"Open", "Save", "Save As", "Exit"}, 1, false);
 		this.getChildren().add(mainBar);
 		

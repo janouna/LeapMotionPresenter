@@ -29,7 +29,7 @@ public class LeapMotionPresenter extends Application {
         
         // Binding leap controls to the mouse
         c = new Controller();
-        mouseController = new MouseController();
+        mouseController = new MouseController(Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
         c.addListener(mouseController);
         
         // Leap UI toolbar
@@ -52,6 +52,7 @@ public class LeapMotionPresenter extends Application {
         scene.getStylesheets().add("file:stylesheet.css");
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.setResizable(false);
         stage.show();
 

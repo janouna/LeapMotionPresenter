@@ -82,8 +82,10 @@ public class RadialOptionsMenuDemo extends Application {
 		radialMenu.setTranslateY(1080/2);
 		container.getChildren().addAll(radialMenu);
 		// Mouse controlling
+		/*
 		c = new Controller();
 		mouseController = new MouseController();
+		*/
 		c.addListener(mouseController);
 		
 		Image handCursor = new Image("file:hand_cursor.png");

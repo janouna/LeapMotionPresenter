@@ -27,13 +27,15 @@ import javafx.beans.property.SimpleBooleanProperty;
  */
 public class MouseController extends Listener {
 	
-	public final static int SCREEN_HEIGHT = 1080;
-	public final static int SCREEN_WIDTH = 1920;
+	private double SCREEN_HEIGHT= 1080;
+	private double SCREEN_WIDTH = 1920;
 	
 	private double oldX;
 	private double oldY;
 
-	public MouseController() {
+	public MouseController(double width, double height) {
+		this.SCREEN_HEIGHT = height;
+		this.SCREEN_WIDTH = width;
 	}
 
 	@Override
@@ -73,8 +75,8 @@ public class MouseController extends Listener {
 					* -SCREEN_HEIGHT * 2;
 			*/
 			
-			final float x = intersect.getX() * SCREEN_WIDTH;
-			final float y = (1 - intersect.getY()) * SCREEN_HEIGHT;
+			final double x = intersect.getX() * SCREEN_WIDTH;
+			final double y = (1 - intersect.getY()) * SCREEN_HEIGHT;
 
 			if (oldX == -1 && oldY == -1) {
 				oldX = x;
