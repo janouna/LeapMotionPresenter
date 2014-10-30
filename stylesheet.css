@@ -53,3 +53,13 @@
 .segmented-button-bar .toggle-button:hover {
 	-fx-background-color: -selected-percent;
 }
+
+.slide-seperator-vertical {
+	-fx-border-style: solid;
+	-fx-background-color: -light-black;
+	-fx-border-height: 1px;
+}
+
+.thumbnail-container .button {
+	-fx-padding: 0.4em 1.833333em 0.4em 1.833333em;
+}

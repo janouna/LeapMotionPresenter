@@ -4,6 +4,7 @@ import RadialFX.MouseController;
 
 import com.leapmotion.leap.Controller;
 
+import edu.wpi.cs.lmp.view.LeapSlideBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -34,6 +35,13 @@ public class LeapMotionPresenter extends Application {
         final LeapToolBarGroup topBar = new LeapToolBarGroup();
         root.getChildren().add(topBar);
         StackPane.setAlignment(topBar, Pos.TOP_CENTER);
+        
+        // Leap UI slides bar
+        /*
+        final LeapSlideBar bottomBar = new LeapSlideBar();
+        root.getChildren().add(bottomBar);
+        StackPane.setAlignment(bottomBar, Pos.BOTTOM_CENTER);
+        */
 
         // Scene building
         Scene scene = new Scene(root, 800, 600);
