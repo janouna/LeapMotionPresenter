@@ -11,7 +11,6 @@ import com.leapmotion.leap.InteractionBox;
 import com.leapmotion.leap.Listener;
 import com.leapmotion.leap.Screen;
 import com.leapmotion.leap.Vector;
-import com.sun.javafx.geom.Vec2d;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -30,7 +29,6 @@ public class MouseController extends Listener {
 	
 	public final static int SCREEN_HEIGHT = 1080;
 	public final static int SCREEN_WIDTH = 1920;
-
 	
 	private double oldX;
 	private double oldY;

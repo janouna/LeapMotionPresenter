@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class LeapMotionPresenter extends Application {
@@ -37,14 +38,12 @@ public class LeapMotionPresenter extends Application {
         StackPane.setAlignment(topBar, Pos.TOP_CENTER);
         
         // Leap UI slides bar
-        /*
         final LeapSlideBar bottomBar = new LeapSlideBar();
         root.getChildren().add(bottomBar);
         StackPane.setAlignment(bottomBar, Pos.BOTTOM_CENTER);
-        */
 
         // Scene building
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
         
         // Hand cursor placement
 		Image handCursor = new Image("file:hand_cursor.png");

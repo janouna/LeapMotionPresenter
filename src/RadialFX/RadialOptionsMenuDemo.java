@@ -38,7 +38,7 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
 import com.leapmotion.leap.Controller;
-import com.sun.glass.ui.Cursor;
+// import com.sun.glass.ui.Cursor;
 
 public class RadialOptionsMenuDemo extends Application {
 	
