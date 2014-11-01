@@ -15,7 +15,7 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
-package RadialFX;
+package edu.wpi.cs.lmp.view.radialmenu;
 
 import java.io.File;
 import java.io.IOException;

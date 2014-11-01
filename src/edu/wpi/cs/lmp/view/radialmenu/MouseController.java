@@ -1,4 +1,4 @@
-package RadialFX;
+package edu.wpi.cs.lmp.view.radialmenu;
 
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.FingerList;

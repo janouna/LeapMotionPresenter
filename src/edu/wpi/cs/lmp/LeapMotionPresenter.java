@@ -1,11 +1,10 @@
 package edu.wpi.cs.lmp;
 
-import RadialFX.MouseController;
-
 import com.leapmotion.leap.Controller;
 
 import edu.wpi.cs.lmp.view.LeapSlideBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
+import edu.wpi.cs.lmp.view.radialmenu.MouseController;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
