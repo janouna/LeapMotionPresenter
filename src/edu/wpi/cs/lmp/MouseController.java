@@ -1,4 +1,4 @@
-package edu.wpi.cs.lmp.view.radialmenu;
+package edu.wpi.cs.lmp;
 
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.FingerList;
