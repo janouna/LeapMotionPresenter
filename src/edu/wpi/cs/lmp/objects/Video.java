@@ -10,8 +10,7 @@ public class Video extends MediaView implements IObject {
 
 	@Override
 	public void startMove() {
-		// TODO Auto-generated method stub
-
+		// TODO Implement startMove()
 	}
 
 	@Override

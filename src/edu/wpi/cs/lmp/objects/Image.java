@@ -10,7 +10,7 @@ public class Image extends ImageView implements IObject {
 	private DoubleProperty imgHeight;
 	
 	public Image() {
-		// TODO: Pollice is default image for testing
+		// TODO Pollice is default image for testing
 		super("file:gary.JPG");
 	}
 
@@ -22,6 +22,7 @@ public class Image extends ImageView implements IObject {
 
 	@Override
 	public void startMove() {
+		// TODO Implement startMove()
 		/*
 		this.translateXProperty().bind(palmX);
 		this.translateYProperty().bind(palmY);

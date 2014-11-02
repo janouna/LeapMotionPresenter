@@ -47,7 +47,6 @@ public class MouseController extends Listener {
 		try {
 			mouse = new Robot();
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Frame frame = controller.frame();

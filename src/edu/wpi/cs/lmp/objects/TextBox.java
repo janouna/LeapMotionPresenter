@@ -10,7 +10,7 @@ public class TextBox extends Text implements IObject {
 
 	@Override
 	public void startMove() {
-		// TODO Auto-generated method stub
+		// // TODO Implement startMove()
 
 	}
 
