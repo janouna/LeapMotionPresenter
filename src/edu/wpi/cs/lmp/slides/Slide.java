@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.wpi.cs.lmp.objects.IObject;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
+import edu.wpi.cs.lmp.objects.IObject;
 
 public class Slide extends Parent {
 	
@@ -32,7 +32,7 @@ public class Slide extends Parent {
 	
 	public void addObject(IObject newObject) {
 		children.add(newObject);
-		// TODO: Make less dirty
+		// TODO Fix Node cast
 		this.getChildren().add((Node) newObject);
 	}
 	
@@ -44,6 +44,7 @@ public class Slide extends Parent {
 	public List<IObject> getAt(Point position) {
 		List<IObject> atList = new LinkedList<IObject>();
 		for(IObject i: atList){
+			// TODO Fix Node cast
 			Node j = (Node) i;
 			if(j.contains(new Point2D(position.getX(), position.getY()))){
 				atList.add(i);

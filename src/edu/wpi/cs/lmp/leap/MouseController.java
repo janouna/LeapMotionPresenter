@@ -1,25 +1,15 @@
 package edu.wpi.cs.lmp.leap;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+
 import com.leapmotion.leap.Controller;
-import com.leapmotion.leap.FingerList;
 import com.leapmotion.leap.Frame;
-import com.leapmotion.leap.Gesture;
-import com.leapmotion.leap.GestureList;
 import com.leapmotion.leap.Hand;
 import com.leapmotion.leap.HandList;
 import com.leapmotion.leap.InteractionBox;
 import com.leapmotion.leap.Listener;
-import com.leapmotion.leap.Screen;
 import com.leapmotion.leap.Vector;
-
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.util.ArrayList;
-import java.util.List;
-
-import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 
 /**
  * 

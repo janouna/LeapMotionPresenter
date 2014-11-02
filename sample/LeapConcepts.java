@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-import com.leapmotion.leap.Controller;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
@@ -17,6 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
+import com.leapmotion.leap.Controller;
 
 /**
  * 
@@ -87,12 +89,8 @@ public class LeapConcepts extends Application {
 		double y = img.getTranslateY();
 		double width = imgWidth.doubleValue();
 		double height = imgHeight.doubleValue();
-		if ((handX > x-(width/2) && handX < x+(width/2)) && (handY > y-(height/2) && handY < y+(height/2))) {
-			return true;
-		} else {
-			return false;
-		}
 		
+		return (handX > x-(width/2) && handX < x+(width/2)) && (handY > y-(height/2) && handY < y+(height/2));		
 	}
 	
 	public void resizeImage(double percentageChange) {

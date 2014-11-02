@@ -1,7 +1,7 @@
 package edu.wpi.cs.lmp.objects;
 
 public class ObjectFactory {
-	public static final ObjectFactory instance = new ObjectFactory();
+	public static final ObjectFactory INSTANCE = new ObjectFactory();
 	
 	private ObjectFactory() {}
 	

@@ -466,6 +466,7 @@ public class RadialOptionsMenu extends Group {
 							event.getX(), event.getY(), 0, 0);
 					if (Math.abs(colorItem.getRadius() + colorItem.getOffset()
 							- distanceToCenter) < 20) {
+						// TODO Fill
 						// Exiting by the external item of the menu
 						// selectedColor.set(colorItem.getBackgroundFill());
 					}
@@ -483,7 +484,6 @@ public class RadialOptionsMenu extends Group {
 					colorItemSel.setOffset(offset);
 				}
 			}
-			;
 		}
 
 	}

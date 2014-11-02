@@ -39,7 +39,7 @@ public class LeapToolBar extends StackPane {
 		this.getStyleClass().add("leap-tool-bar");
 		this.isHidden = isHidden;
 		
-		if (this.isHidden == true) {
+		if (this.isHidden) {
 			this.setOpacity(0);
 		}
 
@@ -129,7 +129,7 @@ public class LeapToolBar extends StackPane {
 		for (int i = 0; i < buttonBar.getChildren().size(); i++) {
 			ToggleButton thisButton = (ToggleButton) buttonBar.getChildren()
 					.get(i);
-			if (thisButton.getText() == name) {
+			if (thisButton.getText().equals(name)) {
 				return thisButton;
 			}
 		}

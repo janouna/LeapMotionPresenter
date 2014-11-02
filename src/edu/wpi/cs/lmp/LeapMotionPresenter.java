@@ -1,12 +1,5 @@
 package edu.wpi.cs.lmp;
 
-import com.leapmotion.leap.Controller;
-
-import edu.wpi.cs.lmp.leap.HandState;
-import edu.wpi.cs.lmp.leap.HandStateController;
-import edu.wpi.cs.lmp.leap.MouseController;
-import edu.wpi.cs.lmp.view.LeapSlideBar;
-import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -20,6 +13,14 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import com.leapmotion.leap.Controller;
+
+import edu.wpi.cs.lmp.leap.HandState;
+import edu.wpi.cs.lmp.leap.HandStateController;
+import edu.wpi.cs.lmp.leap.MouseController;
+import edu.wpi.cs.lmp.view.LeapSlideBar;
+import edu.wpi.cs.lmp.view.LeapToolBarGroup;
+
 public class LeapMotionPresenter extends Application {
 
 	Controller c;
@@ -27,7 +28,7 @@ public class LeapMotionPresenter extends Application {
 	HandStateController handController;
 
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start(Stage stage) {
 		// Background setting
 		StackPane root = new StackPane();
 		root.setId("background");

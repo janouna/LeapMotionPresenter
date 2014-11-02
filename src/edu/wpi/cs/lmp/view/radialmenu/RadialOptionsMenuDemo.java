@@ -56,7 +56,7 @@ public class RadialOptionsMenuDemo extends Application {
 	private RadialOptionsMenu radialMenu;
 
 	@Override
-	public void start(final Stage primaryStage) throws Exception {
+	public void start(final Stage primaryStage) {
 		container = new Group();
 		final Scene scene = new Scene(container);
 		scene.setFill(Color.LIGHTBLUE);
