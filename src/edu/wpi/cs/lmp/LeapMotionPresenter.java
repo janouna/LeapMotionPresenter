@@ -63,7 +63,7 @@ public class LeapMotionPresenter extends Application {
 		handController.getHandState().addListener(new ChangeListener<HandState>() {
 			@Override
 			public void changed(ObservableValue<? extends HandState> observable,
-					HandState oldValue, HandState newValue) {
+					HandState oldValue, final HandState newValue) {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
