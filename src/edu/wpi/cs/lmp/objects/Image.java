@@ -1,7 +1,6 @@
 package edu.wpi.cs.lmp.objects;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
 
 public class Image extends ImageView implements IObject {

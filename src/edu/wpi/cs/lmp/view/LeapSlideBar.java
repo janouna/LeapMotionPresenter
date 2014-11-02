@@ -2,7 +2,6 @@ package edu.wpi.cs.lmp.view;
 
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
