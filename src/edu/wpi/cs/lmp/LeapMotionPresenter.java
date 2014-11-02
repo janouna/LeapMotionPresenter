@@ -2,9 +2,15 @@ package edu.wpi.cs.lmp;
 
 import com.leapmotion.leap.Controller;
 
+import edu.wpi.cs.lmp.leap.HandState;
+import edu.wpi.cs.lmp.leap.HandStateController;
+import edu.wpi.cs.lmp.leap.MouseController;
 import edu.wpi.cs.lmp.view.LeapSlideBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -18,6 +24,7 @@ public class LeapMotionPresenter extends Application {
 
 	Controller c;
 	MouseController mouseController;
+	HandStateController handController;
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -30,7 +37,9 @@ public class LeapMotionPresenter extends Application {
 		mouseController = new MouseController(Screen.getPrimary()
 				.getVisualBounds().getWidth(), Screen.getPrimary()
 				.getVisualBounds().getHeight());
+		handController = new HandStateController();
 		c.addListener(mouseController);
+		c.addListener(handController);
 
 		// Leap UI toolbar
 		final LeapToolBarGroup topBar = new LeapToolBarGroup();
@@ -50,6 +59,29 @@ public class LeapMotionPresenter extends Application {
 		// icon based on state (Open palm, closed palm, finger pointed, etc)
 		Image handCursor = new Image("file:hand_cursor.png");
 		scene.setCursor(new ImageCursor(handCursor));
+		
+		handController.getHandState().addListener(new ChangeListener<HandState>() {
+			@Override
+			public void changed(ObservableValue<? extends HandState> observable,
+					HandState oldValue, HandState newValue) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						switch(newValue) {
+						case OPEN:
+							System.out.println("Hand is Open");
+							break;
+						case CLOSED:
+							System.out.println("Hand is Closed");
+							break;
+						case GONE:
+							System.out.println("No Hand detected");
+							break;
+						}
+					}
+				});
+			}	
+		});
 
 		scene.getStylesheets().add("file:stylesheet.css");
 		stage.setScene(scene);

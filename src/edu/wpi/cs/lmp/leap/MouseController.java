@@ -1,4 +1,4 @@
-package edu.wpi.cs.lmp;
+package edu.wpi.cs.lmp.leap;
 
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.FingerList;
@@ -29,9 +29,6 @@ public class MouseController extends Listener {
 	
 	private double SCREEN_HEIGHT= 1080;
 	private double SCREEN_WIDTH = 1920;
-	
-	private double oldX;
-	private double oldY;
 
 	public MouseController(double width, double height) {
 		this.SCREEN_HEIGHT = height;
@@ -41,9 +38,7 @@ public class MouseController extends Listener {
 	@Override
 	public void onConnect(Controller controller) {
 		// Enable the gestures you intend to use onConnect
-		System.out.println("connected");
-		oldX = -1;
-		oldY = -1;
+		System.out.println("connected: MouseController");
 	}
 
 	@Override
@@ -67,29 +62,12 @@ public class MouseController extends Listener {
 			final Hand thisHand = hands.get(0);
 			Vector intersect = screen.normalizePoint(thisHand
 					.stabilizedPalmPosition());
-
-			/*
-			final float x = (Math.min(1, Math.max(0, intersect.getX()) - 0.5f))
-					* SCREEN_WIDTH * 2;
-			final float y = (Math.min(1, Math.max(0, intersect.getY()) - 0.5f))
-					* -SCREEN_HEIGHT * 2;
-			*/
 			
 			final double x = intersect.getX() * SCREEN_WIDTH;
 			final double y = (1 - intersect.getY()) * SCREEN_HEIGHT;
 
-			if (oldX == -1 && oldY == -1) {
-				oldX = x;
-				oldY = y;
-			}
-			/*
-			mouse.mouseMove((int) (x + ((x + oldX) / 2)) / 2,
-					(int) (y + ((y + oldY) / 2)) / 2);
-					*/
 			mouse.mouseMove((int) x, (int) y);
-			System.out.println("X Position: " + intersect.getX() + " Y Position: " + intersect.getY());
-			oldX = x;
-			oldY = y;
+			// System.out.println("X Position: " + intersect.getX() + " Y Position: " + intersect.getY());
 		}
 	}
 }

@@ -18,8 +18,9 @@ import javafx.util.Duration;
 
 public class LeapToolBar extends StackPane {
 	
-	// Size of the button based on percentage ofthe screen
+	// Size of the button based on percentage of the screen height
 	private static final double BUTTON_HEIGHT = 0.15;
+	private static final double BUTTON_WIDTH = 0.30;
 	// Number of seconds for slide in/out animations for the toolbar
 	private static final int ANIMATION_TIME = 1;
 
@@ -75,6 +76,7 @@ public class LeapToolBar extends StackPane {
 		for (int i = 0; i < menuNames.length; i++) {
 			final ToggleButton newButton = new ToggleButton(menuNames[i]);
 			newButton.setPrefHeight(Screen.getPrimary().getVisualBounds().getHeight()*BUTTON_HEIGHT);
+			newButton.setPrefWidth(Screen.getPrimary().getVisualBounds().getHeight()*BUTTON_WIDTH);
 			newButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {

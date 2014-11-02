@@ -40,7 +40,8 @@ import javax.imageio.ImageIO;
 import com.leapmotion.leap.Controller;
 // import com.sun.glass.ui.Cursor;
 
-import edu.wpi.cs.lmp.MouseController;
+
+import edu.wpi.cs.lmp.leap.MouseController;
 
 public class RadialOptionsMenuDemo extends Application {
 	

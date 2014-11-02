@@ -1,6 +1,7 @@
 package edu.wpi.cs.lmp.objects;
 
 public interface IObject {
-	public void resize();
-	public void move();
+	public void startMove();
+	public void endMove();
+	public void resize(double percentChange);
 }

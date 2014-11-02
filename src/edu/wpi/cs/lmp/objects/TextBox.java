@@ -1,19 +1,29 @@
 package edu.wpi.cs.lmp.objects;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.text.Text;
 
 public class TextBox extends Text implements IObject {
+	
+	private DoubleProperty textWidth;
+	private DoubleProperty textHeight;
 
 	@Override
-	public void resize() {
+	public void startMove() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
+	public void endMove() {
+		this.translateXProperty().unbind();
+		this.translateYProperty().unbind();
+	}
 
+	@Override
+	public void resize(double percentageChange) {
+		textWidth.set((textWidth.doubleValue()*percentageChange)/100);
+		textHeight.set((textHeight.doubleValue()*percentageChange)/100);
 	}
 
 }

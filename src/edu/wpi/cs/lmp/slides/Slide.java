@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.cs.lmp.objects.IObject;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 
@@ -28,11 +29,14 @@ public class Slide extends Parent {
 	}
 	
 	public void addObject(IObject newObject) {
-		// Do stuff here
+		children.add(newObject);
+		// TODO: Make less dirty
+		this.getChildren().add((Node) newObject);
 	}
 	
 	public void removeObject(IObject removeObject) {
-		// Remove object here
+		children.remove(removeObject);
+		this.getChildren().remove(removeObject);
 	}
 	
 	public IObject getAt(Point position) {
