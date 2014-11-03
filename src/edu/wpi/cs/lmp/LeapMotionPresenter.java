@@ -16,6 +16,7 @@ import com.leapmotion.leap.Controller;
 
 import edu.wpi.cs.lmp.leap.HandState;
 import edu.wpi.cs.lmp.leap.HandStateController;
+import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.leap.MouseController;
 import edu.wpi.cs.lmp.slides.Slide;
 import edu.wpi.cs.lmp.view.LeapSlideBar;
@@ -62,7 +63,11 @@ public class LeapMotionPresenter extends Application {
 		javafx.scene.image.Image handCursor = new javafx.scene.image.Image("file:hand_cursor.png");
 		scene.setCursor(new ImageCursor(handCursor));
 		
-		handController.getHandState().addListener(new ChangeListener<HandState>() {
+		Slide slide = new Slide();
+		slide.addObject(new Image());
+		root.getChildren().add(slide);
+		
+		HandStateObservable.getInstance().getHandState().addListener(new ChangeListener<HandState>() {
 			@Override
 			public void changed(ObservableValue<? extends HandState> observable,
 					HandState oldValue, final HandState newValue) {
@@ -84,10 +89,6 @@ public class LeapMotionPresenter extends Application {
 				});
 			}	
 		});
-		
-		Slide slide = new Slide();
-		slide.addObject(new Image());
-		root.getChildren().add(slide);
 
 		scene.getStylesheets().add("file:stylesheet.css");
 		stage.setScene(scene);
