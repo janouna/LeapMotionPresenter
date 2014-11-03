@@ -7,7 +7,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
@@ -18,8 +17,10 @@ import com.leapmotion.leap.Controller;
 import edu.wpi.cs.lmp.leap.HandState;
 import edu.wpi.cs.lmp.leap.HandStateController;
 import edu.wpi.cs.lmp.leap.MouseController;
+import edu.wpi.cs.lmp.slides.Slide;
 import edu.wpi.cs.lmp.view.LeapSlideBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
+import edu.wpi.cs.lmp.objects.Image;
 
 public class LeapMotionPresenter extends Application {
 
@@ -58,7 +59,7 @@ public class LeapMotionPresenter extends Application {
 
 		// Hand cursor placement, this should be its own object that chnages
 		// icon based on state (Open palm, closed palm, finger pointed, etc)
-		Image handCursor = new Image("file:hand_cursor.png");
+		javafx.scene.image.Image handCursor = new javafx.scene.image.Image("file:hand_cursor.png");
 		scene.setCursor(new ImageCursor(handCursor));
 		
 		handController.getHandState().addListener(new ChangeListener<HandState>() {
@@ -83,6 +84,10 @@ public class LeapMotionPresenter extends Application {
 				});
 			}	
 		});
+		
+		Slide slide = new Slide();
+		slide.addObject(new Image());
+		root.getChildren().add(slide);
 
 		scene.getStylesheets().add("file:stylesheet.css");
 		stage.setScene(scene);
