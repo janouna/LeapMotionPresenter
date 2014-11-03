@@ -15,7 +15,7 @@ public class HandStateObservable {
 		handState.set(state);
 	}
 	
-	public ObjectProperty<HandState> getHandState() {
-		return handState;
+	public HandState getHandState() {
+		return handState.get();
 	}
 }
