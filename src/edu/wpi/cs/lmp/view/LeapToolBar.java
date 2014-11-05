@@ -16,7 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 
-public class LeapToolBar extends StackPane {
+public class LeapToolBar extends HBox {
 	
 	// Size of the button based on percentage of the screen height
 	private static final double BUTTON_HEIGHT = 0.15;
@@ -143,6 +143,12 @@ public class LeapToolBar extends StackPane {
 			buttons.add((ToggleButton) buttonBar.getChildren().get(i));
 		}
 		return buttons;
+	}
+	
+	public void unselectAllButton() {
+		for (int i=0; i < this.getAllButton().size(); i++) {
+			this.getAllButton().get(i).setSelected(false);
+		}
 	}
 
 	public boolean isHidden() {

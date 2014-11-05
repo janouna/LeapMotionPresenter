@@ -7,48 +7,24 @@ import javafx.event.EventHandler;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 
-public class LeapToolBarSubMenuHandler implements EventHandler<MouseEvent> {
+public class LeapToolBarSubMenuHandler extends LeapToolBarSelectedHandler {
 
-	private ToggleButton mousedNode;
 	private LeapToolBarGroup container;
 	private LeapToolBar newMenu;
-	private LeapToolBar mousedBar;
 
 	public LeapToolBarSubMenuHandler(ToggleButton mousedNode,
 			LeapToolBarGroup container, LeapToolBar mousedBar, LeapToolBar newMenu) {
-		this.mousedNode = mousedNode;
+		super(mousedNode, mousedBar);
 		this.container = container;
-		this.mousedBar = mousedBar;
 		this.newMenu = newMenu;
 	}
 
 	@Override
-	public void handle(MouseEvent event) {
-		if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-			if (event.getY() > mousedNode.getLayoutY() + mousedNode.getHeight()) {
-				// Remove higher level sub menus
-				List<LeapToolBar> toRemove = new ArrayList<LeapToolBar>();
-				for (int i = 0; i < container.getChildren().size(); i++) {
-					LeapToolBar submenu = (LeapToolBar) container.getChildren()
-							.get(i);
-					if (submenu.getMenuLevel() >= newMenu.getMenuLevel()) {
-						toRemove.add(submenu);
-					}
-				}
-				container.getChildren().removeAll(toRemove);
-				// Unselect any previously selected buttons
-				for (int i=0; i < mousedBar.getAllButton().size(); i++) {
-					mousedBar.getAllButton().get(i).setSelected(false);
-				}
-				// Set selected for new submenu
-				mousedNode.setSelected(true);
-				// Instantiate the desired submenu
-				container.getChildren().add(newMenu);
-				// I might reserve the animation transition soley for the main
-				// toolbar rather than each new instantiation
-				// newMenu.transitionIn();
-			}
-		}
+	public void action() {
+		// Remove higher level sub menus
+		container.removeMenuAbove(mousedBar.getMenuLevel());
+		// Instantiate the desired submenu
+		container.getChildren().add(newMenu);
 	}
 
 }

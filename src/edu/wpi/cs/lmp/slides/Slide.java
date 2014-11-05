@@ -23,7 +23,13 @@ public class Slide extends Parent {
 		this.setOnMousePressed(new EventHandler<MouseEvent>(){
 			@Override
 			public void handle(MouseEvent event) {
-				System.out.println("Mouse Event YAY!");
+				Point position = new Point();
+				position.x = (int) event.getX();
+				position.y = (int) event.getY();
+				List<IObject> selected = getAt(position);
+				if (!selected.isEmpty()) {
+					System.out.println("Mouse Event YAY!: " + selected.get(0));
+				}
 			}
 		});
 	}

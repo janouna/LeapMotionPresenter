@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
@@ -43,6 +44,10 @@ public class LeapMotionPresenter extends Application {
 		handController = new HandStateController();
 		c.addListener(mouseController);
 		c.addListener(handController);
+		
+		Slide slide = new Slide();
+		StackPane.setAlignment(slide, Pos.TOP_LEFT);
+		root.getChildren().add(slide);
 
 		// Leap UI toolbar
 		final LeapToolBarGroup topBar = new LeapToolBarGroup();
@@ -62,33 +67,11 @@ public class LeapMotionPresenter extends Application {
 		// icon based on state (Open palm, closed palm, finger pointed, etc)
 		javafx.scene.image.Image handCursor = new javafx.scene.image.Image("file:hand_cursor.png");
 		scene.setCursor(new ImageCursor(handCursor));
-		
-		Slide slide = new Slide();
+
 		slide.addObject(new Image());
-		root.getChildren().add(slide);
-		
-		HandStateObservable.getInstance().getHandState().addListener(new ChangeListener<HandState>() {
-			@Override
-			public void changed(ObservableValue<? extends HandState> observable,
-					HandState oldValue, final HandState newValue) {
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						switch(newValue) {
-						case OPEN:
-							System.out.println("Hand is Open");
-							break;
-						case CLOSED:
-							System.out.println("Hand is Closed");
-							break;
-						case GONE:
-							System.out.println("No Hand detected");
-							break;
-						}
-					}
-				});
-			}	
-		});
+		Image otherImage = new Image();
+		otherImage.setX(400);
+		slide.addObject(otherImage);
 
 		scene.getStylesheets().add("file:stylesheet.css");
 		stage.setScene(scene);

@@ -2,6 +2,11 @@ package edu.wpi.cs.lmp.leap;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
+
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Frame;
@@ -19,6 +24,7 @@ public class MouseController extends Listener {
 	
 	private double SCREEN_HEIGHT= 1080;
 	private double SCREEN_WIDTH = 1920;
+	private Robot mouse;
 
 	public MouseController(double width, double height) {
 		this.SCREEN_HEIGHT = height;
@@ -28,17 +34,43 @@ public class MouseController extends Listener {
 	@Override
 	public void onConnect(Controller controller) {
 		// Enable the gestures you intend to use onConnect
-		System.out.println("connected: MouseController");
-	}
-
-	@Override
-	public void onFrame(Controller controller) {
-		Robot mouse = null;
 		try {
 			mouse = new Robot();
 		} catch (AWTException e) {
 			e.printStackTrace();
 		}
+		
+		HandStateObservable.getInstance().getHandState().addListener(new ChangeListener<HandState>() {
+			@Override
+			public void changed(ObservableValue<? extends HandState> observable,
+					HandState oldValue, final HandState newValue) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						switch(newValue) {
+						case OPEN:
+							System.out.println("Hand Open");
+							mouse.mouseRelease(InputEvent.BUTTON1_MASK);
+							break;
+						case CLOSED:
+							System.out.println("Hand Closed");
+							mouse.mousePress(InputEvent.BUTTON1_MASK);
+							break;
+						case GONE:
+							System.out.println("No Hand detected");
+							mouse.mouseRelease(InputEvent.BUTTON1_MASK);
+							break;
+						}
+					}
+				});
+			}
+		});
+		
+		System.out.println("connected: MouseController");
+	}
+
+	@Override
+	public void onFrame(Controller controller) {
 		Frame frame = controller.frame();
 		final HandList hands = frame.hands();
 		// locatedScreens() to calibrate on to screen cords is deprecated or
@@ -56,7 +88,7 @@ public class MouseController extends Listener {
 			final double y = (1 - intersect.getY()) * SCREEN_HEIGHT;
 
 			mouse.mouseMove((int) x, (int) y);
-			// System.out.println("X Position: " + intersect.getX() + " Y Position: " + intersect.getY());
+			// System.out.println("X Position: " + intersect.getX() + " Y Position: " + intersect.getY());			
 		}
 	}
 }
