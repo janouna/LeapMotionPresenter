@@ -3,7 +3,9 @@ package edu.wpi.cs.lmp.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.wpi.cs.lmp.objects.ObjectType;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -53,6 +55,9 @@ public class LeapToolBarGroup extends VBox {
 				new LeapToolBarSubMenuHandler(mainBar.getButton("Add"), this,
 						mainBar, addBar));
 		mainBar.getButton("ExitMenu").setOnMouseExited(new LeapToolBarExitMenuHandler(mainBar.getButton("ExitMenu"), this, mainBar));
+		
+		// Set add bar button controls
+		addBar.getButton("Image").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Image"), addBar, this, ObjectType.IMAGE));
 
 	}
 
@@ -89,6 +94,11 @@ public class LeapToolBarGroup extends VBox {
 			}
 		}
 		this.getChildren().removeAll(toRemove);
+	}
+	
+	public void removeMenuAll() {
+		this.removeMenuAbove(0);
+		this.removeMenuAt(0);
 	}
 
 }

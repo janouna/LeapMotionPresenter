@@ -11,60 +11,63 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Screen;
 import edu.wpi.cs.lmp.objects.IObject;
+import edu.wpi.cs.lmp.objects.Image;
 
 public class Slide extends Parent {
-	
+
 	private List<IObject> children;
 	private ImageView background;
-	
+
 	public Slide() {
 		children = new ArrayList<IObject>();
-		this.setOnMousePressed(new EventHandler<MouseEvent>(){
+		background = new ImageView();
+		background
+				.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
+		background.setFitHeight(Screen.getPrimary().getVisualBounds()
+				.getHeight());
+		// this.getChildren().add(background);
+		this.addObject(new Image());
+		this.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				Point position = new Point();
-				position.x = (int) event.getX();
-				position.y = (int) event.getY();
-				List<IObject> selected = getAt(position);
-				if (!selected.isEmpty()) {
-					System.out.println("Mouse Event YAY!: " + selected.get(0));
-				}
+				System.out.println("Mouse Event YAY!:");
 			}
 		});
 	}
-	
+
 	public Slide(String bgFile) {
 		children = new ArrayList<IObject>();
 		background = new ImageView("file:" + bgFile);
 	}
-	
+
 	public List<IObject> getObjects() {
 		// Return objects here
 		return children;
 	}
-	
+
 	public void addObject(IObject newObject) {
 		children.add(newObject);
 		// TODO Fix Node cast
 		this.getChildren().add((Node) newObject);
 	}
-	
+
 	public void removeObject(IObject removeObject) {
 		children.remove(removeObject);
 		this.getChildren().remove(removeObject);
 	}
-	
+
 	public List<IObject> getAt(Point position) {
 		List<IObject> atList = new LinkedList<IObject>();
-		for(IObject i: atList){
+		for (IObject i : atList) {
 			// TODO Fix Node cast
 			Node j = (Node) i;
-			if(j.contains(new Point2D(position.getX(), position.getY()))){
+			if (j.contains(new Point2D(position.getX(), position.getY()))) {
 				atList.add(i);
 			}
 		}
-		
+
 		return atList;
 	}
 

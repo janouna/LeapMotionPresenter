@@ -19,14 +19,14 @@ public abstract class LeapToolBarSelectedHandler implements
 	public void handle(MouseEvent event) {
 		if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
 			if (event.getY() > mousedButton.getLayoutY() + mousedButton.getHeight()) {
-				action();
+				action(event);
 				mousedBar.unselectAllButton();
 				mousedButton.setSelected(true);
 			}
 		}
 	}
 	
-	public void action() {
+	public void action(MouseEvent event) {
 		// Carry this action out
 	}
 }

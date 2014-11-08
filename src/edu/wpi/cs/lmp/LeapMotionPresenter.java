@@ -9,6 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -20,6 +21,7 @@ import edu.wpi.cs.lmp.leap.HandStateController;
 import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.leap.MouseController;
 import edu.wpi.cs.lmp.slides.Slide;
+import edu.wpi.cs.lmp.slides.SlideManager;
 import edu.wpi.cs.lmp.view.LeapSlideBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 import edu.wpi.cs.lmp.objects.Image;
@@ -29,11 +31,12 @@ public class LeapMotionPresenter extends Application {
 	Controller c;
 	MouseController mouseController;
 	HandStateController handController;
+	public Slide slide;
 
 	@Override
 	public void start(Stage stage) {
 		// Background setting
-		StackPane root = new StackPane();
+		Pane root = new Pane();
 		root.setId("background");
 
 		// Binding leap controls to the mouse
@@ -45,7 +48,7 @@ public class LeapMotionPresenter extends Application {
 		c.addListener(mouseController);
 		c.addListener(handController);
 		
-		Slide slide = new Slide();
+		slide = SlideManager.getInstance().getCurrentSlide();
 		StackPane.setAlignment(slide, Pos.TOP_LEFT);
 		root.getChildren().add(slide);
 
@@ -53,11 +56,12 @@ public class LeapMotionPresenter extends Application {
 		final LeapToolBarGroup topBar = new LeapToolBarGroup();
 		root.getChildren().add(topBar);
 		StackPane.setAlignment(topBar, Pos.TOP_CENTER);
-
+		/*
 		// Leap UI slides bar
 		final LeapSlideBar bottomBar = new LeapSlideBar();
 		root.getChildren().add(bottomBar);
 		StackPane.setAlignment(bottomBar, Pos.BOTTOM_CENTER);
+		*/
 
 		// Scene building
 		Scene scene = new Scene(root, Screen.getPrimary().getVisualBounds()
@@ -67,11 +71,6 @@ public class LeapMotionPresenter extends Application {
 		// icon based on state (Open palm, closed palm, finger pointed, etc)
 		javafx.scene.image.Image handCursor = new javafx.scene.image.Image("file:hand_cursor.png");
 		scene.setCursor(new ImageCursor(handCursor));
-
-		slide.addObject(new Image());
-		Image otherImage = new Image();
-		otherImage.setX(400);
-		slide.addObject(otherImage);
 
 		scene.getStylesheets().add("file:stylesheet.css");
 		stage.setScene(scene);

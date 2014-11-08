@@ -1,6 +1,7 @@
 package edu.wpi.cs.lmp.objects;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
 
 public class Image extends ImageView implements IObject {
@@ -11,6 +12,10 @@ public class Image extends ImageView implements IObject {
 	public Image() {
 		// TODO Pollice is default image for testing
 		super("file:gary.JPG");
+		imgWidth = new SimpleDoubleProperty(this.getFitWidth());
+		imgHeight = new SimpleDoubleProperty(this.getFitHeight());
+		this.fitWidthProperty().bind(imgWidth);
+		this.fitHeightProperty().bind(imgHeight);
 	}
 
 	@Override

@@ -39,6 +39,8 @@ public class LeapToolBar extends HBox {
 		this.getStyleClass().add("leap-tool-bar");
 		this.isHidden = isHidden;
 		
+		this.setPrefWidth(Screen.getPrimary().getVisualBounds().getWidth());
+		
 		if (this.isHidden) {
 			this.setOpacity(0);
 		}

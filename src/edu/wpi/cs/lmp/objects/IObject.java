@@ -4,4 +4,6 @@ public interface IObject {
 	void startMove();
 	void endMove();
 	void resize(double percentChange);
+	void setX(double x);
+	void setY(double y);
 }

@@ -1,6 +1,7 @@
 package edu.wpi.cs.lmp.view;
 
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 
 public class LeapToolBarExitMenuHandler extends LeapToolBarSelectedHandler {
 	
@@ -13,7 +14,7 @@ public class LeapToolBarExitMenuHandler extends LeapToolBarSelectedHandler {
 	}
 
 	@Override
-	public void action() {
+	public void action(MouseEvent event) {
 		// Remove higher level sub menus
 		container.removeMenuAbove(mousedBar.getMenuLevel());
 		// Instantiate the desired submenu
