@@ -24,7 +24,6 @@ public class LeapToolBarObjectCreator extends LeapToolBarSelectedHandler {
 		IObject newObject = ObjectFactory.getInstance().CreateObject(object);
 		newObject.setX(event.getScreenX());
 		newObject.setY(event.getScreenY());
-		System.out.println("X Coord: " + event.getScreenX() + " Y Coord: " +  event.getScreenY());
 		SlideManager.getInstance().getCurrentSlide().addObject(newObject);
 		container.removeMenuAll();
 	}

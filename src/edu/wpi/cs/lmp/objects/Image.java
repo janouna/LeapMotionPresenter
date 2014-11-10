@@ -1,5 +1,7 @@
 package edu.wpi.cs.lmp.objects;
 
+import edu.wpi.cs.lmp.leap.HandStateObservable;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
@@ -9,13 +11,28 @@ public class Image extends ImageView implements IObject {
 	private DoubleProperty imgWidth;
 	private DoubleProperty imgHeight;
 	
+	private DoubleProperty imgX;
+	private DoubleProperty imgY;
+	
+	private Image instance;
+	
 	public Image() {
 		// TODO Pollice is default image for testing
 		super("file:gary.JPG");
-		imgWidth = new SimpleDoubleProperty(this.getFitWidth());
-		imgHeight = new SimpleDoubleProperty(this.getFitHeight());
-		this.fitWidthProperty().bind(imgWidth);
-		this.fitHeightProperty().bind(imgHeight);
+		instance = this;
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				imgWidth = new SimpleDoubleProperty(instance.getImage().getWidth());
+				imgHeight = new SimpleDoubleProperty(instance.getImage().getHeight());
+				imgX = new SimpleDoubleProperty(instance.getX());
+				imgY = new SimpleDoubleProperty(instance.getY());
+				instance.fitWidthProperty().bind(imgWidth);
+				instance.fitHeightProperty().bind(imgHeight);
+			}
+			
+		});
 	}
 
 	@Override
@@ -26,17 +43,35 @@ public class Image extends ImageView implements IObject {
 
 	@Override
 	public void startMove() {
-		// TODO Implement startMove()
-		/*
-		this.translateXProperty().bind(palmX);
-		this.translateYProperty().bind(palmY);
-		*/
+		this.translateXProperty().bind(HandStateObservable.getInstance().getObservableX());
+		this.translateYProperty().bind(HandStateObservable.getInstance().getObservableY());
+		imgX.bind(HandStateObservable.getInstance().getObservableX());
+		imgY.bind(HandStateObservable.getInstance().getObservableY());
 	}
 
 	@Override
 	public void endMove() {
 		this.translateXProperty().unbind();
 		this.translateYProperty().unbind();
+		imgX.unbind();
+		imgY.unbind();
+		System.out.println(imgX.doubleValue());
+		System.out.println(imgY.doubleValue());
+	}
+
+	@Override
+	public boolean inBounds(double x, double y) {
+		double xPos = imgX.doubleValue();
+		double yPos = imgY.doubleValue();
+		double width = imgWidth.doubleValue();
+		double height = imgHeight.doubleValue();
+		
+		System.out.println(xPos);
+		System.out.println(yPos);
+		
+		
+		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
+		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
 	}
 
 }

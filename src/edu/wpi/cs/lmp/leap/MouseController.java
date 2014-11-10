@@ -88,6 +88,13 @@ public class MouseController extends Listener {
 			final double y = (1 - intersect.getY()) * SCREEN_HEIGHT;
 
 			mouse.mouseMove((int) x, (int) y);
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					HandStateObservable.getInstance().setX(x);
+					HandStateObservable.getInstance().setY(y);
+				}
+			});
 			// System.out.println("X Position: " + intersect.getX() + " Y Position: " + intersect.getY());			
 		}
 	}

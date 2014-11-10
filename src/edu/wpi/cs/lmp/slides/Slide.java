@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import edu.wpi.cs.lmp.objects.IObject;
 import edu.wpi.cs.lmp.objects.Image;
@@ -28,11 +29,21 @@ public class Slide extends Parent {
 		background.setFitHeight(Screen.getPrimary().getVisualBounds()
 				.getHeight());
 		// this.getChildren().add(background);
-		this.addObject(new Image());
 		this.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				System.out.println("Mouse Event YAY!:");
+				List<IObject> clickedOn = getAt(event.getX(), event.getY());
+				System.out.println("Binding to: " + clickedOn.get(0));
+				clickedOn.get(0).startMove();
+			}
+		});
+		this.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				List<IObject> objects = getObjects();
+				for (IObject i : objects) {
+					i.endMove();
+				}
 			}
 		});
 	}
@@ -58,12 +69,10 @@ public class Slide extends Parent {
 		this.getChildren().remove(removeObject);
 	}
 
-	public List<IObject> getAt(Point position) {
+	public List<IObject> getAt(double x, double y) {
 		List<IObject> atList = new LinkedList<IObject>();
-		for (IObject i : atList) {
-			// TODO Fix Node cast
-			Node j = (Node) i;
-			if (j.contains(new Point2D(position.getX(), position.getY()))) {
+		for (IObject i : children) {
+			if (i.inBounds(x, y)) {
 				atList.add(i);
 			}
 		}

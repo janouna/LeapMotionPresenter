@@ -58,6 +58,7 @@ public class LeapToolBarGroup extends VBox {
 		
 		// Set add bar button controls
 		addBar.getButton("Image").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Image"), addBar, this, ObjectType.IMAGE));
+		addBar.getButton("Video").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Video"), addBar, this, ObjectType.VIDEO));
 
 	}
 

@@ -11,6 +11,11 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -49,7 +54,6 @@ public class LeapMotionPresenter extends Application {
 		c.addListener(handController);
 		
 		slide = SlideManager.getInstance().getCurrentSlide();
-		StackPane.setAlignment(slide, Pos.TOP_LEFT);
 		root.getChildren().add(slide);
 
 		// Leap UI toolbar
@@ -71,6 +75,16 @@ public class LeapMotionPresenter extends Application {
 		// icon based on state (Open palm, closed palm, finger pointed, etc)
 		javafx.scene.image.Image handCursor = new javafx.scene.image.Image("file:hand_cursor.png");
 		scene.setCursor(new ImageCursor(handCursor));
+		
+		String content_Url = "<iframe width=\"560\" height=\"315\" src=\"http://www.youtube.com/embed/C0DPdy98e4c\" frameborder=\"0\" allowfullscreen></iframe>";
+		
+		 WebView webView = new WebView();
+	     WebEngine webEngine = webView.getEngine();
+	     webEngine.loadContent(content_Url);
+	     webView.setPrefHeight(315);
+	     webView.setPrefWidth(560);
+		
+		// root.getChildren().add(webView);
 
 		scene.getStylesheets().add("file:stylesheet.css");
 		stage.setScene(scene);
