@@ -1,3 +1,5 @@
+package edu.wpi.cs.lmp.leap;
+
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -11,23 +13,20 @@ import com.leapmotion.leap.GestureList;
 import com.leapmotion.leap.HandList;
 import com.leapmotion.leap.Listener;
 
+import edu.wpi.cs.lmp.objects.IObject;
+
 /**
  * 
  * @author johan Modified to track multiple hands
  */
 public class ResizeListener extends Listener {
 
-	public final static int SCREEN_HEIGHT = 1080;
-	public final static int SCREEN_WIDTH = 1920;
-
-	int cnt = 0;
-	long start = 0;
-	private final LeapConcepts app;
+	private IObject obj;
 	private boolean isResizing = false;
 	private double initialSpace = 0;
 
-	public ResizeListener(LeapConcepts main) {
-		this.app = main;
+	public ResizeListener() {
+		this.obj = null;
 	}
 
 	@Override
@@ -65,7 +64,9 @@ public class ResizeListener extends Listener {
 
 				@Override
 				public void run() {
-					app.resizeImage(percentageChange);
+					if (obj != null) {
+						obj.resize(percentageChange);
+					}
 				}
 
 			});
@@ -82,6 +83,7 @@ public class ResizeListener extends Listener {
 		 * gesture, more fingers you have open the greater the change. Makes
 		 * this a lot more feasible
 		 */
+		/*
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -89,12 +91,18 @@ public class ResizeListener extends Listener {
 					for (int i = 0; i < gestures.count(); i++) {
 						switch (gestures.get(i).type()) {
 						case TYPE_CIRCLE:
-							CircleGesture circle = new CircleGesture(gestures.get(i));
-							if (circle.pointable().direction().angleTo(circle.normal()) <= Math.PI / 2) {
+							CircleGesture circle = new CircleGesture(gestures
+									.get(i));
+							if (circle.pointable().direction()
+									.angleTo(circle.normal()) <= Math.PI / 2) {
 								// Clockwise if angle is less than 90 degrees
-								app.resizeImage(101);
+								if (obj != null) {
+									obj.resize(101);
+								}
 							} else {
-								app.resizeImage(99);
+								if (obj != null) {
+									obj.resize(99);
+								}
 							}
 							break;
 						}
@@ -102,29 +110,10 @@ public class ResizeListener extends Listener {
 				}
 			}
 		});
-
-		// float f = frame.currentFramesPerSecond();
-		// // System.out.println("got frame! "+controller.frame());
-		// double tot = 12;
-		// String msg = "";
-		// long n = System.currentTimeMillis();
-		// for (int i = 0; i < 3000; i++) {
-		// double d = Math.random() * i;
-		// tot = tot + d;
-		// String u = UUID.randomUUID().toString();
-		// msg = msg + u;
-		// }
-		// long m = System.currentTimeMillis();
-		// System.out.println("TIME = "+(m-n));
-		// if (start == 0) {
-		// start = System.currentTimeMillis();
-		// }
-		// cnt++;
-		// if (cnt%100==0) {
-		// long now = System.currentTimeMillis();
-		// double rate = (double)cnt/(now - start);
-		// System.out.println("rate = "+rate+" -- "+f);
-		// }
-		//
+		*/
+	}
+	
+	public void setIObject(IObject obj) {
+		this.obj = obj;
 	}
 }

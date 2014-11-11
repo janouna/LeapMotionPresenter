@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.leapmotion.leap.Controller;
+
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -13,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
+import edu.wpi.cs.lmp.leap.ResizeListener;
 import edu.wpi.cs.lmp.objects.IObject;
 import edu.wpi.cs.lmp.objects.Image;
 
@@ -20,8 +23,13 @@ public class Slide extends Parent {
 
 	private List<IObject> children;
 	private ImageView background;
+	private ResizeListener resizer;
+	private Controller c;
 
 	public Slide() {
+		c = new Controller();
+		resizer = new ResizeListener();
+		c.addListener(resizer);
 		children = new ArrayList<IObject>();
 		background = new ImageView();
 		background
@@ -29,6 +37,7 @@ public class Slide extends Parent {
 		background.setFitHeight(Screen.getPrimary().getVisualBounds()
 				.getHeight());
 		// this.getChildren().add(background);
+		// Bind on click
 		this.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -37,6 +46,7 @@ public class Slide extends Parent {
 				clickedOn.get(0).startMove();
 			}
 		});
+		// Unbind on release
 		this.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -44,6 +54,21 @@ public class Slide extends Parent {
 				for (IObject i : objects) {
 					i.endMove();
 				}
+			}
+		});
+		// Bind resizer to object the cursor is ontop of
+		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				List<IObject> mouseOver = getAt(event.getX(), event.getY());
+				resizer.setIObject(mouseOver.get(0));
+			}
+		});
+		// Unbind resizer as cursor is not on anything
+		this.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				resizer.setIObject(null);
 			}
 		});
 	}

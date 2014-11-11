@@ -43,6 +43,8 @@ public class Image extends ImageView implements IObject {
 
 	@Override
 	public void startMove() {
+		instance.layoutXProperty().set(-instance.getX());
+		instance.layoutYProperty().set(-instance.getY());
 		this.translateXProperty().bind(HandStateObservable.getInstance().getObservableX());
 		this.translateYProperty().bind(HandStateObservable.getInstance().getObservableY());
 		imgX.bind(HandStateObservable.getInstance().getObservableX());
@@ -55,8 +57,6 @@ public class Image extends ImageView implements IObject {
 		this.translateYProperty().unbind();
 		imgX.unbind();
 		imgY.unbind();
-		System.out.println(imgX.doubleValue());
-		System.out.println(imgY.doubleValue());
 	}
 
 	@Override

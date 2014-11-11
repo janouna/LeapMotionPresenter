@@ -1,7 +1,6 @@
 package edu.wpi.cs.lmp.objects;
 
 import edu.wpi.cs.lmp.leap.HandStateObservable;
-import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.media.Media;
@@ -12,6 +11,9 @@ public class Video extends MediaView implements IObject {
 	
 	private DoubleProperty vidWidth;
 	private DoubleProperty vidHeight;
+	
+	private DoubleProperty vidX;
+	private DoubleProperty vidY;
 	
 	// Video source
 	private Media media;
@@ -33,6 +35,8 @@ public class Video extends MediaView implements IObject {
 			public void run() {
 				vidWidth = new SimpleDoubleProperty(mediaPlayer.getMedia().getWidth());
 				vidHeight = new SimpleDoubleProperty(mediaPlayer.getMedia().getHeight());
+				vidX = new SimpleDoubleProperty(instance.getX());
+				vidY = new SimpleDoubleProperty(instance.getY());
 				instance.fitWidthProperty().bind(vidWidth);
 				instance.fitHeightProperty().bind(vidHeight);
 				System.out.println(instance.getFitWidth());
@@ -42,14 +46,20 @@ public class Video extends MediaView implements IObject {
 
 	@Override
 	public void startMove() {
+		instance.layoutXProperty().set(-instance.getX());
+		instance.layoutYProperty().set(-instance.getY());
 		this.translateXProperty().bind(HandStateObservable.getInstance().getObservableX());
 		this.translateYProperty().bind(HandStateObservable.getInstance().getObservableY());
+		vidX.bind(HandStateObservable.getInstance().getObservableX());
+		vidY.bind(HandStateObservable.getInstance().getObservableY());
 	}
 
 	@Override
 	public void endMove() {
 		this.translateXProperty().unbind();
 		this.translateYProperty().unbind();
+		vidX.unbind();
+		vidY.unbind();
 	}
 
 	@Override
@@ -60,8 +70,8 @@ public class Video extends MediaView implements IObject {
 	
 	@Override
 	public boolean inBounds(double x, double y) {
-		double xPos = this.getX();
-		double yPos = this.getY();
+		double xPos = vidX.doubleValue();
+		double yPos = vidY.doubleValue();
 		double width = vidWidth.doubleValue();
 		double height = vidHeight.doubleValue();
 		
