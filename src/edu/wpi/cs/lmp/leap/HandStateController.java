@@ -27,7 +27,7 @@ public class HandStateController extends Listener {
 		final FingerList fingers = frame.fingers();
 		final HandList hands = frame.hands();
 
-		if (!hands.isEmpty()) {
+		if (hands.count() == 1) {
 			Hand thisHand = hands.get(0);
 			if (thisHand.isValid() && thisHand.sphereRadius() <= 50
 					&& fingers.extended().isEmpty()) {

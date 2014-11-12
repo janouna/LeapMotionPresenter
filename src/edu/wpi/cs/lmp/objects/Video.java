@@ -15,6 +15,8 @@ public class Video extends MediaView implements IObject {
 	private DoubleProperty vidX;
 	private DoubleProperty vidY;
 	
+	private boolean isPlaying;
+	
 	// Video source
 	private Media media;
 	// Controls for the video
@@ -24,10 +26,11 @@ public class Video extends MediaView implements IObject {
 	
 	public Video () {
 		super();
-		instance = this;		
+		instance = this;
+		isPlaying = false;
+		// Modify the media variable to take in desired URL or FILE
 		media = new Media("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
 		mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.play();
 		this.setMediaPlayer(mediaPlayer);
 		
 		mediaPlayer.setOnReady(new Runnable() {
@@ -77,6 +80,17 @@ public class Video extends MediaView implements IObject {
 		
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
 		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
+	}
+	
+	@Override
+	public void onScreenTap() {
+		if (isPlaying) {
+			mediaPlayer.pause();
+			isPlaying = false;
+		} else {
+			mediaPlayer.play();
+			isPlaying = true;
+		}
 	}
 
 }

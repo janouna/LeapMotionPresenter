@@ -33,7 +33,8 @@ public class ResizeListener extends Listener {
 	public void onConnect(Controller controller) {
 		// Enable the gestures you intend to use onConnect
 		controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
-		System.out.println("connected");
+		controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
+		System.out.println("connected: Resize/Gesture Listener");
 	}
 
 	@Override
@@ -83,13 +84,13 @@ public class ResizeListener extends Listener {
 		 * gesture, more fingers you have open the greater the change. Makes
 		 * this a lot more feasible
 		 */
-		/*
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
 				if (!gestures.isEmpty()) {
 					for (int i = 0; i < gestures.count(); i++) {
 						switch (gestures.get(i).type()) {
+						/*
 						case TYPE_CIRCLE:
 							CircleGesture circle = new CircleGesture(gestures
 									.get(i));
@@ -105,12 +106,17 @@ public class ResizeListener extends Listener {
 								}
 							}
 							break;
+						*/
+						case TYPE_SCREEN_TAP:
+							if (obj != null) {
+								obj.onScreenTap();
+							}
+							break;
 						}
 					}
 				}
 			}
 		});
-		*/
 	}
 	
 	public void setIObject(IObject obj) {

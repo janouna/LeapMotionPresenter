@@ -66,12 +66,13 @@ public class Image extends ImageView implements IObject {
 		double width = imgWidth.doubleValue();
 		double height = imgHeight.doubleValue();
 		
-		System.out.println(xPos);
-		System.out.println(yPos);
-		
-		
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
 		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
+	}
+	
+	@Override
+	public void onScreenTap() {
+		
 	}
 
 }

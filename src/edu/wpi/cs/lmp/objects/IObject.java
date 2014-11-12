@@ -6,5 +6,6 @@ public interface IObject {
 	void resize(double percentChange);
 	void setX(double x);
 	void setY(double y);
+	void onScreenTap();
 	boolean inBounds(double x, double y);
 }

@@ -48,5 +48,10 @@ public class TextBox extends Text implements IObject {
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
 		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
 	}
+	
+	@Override
+	public void onScreenTap() {
+		
+	}
 
 }

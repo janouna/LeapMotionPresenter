@@ -54,6 +54,7 @@ public class LeapMotionPresenter extends Application {
 		c.addListener(handController);
 		
 		slide = SlideManager.getInstance().getCurrentSlide();
+		StackPane.setAlignment(slide, Pos.CENTER);
 		root.getChildren().add(slide);
 
 		// Leap UI toolbar
