@@ -32,12 +32,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 
 import com.leapmotion.leap.Controller;
 // import com.sun.glass.ui.Cursor;
+
 
 
 import edu.wpi.cs.lmp.leap.MouseController;
@@ -84,10 +86,9 @@ public class RadialOptionsMenuDemo extends Application {
 		radialMenu.setTranslateY(1080/2);
 		container.getChildren().addAll(radialMenu);
 		// Mouse controlling
-		/*
+		
 		c = new Controller();
-		mouseController = new MouseController();
-		*/
+		mouseController = new MouseController(Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
 		c.addListener(mouseController);
 		
 		Image handCursor = new Image("file:hand_cursor.png");
