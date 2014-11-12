@@ -1,11 +1,14 @@
 package edu.wpi.cs.lmp.objects;
 
+import java.io.File;
+
 import edu.wpi.cs.lmp.leap.HandStateObservable;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.util.Duration;
 
 public class Video extends MediaView implements IObject {
 	
@@ -29,7 +32,7 @@ public class Video extends MediaView implements IObject {
 		instance = this;
 		isPlaying = false;
 		// Modify the media variable to take in desired URL or FILE
-		media = new Media("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
+		media = new Media(new File("big_buck_bunny.mp4").toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
 		this.setMediaPlayer(mediaPlayer);
 		
@@ -91,6 +94,11 @@ public class Video extends MediaView implements IObject {
 			mediaPlayer.play();
 			isPlaying = true;
 		}
+	}
+	
+	@Override
+	public void onCounterCircle() {
+		mediaPlayer.seek(Duration.ZERO);
 	}
 
 }

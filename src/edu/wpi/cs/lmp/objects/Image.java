@@ -75,4 +75,10 @@ public class Image extends ImageView implements IObject {
 		
 	}
 
+	@Override
+	public void onCounterCircle() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

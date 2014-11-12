@@ -54,4 +54,10 @@ public class TextBox extends Text implements IObject {
 		
 	}
 
+	@Override
+	public void onCounterCircle() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

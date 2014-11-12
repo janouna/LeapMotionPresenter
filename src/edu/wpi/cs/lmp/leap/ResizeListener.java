@@ -97,7 +97,6 @@ public class ResizeListener extends Listener {
 				if (!gestures.isEmpty()) {
 					for (int i = 0; i < gestures.count(); i++) {
 						switch (gestures.get(i).type()) {
-						/*
 						case TYPE_CIRCLE:
 							CircleGesture circle = new CircleGesture(gestures
 									.get(i));
@@ -105,15 +104,16 @@ public class ResizeListener extends Listener {
 									.angleTo(circle.normal()) <= Math.PI / 2) {
 								// Clockwise if angle is less than 90 degrees
 								if (obj != null) {
-									obj.resize(101);
+									//obj.resize(101);
 								}
 							} else {
-								if (obj != null) {
-									obj.resize(99);
+								// Testing acceptable circle
+								if (obj != null && circle.durationSeconds() >= 0.5) {
+									//obj.resize(99);
+									obj.onCounterCircle();
 								}
 							}
 							break;
-						*/
 						case TYPE_SCREEN_TAP:
 							if (obj != null) {
 								obj.onScreenTap();

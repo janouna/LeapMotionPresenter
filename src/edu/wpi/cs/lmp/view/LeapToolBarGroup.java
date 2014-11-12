@@ -36,6 +36,9 @@ public class LeapToolBarGroup extends VBox {
 			public void handle(MouseEvent arg0) {
 				if (mainBar.isHidden()) {
 					mainBar.transitionIn();
+				} else {
+					instance.removeMenuAbove(mainBar.getMenuLevel());
+					mainBar.unselectAllButton();
 				}
 			}
 		});

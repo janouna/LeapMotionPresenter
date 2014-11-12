@@ -15,6 +15,7 @@ public class LeapToolBarObjectCreator extends LeapToolBarSelectedHandler {
 	public LeapToolBarObjectCreator(ToggleButton mousedButton,
 			LeapToolBar mousedBar, LeapToolBarGroup container, ObjectType object) {
 		super(mousedButton, mousedBar);
+		setSelection = false;
 		this.object = object;
 		this.container = container;
 	}

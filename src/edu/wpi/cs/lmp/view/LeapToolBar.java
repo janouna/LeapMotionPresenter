@@ -148,9 +148,13 @@ public class LeapToolBar extends HBox {
 	}
 	
 	public void unselectAllButton() {
-		for (int i=0; i < this.getAllButton().size(); i++) {
-			this.getAllButton().get(i).setSelected(false);
+		for (int i = 0; i < buttonBar.getChildren().size(); i++) {
+			ToggleButton thisButton = (ToggleButton) buttonBar.getChildren()
+					.get(i);
+			System.out.println("BUTTON OFF: " + thisButton.getText());
+			thisButton.setSelected(false);
 		}
+
 	}
 
 	public boolean isHidden() {

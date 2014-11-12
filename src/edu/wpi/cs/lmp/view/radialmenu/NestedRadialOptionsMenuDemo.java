@@ -86,7 +86,7 @@ public class NestedRadialOptionsMenuDemo extends RadialOptionsMenuDemo {
 		final double centerClosedRadius = 28;
 		final double centerOpenedRadius = 40;
 
-		final String[] menus = new String[] { "File, Add, Present, Exit" };
+		final String[] menus = new String[] { "File", "Add", "Present", "Exit" };
 		HashMap<String, List<String>> nestedItems = new HashMap<String, List<String>>();
 		nestedItems.put("File", Arrays.asList((new String[] {"Open, Save, Save As, Close"})));
 		nestedItems.put("Add", Arrays.asList((new String[] {"Text, Image, Video"})));

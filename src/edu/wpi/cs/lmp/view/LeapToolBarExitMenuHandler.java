@@ -10,6 +10,7 @@ public class LeapToolBarExitMenuHandler extends LeapToolBarSelectedHandler {
 	public LeapToolBarExitMenuHandler(ToggleButton mousedNode,
 			LeapToolBarGroup container, LeapToolBar mousedBar) {
 		super(mousedNode, mousedBar);
+		setSelection = false;
 		this.container = container;
 	}
 
