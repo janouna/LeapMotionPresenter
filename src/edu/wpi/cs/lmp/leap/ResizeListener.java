@@ -52,10 +52,17 @@ public class ResizeListener extends Listener {
 			double xPos1 = hands.get(0).fingers().get(0).tipPosition().getX();
 			double xPos2 = hands.get(1).fingers().get(0).tipPosition().getX();
 
+			double initXPos1 = 0;
+			double initXPos2 = 0;
+
 			// Wasn't resizing before, new initial space needed
 			if (!isResizing) {
 				initialSpace = Math.abs(xPos2 - xPos1);
+				initXPos1 = xPos1;
+				initXPos2 = xPos2;
+				
 			}
+			//double newSize = Math.abs(Math.abs(((initXPos2 - xPos2)/2.0) + xPos2) - ((initXPos1 - xPos1)/2.0) + xPos1);
 			double newSize = Math.abs(xPos2 - xPos1);
 
 			final double percentageChange = (newSize * 100) / initialSpace;

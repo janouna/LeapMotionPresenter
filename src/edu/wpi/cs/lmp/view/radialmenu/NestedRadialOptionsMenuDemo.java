@@ -19,6 +19,11 @@ package edu.wpi.cs.lmp.view.radialmenu;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
@@ -42,9 +47,14 @@ import com.leapmotion.leap.Controller;
 
 
 
+
+
+
+
+
 import edu.wpi.cs.lmp.leap.MouseController;
 
-public class RadialOptionsMenuDemo extends Application {
+public class NestedRadialOptionsMenuDemo extends RadialOptionsMenuDemo {
 	
 	Controller c;
 	MouseController mouseController;
@@ -76,10 +86,14 @@ public class RadialOptionsMenuDemo extends Application {
 		final double centerClosedRadius = 28;
 		final double centerOpenedRadius = 40;
 
-		final String[] menus = new String[] { "DOWLOADS", "SYNOPSIS", "VIDEO",
-				"PHOTO", "GAME", "CAST & CREW" };
+		final String[] menus = new String[] { "File, Add, Present, Exit" };
+		HashMap<String, List<String>> nestedItems = new HashMap<String, List<String>>();
+		nestedItems.put("File", Arrays.asList((new String[] {"Open, Save, Save As, Close"})));
+		nestedItems.put("Add", Arrays.asList((new String[] {"Text, Image, Video"})));
+		nestedItems.put("Present", new ArrayList<String>());
+		nestedItems.put("Exit", new ArrayList<String>());
 
-		radialMenu = new RadialOptionsMenu(this, menus, itemInnerRadius, itemRadius,
+		radialMenu = new NestedRadialOptionsMenu(this, menus, nestedItems, itemInnerRadius, itemRadius,
 				centerClosedRadius, centerOpenedRadius);
 
 		radialMenu.setTranslateX(1920/2);
@@ -112,7 +126,7 @@ public class RadialOptionsMenuDemo extends Application {
 			public void handle(final KeyEvent event) {
 				System.out.println(event);
 				if (event.getCode() == KeyCode.F5) {
-					RadialOptionsMenuDemo.this.takeSnapshot(scene);
+					NestedRadialOptionsMenuDemo.this.takeSnapshot(scene);
 				}
 			}
 		});
