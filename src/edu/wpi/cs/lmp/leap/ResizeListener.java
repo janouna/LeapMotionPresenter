@@ -23,6 +23,7 @@ public class ResizeListener extends Listener {
 
 	private IObject obj;
 	private boolean isResizing = false;
+	private boolean unbindRequest = false;
 	private double initialSpace = 0;
 
 	public ResizeListener() {
@@ -52,6 +53,9 @@ public class ResizeListener extends Listener {
 			double xPos1 = hands.get(0).fingers().get(0).tipPosition().getX();
 			double xPos2 = hands.get(1).fingers().get(0).tipPosition().getX();
 
+			double zPos1 = hands.get(0).fingers().get(0).tipPosition().getZ();
+			double zPos2 = hands.get(1).fingers().get(0).tipPosition().getZ();
+
 			double initXPos1 = 0;
 			double initXPos2 = 0;
 
@@ -60,29 +64,36 @@ public class ResizeListener extends Listener {
 				initialSpace = Math.abs(xPos2 - xPos1);
 				initXPos1 = xPos1;
 				initXPos2 = xPos2;
-				
+
 			}
-			//double newSize = Math.abs(Math.abs(((initXPos2 - xPos2)/2.0) + xPos2) - ((initXPos1 - xPos1)/2.0) + xPos1);
-			double newSize = Math.abs(xPos2 - xPos1);
+			
+			if (Math.abs(zPos2 - zPos1) <= 30) {
+				// double newSize = Math.abs(Math.abs(((initXPos2 - xPos2)/2.0)
+				// + xPos2) - ((initXPos1 - xPos1)/2.0) + xPos1);
+				double newSize = Math.abs(xPos2 - xPos1);
 
-			final double percentageChange = (newSize * 100) / initialSpace;
-			isResizing = true;
+				final double percentageChange = (newSize * 100) / initialSpace;
+				isResizing = true;
 
-			Platform.runLater(new Runnable() {
+				Platform.runLater(new Runnable() {
 
-				@Override
-				public void run() {
-					if (obj != null) {
-						obj.resize(percentageChange);
+					@Override
+					public void run() {
+						if (obj != null) {
+							obj.resize(percentageChange);
+						}
 					}
-				}
 
-			});
+				});
 
-			initialSpace = newSize;
+				initialSpace = newSize;
+			}
 
 		} else {
 			isResizing = false;
+			if (unbindRequest) {
+				setIObject(null);
+			}
 		}
 
 		// Implementing circle gesture for resizing
@@ -104,12 +115,13 @@ public class ResizeListener extends Listener {
 									.angleTo(circle.normal()) <= Math.PI / 2) {
 								// Clockwise if angle is less than 90 degrees
 								if (obj != null) {
-									//obj.resize(101);
+									// obj.resize(101);
 								}
 							} else {
 								// Testing acceptable circle
-								if (obj != null && circle.durationSeconds() >= 0.5) {
-									//obj.resize(99);
+								if (obj != null
+										&& circle.durationSeconds() >= 0.5) {
+									// obj.resize(99);
 									obj.onCounterCircle();
 								}
 							}
@@ -125,8 +137,19 @@ public class ResizeListener extends Listener {
 			}
 		});
 	}
-	
+
 	public void setIObject(IObject obj) {
-		this.obj = obj;
+		if (!isResizing && obj == null) {
+			// Not resizing, unbin object
+			unbindRequest = false;
+			this.obj = obj;
+		} else if (isResizing && obj == null) {
+			// Currently resizing, set object to null when finished
+			// unbindRequest is checked onFrame
+			unbindRequest = true;
+		} else {
+			unbindRequest = false;
+			this.obj = obj;
+		}
 	}
 }
