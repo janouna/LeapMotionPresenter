@@ -1,9 +1,11 @@
-package edu.wpi.cs.lmp.view;
+package edu.wpi.cs.lmp.view.controller;
 
 import edu.wpi.cs.lmp.objects.IObject;
 import edu.wpi.cs.lmp.objects.ObjectFactory;
 import edu.wpi.cs.lmp.objects.ObjectType;
 import edu.wpi.cs.lmp.slides.SlideManager;
+import edu.wpi.cs.lmp.view.LeapToolBar;
+import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 

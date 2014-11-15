@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.cs.lmp.objects.ObjectType;
+import edu.wpi.cs.lmp.view.controller.LeapToolBarExitMenuHandler;
+import edu.wpi.cs.lmp.view.controller.LeapToolBarObjectCreator;
+import edu.wpi.cs.lmp.view.controller.LeapToolBarSubMenuHandler;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;

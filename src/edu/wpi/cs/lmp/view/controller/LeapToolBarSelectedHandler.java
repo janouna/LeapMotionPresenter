@@ -1,5 +1,6 @@
-package edu.wpi.cs.lmp.view;
+package edu.wpi.cs.lmp.view.controller;
 
+import edu.wpi.cs.lmp.view.LeapToolBar;
 import javafx.event.EventHandler;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
