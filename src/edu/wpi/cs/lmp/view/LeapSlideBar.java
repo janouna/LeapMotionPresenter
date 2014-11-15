@@ -7,6 +7,7 @@ import edu.wpi.cs.lmp.objects.ObjectType;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.animation.TranslateTransitionBuilder;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
@@ -53,6 +54,8 @@ public class LeapSlideBar extends VBox {
 		// Do all the VBox standard stuff and set the sizes
 		super();
 		instance = this;
+		
+		// Positioning		
 		this.setPrefHeight(Control.USE_COMPUTED_SIZE);
 		this.setMaxHeight(Control.USE_PREF_SIZE);
 		this.getStyleClass().add("leap-tool-bar");
@@ -107,7 +110,6 @@ public class LeapSlideBar extends VBox {
 					instance.transitionIn();
 				} else {
 					instance.transitionOut();
-					//instance.unselectAllButton();
 				}
 			}
 		});
@@ -148,6 +150,18 @@ public class LeapSlideBar extends VBox {
 		image.setFitHeight(Screen.getPrimary().getVisualBounds().getWidth()*THUMBNAIL_HEIGHT);
 		thumbnail.setGraphic(image);
 		slideContainer.getChildren().add(thumbnail);
+		
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				double screen_height = Screen.getPrimary().getVisualBounds().getHeight();
+				instance.setTranslateY(screen_height - instance.getLayoutBounds().getHeight());
+				animationIn.setFromY(screen_height);
+				animationIn.setToY(screen_height - instance.getLayoutBounds().getHeight());
+				animationOut.setToY(screen_height);
+				animationOut.setFromY(screen_height - instance.getLayoutBounds().getHeight());
+				}
+		});
 	}
 
 	public void transitionIn() {
@@ -176,16 +190,6 @@ public class LeapSlideBar extends VBox {
 		}
 		return buttons;
 	}
-
-	//	public void unselectAllButton() {
-	//		for (int i = 0; i < buttonBar.getChildren().size(); i++) {
-	//			ToggleButton thisButton = (ToggleButton) buttonBar.getChildren()
-	//					.get(i);
-	//			System.out.println("BUTTON OFF: " + thisButton.getText());
-	//			thisButton.setSelected(false);
-	//		}
-	//
-	//	}
 
 	public boolean isHidden() {
 		return isHidden;

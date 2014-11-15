@@ -54,19 +54,15 @@ public class LeapMotionPresenter extends Application {
 		c.addListener(handController);
 		
 		slide = SlideManager.getInstance().getCurrentSlide();
-		StackPane.setAlignment(slide, Pos.CENTER);
 		root.getChildren().add(slide);
 
 		// Leap UI toolbar
 		final LeapToolBarGroup topBar = new LeapToolBarGroup();
 		root.getChildren().add(topBar);
-		StackPane.setAlignment(topBar, Pos.TOP_CENTER);
-		/*
+		
 		// Leap UI slides bar
 		final LeapSlideBar bottomBar = new LeapSlideBar();
 		root.getChildren().add(bottomBar);
-		StackPane.setAlignment(bottomBar, Pos.BOTTOM_CENTER);
-		*/
 
 		// Scene building
 		Scene scene = new Scene(root, Screen.getPrimary().getVisualBounds()

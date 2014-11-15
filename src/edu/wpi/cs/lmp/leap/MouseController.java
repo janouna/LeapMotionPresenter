@@ -113,11 +113,11 @@ public class MouseController extends Listener {
 			final Hand thisHand = hands.rightmost();
 			Vector intersect = screen.normalizePoint(thisHand
 					.stabilizedPalmPosition());
-			Vector unstableIntersect = screen.normalizePoint(thisHand.palmPosition());
+			// Vector unstableIntersect = screen.normalizePoint(thisHand.palmPosition());
 			
 			final double x = intersect.getX() * SCREEN_WIDTH;
-			// final double y = (1 - intersect.getY()) * SCREEN_HEIGHT;
-			final double y = unstableIntersect.getZ() * SCREEN_HEIGHT;
+			final double y = (1 - intersect.getY()) * SCREEN_HEIGHT;
+			// final double y = unstableIntersect.getZ() * SCREEN_HEIGHT;
 
 			mouse.mouseMove((int) x, (int) y);
 			Platform.runLater(new Runnable() {
