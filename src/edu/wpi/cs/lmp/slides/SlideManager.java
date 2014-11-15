@@ -47,8 +47,18 @@ public class SlideManager {
 		slides.add(new Slide());
 	}
 	
+	public void addSlide(int i){
+		slides.add(i, new Slide());
+	}
+	
 	public void removeSlide(int i) {
 		slides.remove(i);
+	}
+	
+	public void moveSlide(int from, int to){
+		Slide temp = slides.get(from);
+		removeSlide(from);
+		slides.add(to, temp);
 	}
 	
 	public ListProperty<Slide> getSlidesProperty() {
