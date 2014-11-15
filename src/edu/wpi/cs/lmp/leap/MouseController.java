@@ -26,6 +26,14 @@ public class MouseController extends Listener {
 	
 	private double SCREEN_HEIGHT= 1080;
 	private double SCREEN_WIDTH = 1920;
+	
+	private static final float HEIGHT_BOTTOM_CLAMP = 0.2f;
+	private static final float HEIGHT_TOP_CLAMP = 0.8f;
+	
+	private static final float WIDTH_LEFT_CLAMP = 0.2f;
+	private static final float WIDTH_RIGHT_CLAMP = 0.8f;
+
+	
 	private Robot mouse;
 
 	public MouseController(double width, double height) {
@@ -102,12 +110,14 @@ public class MouseController extends Listener {
 		}
 		*/
 		if (!hands.isEmpty()) {
-			final Hand thisHand = hands.get(0);
+			final Hand thisHand = hands.rightmost();
 			Vector intersect = screen.normalizePoint(thisHand
 					.stabilizedPalmPosition());
+			Vector unstableIntersect = screen.normalizePoint(thisHand.palmPosition());
 			
 			final double x = intersect.getX() * SCREEN_WIDTH;
-			final double y = (1 - intersect.getY()) * SCREEN_HEIGHT;
+			// final double y = (1 - intersect.getY()) * SCREEN_HEIGHT;
+			final double y = unstableIntersect.getZ() * SCREEN_HEIGHT;
 
 			mouse.mouseMove((int) x, (int) y);
 			Platform.runLater(new Runnable() {

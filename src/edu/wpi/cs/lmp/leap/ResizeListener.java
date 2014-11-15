@@ -58,16 +58,18 @@ public class ResizeListener extends Listener {
 
 			double initXPos1 = 0;
 			double initXPos2 = 0;
-
-			// Wasn't resizing before, new initial space needed
-			if (!isResizing) {
-				initialSpace = Math.abs(xPos2 - xPos1);
-				initXPos1 = xPos1;
-				initXPos2 = xPos2;
-
-			}
 			
+			// Check if the fingers are aligned closely enough to begin resizing
 			if (Math.abs(zPos2 - zPos1) <= 30) {
+				
+				// Wasn't resizing before, new initial space needed
+				if (!isResizing) {
+					initialSpace = Math.abs(xPos2 - xPos1);
+					initXPos1 = xPos1;
+					initXPos2 = xPos2;
+
+				}
+				
 				// double newSize = Math.abs(Math.abs(((initXPos2 - xPos2)/2.0)
 				// + xPos2) - ((initXPos1 - xPos1)/2.0) + xPos1);
 				double newSize = Math.abs(xPos2 - xPos1);
@@ -87,9 +89,13 @@ public class ResizeListener extends Listener {
 				});
 
 				initialSpace = newSize;
+			} else {
+				// Two hand count is there, but not aligned therefore not resizing
+				isResizing = false;
 			}
 
 		} else {
+			// Second hand is gone, resizing is done.
 			isResizing = false;
 			if (unbindRequest) {
 				setIObject(null);

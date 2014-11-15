@@ -29,8 +29,7 @@ public class HandStateController extends Listener {
 
 		if (hands.count() == 1) {
 			Hand thisHand = hands.get(0);
-			if (thisHand.isValid() && thisHand.sphereRadius() <= 50
-					&& fingers.extended().isEmpty()) {
+			if (thisHand.isValid() && thisHand.grabStrength() >= 0.7) {
 				// The hand should be considered closed, change the state
 				if (!HandStateObservable.getInstance().get().equals(HandState.CLOSED)) {
 					// handState.set(HandState.CLOSED);
