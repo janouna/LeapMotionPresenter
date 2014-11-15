@@ -6,6 +6,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class SlideManager {
 	
@@ -15,7 +17,8 @@ public class SlideManager {
 	
 	private SlideManager() {
 		currentSlide = new SimpleIntegerProperty(0);
-		slides = new SimpleListProperty<Slide>();
+		ObservableList<Slide> observableList = FXCollections.observableArrayList();
+		slides = new SimpleListProperty<Slide>(observableList);
 		slides.add(new Slide());
 	}
 	

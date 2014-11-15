@@ -6,6 +6,7 @@ import java.util.List;
 import edu.wpi.cs.lmp.objects.ObjectType;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarExitMenuHandler;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarObjectCreator;
+import edu.wpi.cs.lmp.view.controller.LeapToolBarSlideCreator;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSubMenuHandler;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -48,7 +49,7 @@ public class LeapToolBarGroup extends VBox {
 
 		// Instantiate other bars
 		addBar = new LeapToolBar(new String[] { "Slide", "Text", "Image",
-				"Video", "Pollice" }, 1, false);
+				"Video" }, 1, false);
 		fileBar = new LeapToolBar(new String[] { "Open", "Save", "Save As",
 				"Exit" }, 1, false);
 		this.getChildren().add(mainBar);
@@ -65,6 +66,8 @@ public class LeapToolBarGroup extends VBox {
 		// Set add bar button controls
 		addBar.getButton("Image").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Image"), addBar, this, ObjectType.IMAGE));
 		addBar.getButton("Video").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Video"), addBar, this, ObjectType.VIDEO));
+		addBar.getButton("Slide").setOnMouseExited(new LeapToolBarSlideCreator(addBar.getButton("Slide"), addBar, this));
+
 
 	}
 
