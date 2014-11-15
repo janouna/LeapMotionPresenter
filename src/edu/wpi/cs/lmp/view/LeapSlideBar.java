@@ -51,6 +51,10 @@ public class LeapSlideBar extends VBox {
 	private boolean isHidden;
 
 	public LeapSlideBar() {
+		// TODO Make helper methods.
+		// TODO Slide buttons
+		// TODO Display Slides properly
+		
 		// Do all the VBox standard stuff and set the sizes
 		super();
 		instance = this;
