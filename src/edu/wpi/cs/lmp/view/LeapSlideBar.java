@@ -172,7 +172,8 @@ public class LeapSlideBar extends VBox {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				double screen_height = Screen.getPrimary().getVisualBounds().getHeight();
+				double screen_height = Screen.getPrimary().getBounds().getHeight();
+				System.out.println(screen_height);
 				instance.setTranslateY(screen_height);
 				animationIn.setFromY(screen_height);
 				animationIn.setToY(screen_height - instance.getLayoutBounds().getHeight());
