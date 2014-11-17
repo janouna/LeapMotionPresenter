@@ -93,10 +93,10 @@ public class LeapSlideBar extends VBox {
 		slideGroupContainer.getChildren().add(slideContainer);
 		
 		forward = new Button(">");
-		forward.setPrefHeight(Screen.getPrimary().getVisualBounds().getWidth()*THUMBNAIL_HEIGHT);
+		forward.setPrefHeight(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_HEIGHT);
 		back = new Button("<");
-		back.setPrefHeight(Screen.getPrimary().getVisualBounds().getWidth()*THUMBNAIL_HEIGHT);
-		slideControlContainer.setPrefWidth(Screen.getPrimary().getVisualBounds().getWidth());
+		back.setPrefHeight(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_HEIGHT);
+		slideControlContainer.setPrefWidth(Screen.getPrimary().getBounds().getWidth());
 
 		slideControlContainer.getChildren().addAll(back, slideGroupContainer,
 				forward);
@@ -162,8 +162,8 @@ public class LeapSlideBar extends VBox {
 		// Experimenting with thumbnail sizes
 		ImageView image = new ImageView("file:example-thumb.gif");
 		Button thumbnail = new Button();
-		image.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth()*THUMBNAIL_WIDTH);
-		image.setFitHeight(Screen.getPrimary().getVisualBounds().getWidth()*THUMBNAIL_HEIGHT);
+		image.setFitWidth(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_WIDTH);
+		image.setFitHeight(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_HEIGHT);
 		thumbnail.setGraphic(image);
 		slideContainer.getChildren().add(thumbnail);
 		
