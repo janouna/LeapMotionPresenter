@@ -5,11 +5,11 @@ import java.util.List;
 
 import edu.wpi.cs.lmp.objects.ObjectType;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarExitMenuHandler;
+import edu.wpi.cs.lmp.view.controller.LeapToolBarExitProgramHandler;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarObjectCreator;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSlideCreator;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSubMenuHandler;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -19,17 +19,12 @@ public class LeapToolBarGroup extends VBox {
 
 	private LeapToolBarGroup instance;
 
-	private int activeToolBars;
 	private LeapToolBar mainBar;
 
 	private LeapToolBar fileBar;
 	private LeapToolBar addBar;
-	private LeapToolBar presentBar;
-
 	public LeapToolBarGroup() {
 		super();
-		activeToolBars = 0;
-
 		instance = this;
 
 		// Instantiate main bar and behavior
@@ -68,7 +63,7 @@ public class LeapToolBarGroup extends VBox {
 		addBar.getButton("Video").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Video"), addBar, this, ObjectType.VIDEO));
 		addBar.getButton("Slide").setOnMouseExited(new LeapToolBarSlideCreator(addBar.getButton("Slide"), addBar, this));
 
-
+		fileBar.getButton("Exit").setOnMouseExited(new LeapToolBarExitProgramHandler(fileBar.getButton("Exit"), fileBar));
 	}
 
 	public LeapToolBar getMenuAt(int level) {
@@ -110,5 +105,4 @@ public class LeapToolBarGroup extends VBox {
 		this.removeMenuAbove(0);
 		this.removeMenuAt(0);
 	}
-
 }

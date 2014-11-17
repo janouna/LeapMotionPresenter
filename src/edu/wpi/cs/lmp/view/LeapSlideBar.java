@@ -48,7 +48,6 @@ public class LeapSlideBar extends VBox {
 	private TranslateTransition animationIn;
 	private TranslateTransition animationOut;
 	private boolean isAnimating;
-	private boolean isHidden;
 
 	public LeapSlideBar() {
 		// TODO Make helper methods.
@@ -105,7 +104,6 @@ public class LeapSlideBar extends VBox {
 			@Override
 			public void handle(ActionEvent arg0) {
 				isAnimating = false;
-				instance.isHidden = false;
 			}
 		});
 		animationOut = new TranslateTransition();
@@ -117,7 +115,6 @@ public class LeapSlideBar extends VBox {
 			@Override
 			public void handle(ActionEvent arg0) {
 				isAnimating = false;
-				instance.isHidden = true;
 				instance.setOpacity(0);
 			}
 		});

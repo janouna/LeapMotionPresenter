@@ -12,8 +12,7 @@ public abstract class LeapToolBarSelectedHandler implements
 	protected LeapToolBar mousedBar;
 	protected boolean setSelection = true;
 
-	public LeapToolBarSelectedHandler(ToggleButton mousedButton,
-			LeapToolBar mousedBar) {
+	public LeapToolBarSelectedHandler(ToggleButton mousedButton, LeapToolBar mousedBar) {
 		this.mousedButton = mousedButton;
 		this.mousedBar = mousedBar;
 	}
@@ -32,7 +31,5 @@ public abstract class LeapToolBarSelectedHandler implements
 		}
 	}
 
-	public void action(MouseEvent event) {
-		// Carry this action out
-	}
+	public abstract void action(MouseEvent event);
 }

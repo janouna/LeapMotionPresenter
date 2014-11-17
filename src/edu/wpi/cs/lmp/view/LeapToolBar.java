@@ -5,14 +5,12 @@ import java.util.List;
 
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
-import javafx.animation.TranslateTransitionBuilder;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 
@@ -47,10 +45,37 @@ public class LeapToolBar extends HBox {
 
 		instance = this;
 
-		animationIn = TranslateTransitionBuilder.create()
-				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(-2).toY(0)
-				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
-
+//		animationIn = TranslateTransitionBuilder.create()
+//				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(-2).toY(0)
+//				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
+//
+//		animationIn.onFinishedProperty().set(new EventHandler<ActionEvent>() {
+//			@Override
+//			public void handle(ActionEvent arg0) {
+//				isAnimating = false;
+//				instance.isHidden = false;
+//			}
+//		});
+//
+//		animationOut = TranslateTransitionBuilder.create()
+//				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(0).toY(-100)
+//				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
+//
+//		animationOut.onFinishedProperty().set(new EventHandler<ActionEvent>() {
+//			@Override
+//			public void handle(ActionEvent arg0) {
+//				isAnimating = false;
+//				instance.isHidden = true;
+//				instance.setOpacity(0);
+//			}
+//		});
+		
+		animationIn = new TranslateTransition();
+		animationIn.setDuration(new Duration(ANIMATION_TIME * 1000));
+		animationIn.setNode(this);
+		animationIn.setToY(0);
+		animationIn.setAutoReverse(true);
+		animationIn.setInterpolator(Interpolator.EASE_OUT);
 		animationIn.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -59,10 +84,12 @@ public class LeapToolBar extends HBox {
 			}
 		});
 
-		animationOut = TranslateTransitionBuilder.create()
-				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(0).toY(-100)
-				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
-
+		animationOut = new TranslateTransition();
+		animationOut.setDuration(new Duration(ANIMATION_TIME * 1000));
+		animationOut.setNode(this);
+		animationOut.setFromY(0);
+		animationOut.setAutoReverse(true);
+		animationOut.setInterpolator(Interpolator.EASE_OUT);
 		animationOut.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
