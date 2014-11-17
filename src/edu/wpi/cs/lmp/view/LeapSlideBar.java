@@ -3,7 +3,6 @@ package edu.wpi.cs.lmp.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.wpi.cs.lmp.objects.ObjectType;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.animation.TranslateTransitionBuilder;
@@ -15,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -119,11 +117,21 @@ public class LeapSlideBar extends VBox {
 		});
 
 		// TODO Set button controls
+		
+		double screen_height = Screen.getPrimary().getVisualBounds().getHeight();
+		
+//		animationIn = TranslateTransitionBuilder.create()
+//				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(-2).toY(0)
+//				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build(); 
 
-		animationIn = TranslateTransitionBuilder.create()
-				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(-2).toY(0)
-				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
-
+		
+		animationIn = new TranslateTransition();
+		animationIn.setDuration(new Duration(ANIMATION_TIME * 1000));
+		animationIn.setNode(this);
+		animationIn.setFromY(screen_height);
+		animationIn.setToY(screen_height - instance.getLayoutBounds().getHeight());
+		animationIn.setAutoReverse(true);
+		animationIn.setInterpolator(Interpolator.EASE_OUT);
 		animationIn.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -132,10 +140,17 @@ public class LeapSlideBar extends VBox {
 			}
 		});
 
-		animationOut = TranslateTransitionBuilder.create()
-				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(0).toY(-100)
-				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
+//		animationOut = TranslateTransitionBuilder.create()
+//				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(0).toY(-100)
+//				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
 
+		animationOut = new TranslateTransition();
+		animationOut.setDuration(new Duration(ANIMATION_TIME * 1000));
+		animationOut.setNode(this);
+		animationOut.setFromY(screen_height - instance.getLayoutBounds().getHeight());
+		animationOut.setToY(screen_height);
+		animationOut.setAutoReverse(true);
+		animationOut.setInterpolator(Interpolator.EASE_OUT);
 		animationOut.onFinishedProperty().set(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -158,13 +173,8 @@ public class LeapSlideBar extends VBox {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				double screen_height = Screen.getPrimary().getVisualBounds().getHeight();
-				instance.setTranslateY(screen_height - instance.getLayoutBounds().getHeight());
-				animationIn.setFromY(screen_height);
-				animationIn.setToY(screen_height - instance.getLayoutBounds().getHeight());
-				animationOut.setToY(screen_height);
-				animationOut.setFromY(screen_height - instance.getLayoutBounds().getHeight());
-				}
+				instance.setTranslateY(Screen.getPrimary().getVisualBounds().getHeight());
+			}
 		});
 	}
 
