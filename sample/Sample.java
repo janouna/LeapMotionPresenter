@@ -36,6 +36,7 @@ class SampleListener extends Listener {
     public void onFrame(Controller controller) {
         // Get the most recent frame and report some basic information
         Frame frame = controller.frame();
+        /*
         System.out.println("Frame id: " + frame.id()
                          + ", timestamp: " + frame.timestamp()
                          + ", hands: " + frame.hands().count()
@@ -87,7 +88,7 @@ class SampleListener extends Listener {
                              + ", position: " + tool.tipPosition()
                              + ", direction: " + tool.direction());
         }
-
+		*/
         GestureList gestures = frame.gestures();
         for (int i = 0; i < gestures.count(); i++) {
             Gesture gesture = gestures.get(i);

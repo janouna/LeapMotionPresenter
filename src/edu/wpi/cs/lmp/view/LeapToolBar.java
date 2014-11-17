@@ -151,7 +151,6 @@ public class LeapToolBar extends HBox {
 		for (int i = 0; i < buttonBar.getChildren().size(); i++) {
 			ToggleButton thisButton = (ToggleButton) buttonBar.getChildren()
 					.get(i);
-			System.out.println("BUTTON OFF: " + thisButton.getText());
 			thisButton.setSelected(false);
 		}
 

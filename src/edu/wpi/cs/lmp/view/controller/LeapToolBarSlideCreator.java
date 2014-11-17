@@ -14,6 +14,7 @@ public class LeapToolBarSlideCreator extends LeapToolBarSelectedHandler {
 			LeapToolBar mousedBar, LeapToolBarGroup container) {
 		super(mousedButton, mousedBar);
 		this.container = container;
+		setSelection = false;
 	}
 	
 	@Override

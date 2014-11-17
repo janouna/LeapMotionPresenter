@@ -3,10 +3,12 @@ package edu.wpi.cs.lmp.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.wpi.cs.lmp.slides.Slide;
+import edu.wpi.cs.lmp.slides.SlideManager;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
-import javafx.animation.TranslateTransitionBuilder;
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
@@ -165,6 +167,8 @@ public class LeapSlideBar extends VBox {
 		thumbnail.setGraphic(image);
 		slideContainer.getChildren().add(thumbnail);
 		
+		slideManagerObservers();
+		
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -174,6 +178,22 @@ public class LeapSlideBar extends VBox {
 				animationIn.setToY(screen_height - instance.getLayoutBounds().getHeight());
 				animationOut.setFromY(screen_height - instance.getLayoutBounds().getHeight());
 				animationOut.setToY(screen_height);
+			}
+		});
+	}
+	
+	private void slideManagerObservers() {
+		// Observer for the list of slides, any changes made and the onChange is fired
+		SlideManager.getInstance().getSlidesProperty().addListener(new ListChangeListener<Slide>() {
+			@Override
+			public void onChanged(
+					javafx.collections.ListChangeListener.Change<? extends Slide> changes) {
+				// Ideally have a method to update the contents of the slide bar
+				// onChanged gives variable that can be looped through to see what changes were made if necessary
+				System.out.println("SLIDES CHANGED");
+				// Update the slide count
+				numSlides = changes.getList().size();
+				slideLabel.setText("Slide: " + currentSlide + " / " + numSlides);
 			}
 		});
 	}

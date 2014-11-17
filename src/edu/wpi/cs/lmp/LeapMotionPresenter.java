@@ -33,15 +33,20 @@ import edu.wpi.cs.lmp.objects.Image;
 
 public class LeapMotionPresenter extends Application {
 
-	Controller c;
-	MouseController mouseController;
-	HandStateController handController;
-	public Slide slide;
+	private Controller c;
+	private MouseController mouseController;
+	private HandStateController handController;
+	private Slide slide;
+
+	private LeapMotionPresenter instance;
+	private Pane root;
+	
 
 	@Override
 	public void start(Stage stage) {
 		// Background setting
-		Pane root = new Pane();
+		instance = this;
+		root = new Pane();
 		root.setId("background");
 
 		// Binding leap controls to the mouse
@@ -90,6 +95,41 @@ public class LeapMotionPresenter extends Application {
 		stage.setResizable(false);
 		stage.show();
 
+	}
+	
+	public void changeSlideObserver() {
+		SlideManager.getInstance().getCurrentSlideProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0,
+					Number arg1, Number arg2) {
+				// Get information of current slide
+				Slide currentSlide = instance.getSlide();
+				int position = instance.getRoot().getChildren().indexOf(currentSlide);
+				
+				// Remove, replace, and readd the current slide with the new slide
+				instance.getRoot().getChildren().remove(position);
+				currentSlide = SlideManager.getInstance().getCurrentSlide();
+				instance.getRoot().getChildren().add(position, currentSlide);
+			}
+			
+		});
+	}
+	
+	public Slide getSlide() {
+		return slide;
+	}
+
+	public void setSlide(Slide slide) {
+		this.slide = slide;
+	}
+
+	public Pane getRoot() {
+		return root;
+	}
+
+	public void setRoot(Pane root) {
+		this.root = root;
 	}
 
 	public static void main(String[] args) {

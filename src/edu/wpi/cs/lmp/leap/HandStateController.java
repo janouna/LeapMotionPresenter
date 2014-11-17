@@ -3,21 +3,22 @@ package edu.wpi.cs.lmp.leap;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+import com.leapmotion.leap.CircleGesture;
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.FingerList;
 import com.leapmotion.leap.Frame;
+import com.leapmotion.leap.Gesture;
+import com.leapmotion.leap.GestureList;
 import com.leapmotion.leap.Hand;
 import com.leapmotion.leap.HandList;
 import com.leapmotion.leap.Listener;
 
 public class HandStateController extends Listener {
 
-	// private ObjectProperty<HandState> handState = new SimpleObjectProperty<>();
-
 	@Override
 	public void onConnect(Controller controller) {
 		// Enable the gestures you intend to use onConnect
-		// handState.set(HandState.GONE);
+		controller.enableGesture(Gesture.Type.TYPE_SWIPE);
 		System.out.println("connected: HandStateController");
 	}
 
@@ -26,6 +27,7 @@ public class HandStateController extends Listener {
 		Frame frame = controller.frame();
 		final FingerList fingers = frame.fingers();
 		final HandList hands = frame.hands();
+		final GestureList gestures = frame.gestures();
 
 		if (hands.count() == 1) {
 			Hand thisHand = hands.get(0);
@@ -46,6 +48,16 @@ public class HandStateController extends Listener {
 			if (!HandStateObservable.getInstance().get().equals(HandState.GONE)) {
 				// handState.set(HandState.GONE);
 				HandStateObservable.getInstance().set(HandState.GONE);
+			}
+		}
+		
+		
+		if (!gestures.isEmpty()) {
+			for (int i = 0; i < gestures.count(); i++) {
+				switch (gestures.get(i).type()) {
+				case TYPE_SWIPE:
+					break;
+				}
 			}
 		}
 	}
