@@ -3,11 +3,13 @@ package edu.wpi.cs.lmp.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.wpi.cs.lmp.objects.ObjectType;
+import edu.wpi.cs.lmp.slides.Slide;
+import edu.wpi.cs.lmp.slides.SlideManager;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.animation.TranslateTransitionBuilder;
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
@@ -15,7 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -34,8 +35,8 @@ public class LeapSlideBar extends VBox {
 
 	private LeapSlideBar instance;
 
-	private int numSlides;
-	private int currentSlide;
+	private int numSlides = 1;
+	private int currentSlide = 1;
 	
 	private HBox slideControlContainer;
 	private VBox slideGroupContainer;
@@ -82,7 +83,7 @@ public class LeapSlideBar extends VBox {
 		// Instantiate the slide label, this is a placeholder to get the point
 		// across but labels should be the only thing necessary in the final
 		// version of this UI bar
-		slideLabel = new Label("Slide: 0 / 0");
+		slideLabel = new Label("Slide: " + currentSlide + " / " + numSlides);
 		slideLabel.setTextFill(Color.WHITE);
 		slideLabelContainer = new HBox();
 		slideLabelContainer.getChildren().add(slideLabel);
@@ -155,6 +156,8 @@ public class LeapSlideBar extends VBox {
 		thumbnail.setGraphic(image);
 		slideContainer.getChildren().add(thumbnail);
 		
+		slideManagerObservers();
+		
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -165,6 +168,22 @@ public class LeapSlideBar extends VBox {
 				animationOut.setToY(screen_height);
 				animationOut.setFromY(screen_height - instance.getLayoutBounds().getHeight());
 				}
+		});
+	}
+
+	private void slideManagerObservers() {
+		// Observer for the list of slides, any changes made and the onChange is fired
+		SlideManager.getInstance().getSlidesProperty().addListener(new ListChangeListener<Slide>() {
+			@Override
+			public void onChanged(
+					javafx.collections.ListChangeListener.Change<? extends Slide> changes) {
+				// Ideally have a method to update the contents of the slide bar
+				// onChanged gives variable that can be looped through to see what changes were made if necessary
+				System.out.println("SLIDES CHANGED");
+				// Update the slide count
+				numSlides = changes.getList().size();
+				slideLabel.setText("Slide: " + currentSlide + " / " + numSlides);
+			}
 		});
 	}
 
