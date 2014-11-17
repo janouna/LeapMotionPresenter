@@ -39,7 +39,7 @@ public class LeapToolBar extends HBox {
 		this.getStyleClass().add("leap-tool-bar");
 		this.isHidden = isHidden;
 		
-		this.setPrefWidth(Screen.getPrimary().getVisualBounds().getWidth());
+		this.setPrefWidth(Screen.getPrimary().getBounds().getWidth());
 		
 		if (this.isHidden) {
 			this.setOpacity(0);
@@ -77,8 +77,8 @@ public class LeapToolBar extends HBox {
 
 		for (int i = 0; i < menuNames.length; i++) {
 			final ToggleButton newButton = new ToggleButton(menuNames[i]);
-			newButton.setPrefHeight(Screen.getPrimary().getVisualBounds().getHeight()*BUTTON_HEIGHT);
-			newButton.setPrefWidth(Screen.getPrimary().getVisualBounds().getHeight()*BUTTON_WIDTH);
+			newButton.setPrefHeight(Screen.getPrimary().getBounds().getHeight()*BUTTON_HEIGHT);
+			newButton.setPrefWidth(Screen.getPrimary().getBounds().getHeight()*BUTTON_WIDTH);
 			newButton.setOnMouseMoved(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {

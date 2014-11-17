@@ -51,9 +51,8 @@ public class LeapMotionPresenter extends Application {
 
 		// Binding leap controls to the mouse
 		c = new Controller();
-		mouseController = new MouseController(Screen.getPrimary()
-				.getVisualBounds().getWidth(), Screen.getPrimary()
-				.getVisualBounds().getHeight());
+		mouseController = new MouseController(Screen.getPrimary().getBounds().getWidth(),
+				Screen.getPrimary().getBounds().getHeight());
 		handController = new HandStateController();
 		c.addListener(mouseController);
 		c.addListener(handController);
@@ -70,8 +69,8 @@ public class LeapMotionPresenter extends Application {
 		root.getChildren().add(bottomBar);
 
 		// Scene building
-		Scene scene = new Scene(root, Screen.getPrimary().getVisualBounds()
-				.getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
+		Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(),
+				Screen.getPrimary().getBounds().getHeight());
 
 		// Hand cursor placement, this should be its own object that chnages
 		// icon based on state (Open palm, closed palm, finger pointed, etc)
