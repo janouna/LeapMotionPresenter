@@ -57,7 +57,7 @@ public class LeapSlideBar extends VBox {
 		super();
 		instance = this;
 		
-		// Positioning		
+		// Positioning
 		this.setPrefHeight(Control.USE_COMPUTED_SIZE);
 		this.setMaxHeight(Control.USE_PREF_SIZE);
 		this.getStyleClass().add("leap-tool-bar");
@@ -118,7 +118,6 @@ public class LeapSlideBar extends VBox {
 
 		// TODO Set button controls
 		
-		double screen_height = Screen.getPrimary().getVisualBounds().getHeight();
 		
 //		animationIn = TranslateTransitionBuilder.create()
 //				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(-2).toY(0)
@@ -128,8 +127,6 @@ public class LeapSlideBar extends VBox {
 		animationIn = new TranslateTransition();
 		animationIn.setDuration(new Duration(ANIMATION_TIME * 1000));
 		animationIn.setNode(this);
-		animationIn.setFromY(screen_height);
-		animationIn.setToY(screen_height - instance.getLayoutBounds().getHeight());
 		animationIn.setAutoReverse(true);
 		animationIn.setInterpolator(Interpolator.EASE_OUT);
 		animationIn.onFinishedProperty().set(new EventHandler<ActionEvent>() {
@@ -147,8 +144,6 @@ public class LeapSlideBar extends VBox {
 		animationOut = new TranslateTransition();
 		animationOut.setDuration(new Duration(ANIMATION_TIME * 1000));
 		animationOut.setNode(this);
-		animationOut.setFromY(screen_height - instance.getLayoutBounds().getHeight());
-		animationOut.setToY(screen_height);
 		animationOut.setAutoReverse(true);
 		animationOut.setInterpolator(Interpolator.EASE_OUT);
 		animationOut.onFinishedProperty().set(new EventHandler<ActionEvent>() {
@@ -173,7 +168,12 @@ public class LeapSlideBar extends VBox {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				instance.setTranslateY(Screen.getPrimary().getVisualBounds().getHeight());
+				double screen_height = Screen.getPrimary().getVisualBounds().getHeight();
+				instance.setTranslateY(screen_height);
+				animationIn.setFromY(screen_height);
+				animationIn.setToY(screen_height - instance.getLayoutBounds().getHeight());
+				animationOut.setFromY(screen_height - instance.getLayoutBounds().getHeight());
+				animationOut.setToY(screen_height);
 			}
 		});
 	}
