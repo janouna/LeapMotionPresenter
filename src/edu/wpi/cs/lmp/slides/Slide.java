@@ -33,8 +33,8 @@ public class Slide extends Parent {
 		children = new ArrayList<IObject>();
 		background = new ImageView();
 		background
-				.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
-		background.setFitHeight(Screen.getPrimary().getVisualBounds()
+				.setFitWidth(Screen.getPrimary().getBounds().getWidth());
+		background.setFitHeight(Screen.getPrimary().getBounds()
 				.getHeight());
 		// this.getChildren().add(background);
 		// Bind on click

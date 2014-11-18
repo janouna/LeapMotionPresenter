@@ -36,7 +36,7 @@ public class LeapSlideBar extends VBox {
 
 	private int numSlides;
 	private int currentSlide;
-	
+
 	private HBox slideControlContainer;
 	private VBox slideGroupContainer;
 	private HBox slideLabelContainer;
@@ -48,22 +48,93 @@ public class LeapSlideBar extends VBox {
 	private TranslateTransition animationIn;
 	private TranslateTransition animationOut;
 	private boolean isAnimating;
-	private boolean isHidden;
 
 	public LeapSlideBar() {
 		// TODO Make helper methods.
 		// TODO Slide buttons
 		// TODO Display Slides properly
-		
+
 		// Do all the VBox standard stuff and set the sizes
 		super();
 		instance = this;
-		
+
 		// Positioning
 		this.setPrefHeight(Control.USE_COMPUTED_SIZE);
 		this.setMaxHeight(Control.USE_PREF_SIZE);
 		this.getStyleClass().add("leap-tool-bar");
 
+		setupBarChildren();
+		setupListeners();
+		setupAnimations();
+
+		// TODO Set button controls
+
+		// TODO Remove
+		// Example slide thumbnail
+		// Experimenting with thumbnail sizes
+		ImageView image = new ImageView("file:example-thumb.gif");
+		Button thumbnail = new Button();
+		image.setFitWidth(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_WIDTH);
+		image.setFitHeight(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_HEIGHT);
+		thumbnail.setGraphic(image);
+		slideContainer.getChildren().add(thumbnail);
+
+		slideManagerObservers();
+
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				double screen_height = Screen.getPrimary().getBounds().getHeight();
+				instance.setTranslateY(screen_height);
+				animationIn.setFromY(screen_height);
+				animationIn.setToY(screen_height - instance.getLayoutBounds().getHeight());
+				animationOut.setFromY(screen_height - instance.getLayoutBounds().getHeight());
+				animationOut.setToY(screen_height);
+			}
+		});
+	}
+
+	private void setupAnimations() {
+		animationIn = new TranslateTransition();
+		animationIn.setDuration(new Duration(ANIMATION_TIME * 1000));
+		animationIn.setNode(this);
+		animationIn.setAutoReverse(true);
+		animationIn.setInterpolator(Interpolator.EASE_OUT);
+		animationIn.onFinishedProperty().set(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				isAnimating = false;
+			}
+		});
+		animationOut = new TranslateTransition();
+		animationOut.setDuration(new Duration(ANIMATION_TIME * 1000));
+		animationOut.setNode(this);
+		animationOut.setAutoReverse(true);
+		animationOut.setInterpolator(Interpolator.EASE_OUT);
+		animationOut.onFinishedProperty().set(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				isAnimating = false;
+				instance.setOpacity(0);
+			}
+		});
+	}
+	private void setupListeners() {
+		// Instantiate main bar and behavior
+		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent arg0) {
+				instance.transitionIn();
+			}
+		});
+		this.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent arg0) {
+				instance.transitionOut();
+			}
+		});
+	}
+	private void setupBarChildren() {
 		// The actual slide stuff:
 		// slideControlContainer: contains all of the slides, the back button
 		// and
@@ -72,7 +143,7 @@ public class LeapSlideBar extends VBox {
 		// forward and back should be self explanatory
 		slideControlContainer = new HBox();
 		slideGroupContainer = new VBox();
-		
+
 		Separator firstDivider = new Separator(Orientation.HORIZONTAL);
 		firstDivider.getStyleClass().add("slide-seperator-vertical");
 
@@ -91,12 +162,12 @@ public class LeapSlideBar extends VBox {
 		slideContainer = new HBox();
 		slideContainer.getStyleClass().add("thumbnail-container");
 		slideGroupContainer.getChildren().add(slideContainer);
-		
+
 		forward = new Button(">");
-		forward.setPrefHeight(Screen.getPrimary().getVisualBounds().getWidth()*THUMBNAIL_HEIGHT);
+		forward.setPrefHeight(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_HEIGHT);
 		back = new Button("<");
-		back.setPrefHeight(Screen.getPrimary().getVisualBounds().getWidth()*THUMBNAIL_HEIGHT);
-		slideControlContainer.setPrefWidth(Screen.getPrimary().getVisualBounds().getWidth());
+		back.setPrefHeight(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_HEIGHT);
+		slideControlContainer.setPrefWidth(Screen.getPrimary().getBounds().getWidth());
 
 		slideControlContainer.getChildren().addAll(back, slideGroupContainer,
 				forward);
@@ -105,84 +176,8 @@ public class LeapSlideBar extends VBox {
 		this.getChildren().add(slideControlContainer);
 
 		this.getChildren().add(new Separator(Orientation.HORIZONTAL));
-
-		// Instantiate main bar and behavior
-		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent arg0) {
-				if (instance.isHidden()) {
-					instance.transitionIn();
-				} else {
-					instance.transitionOut();
-				}
-			}
-		});
-
-		// TODO Set button controls
-		
-		
-//		animationIn = TranslateTransitionBuilder.create()
-//				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(-2).toY(0)
-//				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build(); 
-
-		
-		animationIn = new TranslateTransition();
-		animationIn.setDuration(new Duration(ANIMATION_TIME * 1000));
-		animationIn.setNode(this);
-		animationIn.setAutoReverse(true);
-		animationIn.setInterpolator(Interpolator.EASE_OUT);
-		animationIn.onFinishedProperty().set(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				isAnimating = false;
-				instance.isHidden = false;
-			}
-		});
-
-//		animationOut = TranslateTransitionBuilder.create()
-//				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(0).toY(-100)
-//				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
-
-		animationOut = new TranslateTransition();
-		animationOut.setDuration(new Duration(ANIMATION_TIME * 1000));
-		animationOut.setNode(this);
-		animationOut.setAutoReverse(true);
-		animationOut.setInterpolator(Interpolator.EASE_OUT);
-		animationOut.onFinishedProperty().set(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				isAnimating = false;
-				instance.isHidden = true;
-				instance.setOpacity(0);
-			}
-		});
-
-		// TODO Remove
-		// Example slide thumbnail
-		// Experimenting with thumbnail sizes
-		ImageView image = new ImageView("file:example-thumb.gif");
-		Button thumbnail = new Button();
-		image.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth()*THUMBNAIL_WIDTH);
-		image.setFitHeight(Screen.getPrimary().getVisualBounds().getWidth()*THUMBNAIL_HEIGHT);
-		thumbnail.setGraphic(image);
-		slideContainer.getChildren().add(thumbnail);
-		
-		slideManagerObservers();
-		
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				double screen_height = Screen.getPrimary().getBounds().getHeight();
-				System.out.println(screen_height);
-				instance.setTranslateY(screen_height);
-				animationIn.setFromY(screen_height);
-				animationIn.setToY(screen_height - instance.getLayoutBounds().getHeight());
-				animationOut.setFromY(screen_height - instance.getLayoutBounds().getHeight());
-				animationOut.setToY(screen_height);
-			}
-		});
 	}
-	
+
 	private void slideManagerObservers() {
 		// Observer for the list of slides, any changes made and the onChange is fired
 		SlideManager.getInstance().getSlidesProperty().addListener(new ListChangeListener<Slide>() {
@@ -205,7 +200,6 @@ public class LeapSlideBar extends VBox {
 			isAnimating = true;
 		}
 	}
-
 	public void transitionOut() {
 		if (!isAnimating) {
 			animationOut.play();
@@ -224,9 +218,4 @@ public class LeapSlideBar extends VBox {
 		}
 		return buttons;
 	}
-
-	public boolean isHidden() {
-		return isHidden;
-	}
-
 }
