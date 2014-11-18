@@ -111,6 +111,7 @@ public class LeapMotionPresenter extends Application {
 				// Remove, replace, and readd the current slide with the new slide
 				instance.getRoot().getChildren().remove(position);
 				currentSlide = SlideManager.getInstance().getCurrentSlide();
+				instance.setSlide(currentSlide);
 				instance.getRoot().getChildren().add(position, currentSlide);
 			}
 			
