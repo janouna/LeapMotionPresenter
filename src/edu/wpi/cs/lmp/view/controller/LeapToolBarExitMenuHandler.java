@@ -1,5 +1,6 @@
 package edu.wpi.cs.lmp.view.controller;
 
+import edu.wpi.cs.lmp.slides.SlideManager;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 import javafx.scene.control.ToggleButton;
@@ -22,5 +23,11 @@ public class LeapToolBarExitMenuHandler extends LeapToolBarSelectedHandler {
 		container.removeMenuAbove(mousedBar.getMenuLevel());
 		// Instantiate the desired submenu
 		container.removeMenuAt(mousedBar.getMenuLevel());
+		int currentSlide = SlideManager.getInstance().getCurrentSlideNumber();
+		if (currentSlide == 0) {
+			SlideManager.getInstance().setCurrentSlide(1);
+		} else {
+			SlideManager.getInstance().setCurrentSlide(0);
+		}
 	}
 }

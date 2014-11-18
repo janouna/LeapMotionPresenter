@@ -186,7 +186,6 @@ public class LeapSlideBar extends VBox {
 					javafx.collections.ListChangeListener.Change<? extends Slide> changes) {
 				// Ideally have a method to update the contents of the slide bar
 				// onChanged gives variable that can be looped through to see what changes were made if necessary
-				System.out.println("SLIDES CHANGED");
 				// Update the slide count
 				numSlides = changes.getList().size();
 				slideLabel.setText("Slide: " + currentSlide + " / " + numSlides);

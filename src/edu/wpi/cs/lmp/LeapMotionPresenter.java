@@ -86,6 +86,8 @@ public class LeapMotionPresenter extends Application {
 	     webView.setPrefWidth(560);
 		
 		// root.getChildren().add(webView);
+	     
+	    changeSlideObserver();
 
 		scene.getStylesheets().add("file:stylesheet.css");
 		stage.setScene(scene);
@@ -98,10 +100,10 @@ public class LeapMotionPresenter extends Application {
 	
 	public void changeSlideObserver() {
 		SlideManager.getInstance().getCurrentSlideProperty().addListener(new ChangeListener<Number>() {
-
+			
 			@Override
-			public void changed(ObservableValue<? extends Number> arg0,
-					Number arg1, Number arg2) {
+			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+				System.out.println("SLIDE CHANGING");
 				// Get information of current slide
 				Slide currentSlide = instance.getSlide();
 				int position = instance.getRoot().getChildren().indexOf(currentSlide);
@@ -109,6 +111,7 @@ public class LeapMotionPresenter extends Application {
 				// Remove, replace, and readd the current slide with the new slide
 				instance.getRoot().getChildren().remove(position);
 				currentSlide = SlideManager.getInstance().getCurrentSlide();
+				instance.setSlide(currentSlide);
 				instance.getRoot().getChildren().add(position, currentSlide);
 			}
 			
