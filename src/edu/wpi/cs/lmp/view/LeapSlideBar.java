@@ -8,6 +8,8 @@ import edu.wpi.cs.lmp.slides.SlideManager;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -201,6 +203,14 @@ public class LeapSlideBar extends VBox {
 		SlideManager.getInstance().getSlidesProperty().addListener(new ListChangeListener<Slide>() {
 			@Override
 			public void onChanged(javafx.collections.ListChangeListener.Change<? extends Slide> changes) {
+				updateSlides();
+			}
+		});
+		
+		SlideManager.getInstance().getCurrentSlideProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0,
+					Number arg1, Number arg2) {
 				updateSlides();
 			}
 		});

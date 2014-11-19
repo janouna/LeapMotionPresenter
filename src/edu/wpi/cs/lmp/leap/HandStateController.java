@@ -1,5 +1,7 @@
 package edu.wpi.cs.lmp.leap;
 
+import javafx.application.Platform;
+
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.FingerList;
 import com.leapmotion.leap.Frame;
@@ -18,6 +20,8 @@ public class HandStateController extends Listener {
 	// Used for ignoring swipe gestures recognized immediately after another
 	// Useful as all fingers count in the gesture and may be recognized in another frame
 	private static final long SWIPE_TIMEOUT = 200;
+	// Grab strength needed to trigger a closed hand (0.0-1.0)
+	private static final float GRAB_STRENGTH = 0.5f;
 	
 	private long lastSwipe = Long.MIN_VALUE;
 
@@ -40,7 +44,7 @@ public class HandStateController extends Listener {
 
 		if (hands.count() == 1) {
 			Hand thisHand = hands.get(0);
-			if (thisHand.isValid() && thisHand.grabStrength() >= 0.7) {
+			if (thisHand.isValid() && thisHand.grabStrength() >= GRAB_STRENGTH) {
 				// The hand should be considered closed, change the state
 				if (!HandStateObservable.getInstance().get()
 						.equals(HandState.CLOSED)) {
@@ -74,14 +78,22 @@ public class HandStateController extends Listener {
 							.abs(swipe.direction().getY());
 					if (isHorizontal && swipe.state().equals(State.STATE_STOP) && (lastSwipe < System.currentTimeMillis() - SWIPE_TIMEOUT)) {
 						lastSwipe = System.currentTimeMillis();
-						int currentSlide = SlideManager.getInstance().getCurrentSlideNumber();
-						if (swipe.direction().getX() > 0) {
-							System.out.println("Right");
-							SlideManager.getInstance().setCurrentSlide(currentSlide--);
-						} else {
-							SlideManager.getInstance().setCurrentSlide(currentSlide++);
-							System.out.println("Left");
-						}
+						Platform.runLater(new Runnable() {
+
+							@Override
+							public void run() {
+								int currentSlide = SlideManager.getInstance().getCurrentSlideNumber();
+								if (swipe.direction().getX() > 0) {
+									// Right swipe
+									SlideManager.getInstance().setCurrentSlide(--currentSlide);
+								} else {
+									// Left swipe
+									SlideManager.getInstance().setCurrentSlide(++currentSlide);
+								}
+							}
+							
+						});
+
 						break;
 					}
 				default:
