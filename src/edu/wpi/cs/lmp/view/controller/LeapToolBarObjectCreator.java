@@ -1,5 +1,8 @@
 package edu.wpi.cs.lmp.view.controller;
 
+import java.io.File;
+
+import edu.wpi.cs.lmp.FileChooser.FileChooserFactory;
 import edu.wpi.cs.lmp.objects.IObject;
 import edu.wpi.cs.lmp.objects.ObjectFactory;
 import edu.wpi.cs.lmp.objects.ObjectType;
@@ -24,6 +27,11 @@ public class LeapToolBarObjectCreator extends LeapToolBarSelectedHandler {
 	
 	@Override
 	public void action(MouseEvent event) {
+		// Instantiate file chooser window and capture URI of file
+		File file = FileChooserFactory.getInstance().makeFileChooser(object).showOpenDialog(container.getScene().getWindow());
+		System.out.println(file);
+
+		// Object instantiation
 		IObject newObject = ObjectFactory.getInstance().CreateObject(object);
 		newObject.setX(event.getScreenX());
 		newObject.setY(event.getScreenY());
