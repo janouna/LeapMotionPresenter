@@ -17,8 +17,12 @@ public class Image extends ImageView implements IObject {
 	private final Image instance;
 	
 	public Image() {
+		this("file:gary.JPG");
+	}
+
+	public Image(String path) {
 		// TODO Pollice is default image for testing
-		super("file:gary.JPG");
+		super("file:" + path);
 		instance = this;
 		Platform.runLater(new Runnable() {
 

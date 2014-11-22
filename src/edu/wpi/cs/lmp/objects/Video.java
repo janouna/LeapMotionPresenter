@@ -49,6 +49,29 @@ public class Video extends MediaView implements IObject {
 			}
 		});
 	}
+	
+	public Video (String path) {
+		super();
+		instance = this;
+		isPlaying = false;
+		// Modify the media variable to take in desired URL or FILE
+		media = new Media(new File(path).toURI().toString());
+		mediaPlayer = new MediaPlayer(media);
+		this.setMediaPlayer(mediaPlayer);
+		
+		mediaPlayer.setOnReady(new Runnable() {
+			@Override
+			public void run() {
+				vidWidth = new SimpleDoubleProperty(mediaPlayer.getMedia().getWidth());
+				vidHeight = new SimpleDoubleProperty(mediaPlayer.getMedia().getHeight());
+				vidX = new SimpleDoubleProperty(instance.getX());
+				vidY = new SimpleDoubleProperty(instance.getY());
+				instance.fitWidthProperty().bind(vidWidth);
+				instance.fitHeightProperty().bind(vidHeight);
+				System.out.println(instance.getFitWidth());
+			}
+		});
+	}
 
 	@Override
 	public void startMove() {

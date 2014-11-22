@@ -26,4 +26,22 @@ public class ObjectFactory {
 		
 		return o;
 	}
+	
+	public IObject createObject(ObjectType type, String path){
+		IObject o = null;
+		
+		switch(type){
+		case IMAGE:
+			o = new Image(path);
+			break;
+		case TEXT:
+			o = new TextBox();
+			break;
+		case VIDEO:
+			o = new Video(path);
+			break;
+		}
+		
+		return o;
+	}
 }

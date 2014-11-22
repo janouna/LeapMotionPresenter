@@ -29,13 +29,14 @@ public class LeapToolBarObjectCreator extends LeapToolBarSelectedHandler {
 	public void action(MouseEvent event) {
 		// Instantiate file chooser window and capture URI of file
 		final File file = FileChooserFactory.getInstance().makeFileChooser(object).showOpenDialog(container.getScene().getWindow());
-		System.out.println(file);
 
 		// Object instantiation
-		final IObject newObject = ObjectFactory.getInstance().createObject(object);
-		newObject.setX(event.getScreenX());
-		newObject.setY(event.getScreenY());
-		SlideManager.getInstance().getCurrentSlide().addObject(newObject);
+		if (file != null) {
+			final IObject newObject = ObjectFactory.getInstance().createObject(object, file.toString());
+			newObject.setX(event.getScreenX());
+			newObject.setY(event.getScreenY());
+			SlideManager.getInstance().getCurrentSlide().addObject(newObject);
+		}
 		container.removeMenuAll();
 	}
 
