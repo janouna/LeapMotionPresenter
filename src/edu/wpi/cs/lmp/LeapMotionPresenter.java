@@ -90,6 +90,7 @@ public class LeapMotionPresenter extends Application {
 	    changeSlideObserver();
 
 		scene.getStylesheets().add("file:stylesheet.css");
+		stage.setTitle("Leap Motion Presenter");
 		stage.setScene(scene);
 		stage.setFullScreen(true);
 		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);

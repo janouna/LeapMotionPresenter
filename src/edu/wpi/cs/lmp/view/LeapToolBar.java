@@ -20,7 +20,7 @@ public class LeapToolBar extends HBox {
 	private static final double BUTTON_HEIGHT = 0.15;
 	private static final double BUTTON_WIDTH = 0.30;
 	// Number of seconds for slide in/out animations for the toolbar
-	private static final int ANIMATION_TIME = 1;
+	private static final float ANIMATION_TIME = 0.5f;
 
 	private LeapToolBar instance;
 	private HBox buttonBar;
@@ -38,37 +38,8 @@ public class LeapToolBar extends HBox {
 		this.isHidden = isHidden;
 		
 		this.setPrefWidth(Screen.getPrimary().getBounds().getWidth());
-		
-		if (this.isHidden) {
-			this.setOpacity(0);
-		}
 
 		instance = this;
-
-//		animationIn = TranslateTransitionBuilder.create()
-//				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(-2).toY(0)
-//				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
-//
-//		animationIn.onFinishedProperty().set(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent arg0) {
-//				isAnimating = false;
-//				instance.isHidden = false;
-//			}
-//		});
-//
-//		animationOut = TranslateTransitionBuilder.create()
-//				.duration(new Duration(ANIMATION_TIME * 1000)).node(this).fromY(0).toY(-100)
-//				.autoReverse(true).interpolator(Interpolator.EASE_OUT).build();
-//
-//		animationOut.onFinishedProperty().set(new EventHandler<ActionEvent>() {
-//			@Override
-//			public void handle(ActionEvent arg0) {
-//				isAnimating = false;
-//				instance.isHidden = true;
-//				instance.setOpacity(0);
-//			}
-//		});
 		
 		animationIn = new TranslateTransition();
 		animationIn.setDuration(new Duration(ANIMATION_TIME * 1000));
@@ -81,6 +52,7 @@ public class LeapToolBar extends HBox {
 			public void handle(ActionEvent arg0) {
 				isAnimating = false;
 				instance.isHidden = false;
+				instance.enableAllButton(true);
 			}
 		});
 
@@ -96,6 +68,7 @@ public class LeapToolBar extends HBox {
 				isAnimating = false;
 				instance.isHidden = true;
 				instance.setOpacity(0);
+				instance.enableAllButton(false);
 			}
 		});
 
@@ -115,6 +88,7 @@ public class LeapToolBar extends HBox {
 							+ "linear-gradient(to bottom, -light-orange "
 							+ (percentSelected) + "%, -dark-black "
 							+ (percentSelected) + "%);");
+					newButton.setSelected(false);
 				}
 			});
 			/*
@@ -136,6 +110,11 @@ public class LeapToolBar extends HBox {
 				animationOut.setToY(-instance.getLayoutBounds().getHeight());
 			}
 		});
+		
+		if (this.isHidden) {
+			this.setOpacity(0);
+			this.enableAllButton(false);
+		}
 
 	}
 
@@ -181,6 +160,14 @@ public class LeapToolBar extends HBox {
 			thisButton.setSelected(false);
 		}
 
+	}
+	
+	public void enableAllButton(boolean enable) {
+		for (int i = 0; i < buttonBar.getChildren().size(); i++) {
+			ToggleButton thisButton = (ToggleButton) buttonBar.getChildren()
+					.get(i);
+			thisButton.setDisable(!enable);
+		}
 	}
 
 	public boolean isHidden() {

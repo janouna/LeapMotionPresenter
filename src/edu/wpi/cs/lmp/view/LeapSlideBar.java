@@ -38,7 +38,7 @@ public class LeapSlideBar extends VBox {
 	private static final double THUMBNAIL_WIDTH = 0.10;
 	private static final double THUMBNAIL_HEIGHT = 0.10;
 	// Number of seconds for slide in/out animations for the toolbar
-	private static final int ANIMATION_TIME = 1;
+	private static final float ANIMATION_TIME = 0.5f;
 
 	private LeapSlideBar instance;
 
@@ -77,16 +77,6 @@ public class LeapSlideBar extends VBox {
 		setupAnimations();
 
 		// TODO Set button controls
-
-		// TODO Remove
-		// Example slide thumbnail
-		// Experimenting with thumbnail sizes
-		ImageView image = new ImageView("file:example-thumb.gif");
-		Button thumbnail = new Button();
-		image.setFitWidth(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_WIDTH);
-		image.setFitHeight(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_HEIGHT);
-		thumbnail.setGraphic(image);
-		slideContainer.getChildren().add(thumbnail);
 
 		slideManagerObservers();
 		

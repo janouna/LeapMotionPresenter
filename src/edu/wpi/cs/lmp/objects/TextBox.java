@@ -1,6 +1,7 @@
 package edu.wpi.cs.lmp.objects;
 
 import edu.wpi.cs.lmp.leap.HandStateObservable;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.text.Text;
@@ -10,14 +11,26 @@ public class TextBox extends Text implements IObject {
 	private DoubleProperty textWidth;
 	private DoubleProperty textHeight;
 	
+	private DoubleProperty textX;
+	private DoubleProperty textY;
+	
+	private TextBox instance;
+	
 	public TextBox() {
 		//TODO: Text is an interesting problem with bounds perhaps layout container?
-		textWidth = new SimpleDoubleProperty();
-		textHeight = new SimpleDoubleProperty();
-		/* Resize will need to accound to for font sizing
-		textWidth.bind(this.);
-		this.fitHeightProperty().bind(textHeight);
-		*/ 
+		super("TESTING TESTING");
+		// Resize will need to accound to for font sizing
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				textWidth = new SimpleDoubleProperty(instance.getScaleX());
+				textHeight = new SimpleDoubleProperty(instance.getScaleY());
+				instance.scaleXProperty().bind(textWidth);
+				instance.scaleYProperty().bind(textHeight);
+			}
+			
+		});
 	}
 
 	@Override
@@ -40,13 +53,15 @@ public class TextBox extends Text implements IObject {
 	
 	@Override
 	public boolean inBounds(double x, double y) {
-		double xPos = this.getX();
-		double yPos = this.getY();
+		/*
+		double xPos = textX.doubleValue();
+		double yPos = textY.doubleValue();
 		double width = textWidth.doubleValue();
 		double height = textHeight.doubleValue();
-		
+		*/
+		return true;
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
-		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
+		//return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
 	}
 	
 	@Override
