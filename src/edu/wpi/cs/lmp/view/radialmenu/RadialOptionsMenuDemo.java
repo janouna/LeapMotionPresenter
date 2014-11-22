@@ -91,7 +91,7 @@ public class RadialOptionsMenuDemo extends Application {
 		mouseController = new MouseController(Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
 		c.addListener(mouseController);
 		
-		Image handCursor = new Image("file:hand_cursor.png");
+		final Image handCursor = new Image("file:hand_cursor.png");
 		
 		scene.setCursor(new ImageCursor(handCursor));
 

@@ -1,7 +1,7 @@
 package edu.wpi.cs.lmp.objects;
 
 public class ObjectFactory {
-	private static ObjectFactory INSTANCE = new ObjectFactory();
+	private static final ObjectFactory INSTANCE = new ObjectFactory();
 	
 	private ObjectFactory() {}
 	
@@ -9,7 +9,7 @@ public class ObjectFactory {
 		return INSTANCE;
 	}
 	
-	public IObject CreateObject(ObjectType type){
+	public IObject createObject(ObjectType type){
 		IObject o = null;
 		
 		switch(type){

@@ -340,13 +340,10 @@ public class RadialMenuItem extends Group implements ChangeListener<Object> {
 	    graphicContainer.getChildren().clear();
 	}
 
-	path.setFill(backgroundVisible.get() ? (mouseOn
-		&& backgroundMouseOnFill.get() != null ? backgroundMouseOnFill
-		.get() : backgroundFill.get()) : null);
-	path.setStroke(strokeVisible.get() ? (mouseOn
-		&& strokeMouseOnFill.get() != null ? strokeMouseOnFill.get()
-		: strokeFill.get()) : null);
-
+	path.setFill(backgroundVisible.get() ? ((mouseOn && backgroundMouseOnFill.get() != null) ?
+			backgroundMouseOnFill.get() : backgroundFill.get()) : null);
+	path.setStroke(strokeVisible.get() ? ((mouseOn && strokeMouseOnFill.get() != null) ?
+			strokeMouseOnFill.get() : strokeFill.get()) : null);
 	path.setFillRule(FillRule.EVEN_ODD);
 
 	computeCoordinates();

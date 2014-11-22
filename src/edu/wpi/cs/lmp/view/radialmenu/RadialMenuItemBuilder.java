@@ -24,7 +24,7 @@ import javafx.scene.paint.Paint;
 
 public class RadialMenuItemBuilder<B extends RadialMenuItemBuilder<B>> {
 
-    private RadialMenuItem item;
+    private final RadialMenuItem item;
 
     protected RadialMenuItemBuilder() {
 	this.item = new RadialMenuItem();

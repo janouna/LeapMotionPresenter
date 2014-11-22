@@ -3,8 +3,6 @@ package edu.wpi.cs.lmp.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.wpi.cs.lmp.slides.Slide;
-import edu.wpi.cs.lmp.slides.SlideManager;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -14,16 +12,14 @@ import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.image.Image;
+import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -32,6 +28,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.util.Duration;
+import edu.wpi.cs.lmp.slides.Slide;
+import edu.wpi.cs.lmp.slides.SlideManager;
 
 public class LeapSlideBar extends VBox {
 
@@ -40,7 +38,7 @@ public class LeapSlideBar extends VBox {
 	// Number of seconds for slide in/out animations for the toolbar
 	private static final float ANIMATION_TIME = 0.5f;
 
-	private LeapSlideBar instance;
+	private final LeapSlideBar instance;
 
 	private int numSlides;
 	private int currentSlide;
@@ -85,7 +83,7 @@ public class LeapSlideBar extends VBox {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				double screen_height = Screen.getPrimary().getBounds().getHeight();
+				final double screen_height = Screen.getPrimary().getBounds().getHeight();
 				instance.setTranslateY(screen_height);
 				animationIn.setFromY(screen_height);
 				animationIn.setToY(screen_height - instance.getLayoutBounds().getHeight());
@@ -135,7 +133,7 @@ public class LeapSlideBar extends VBox {
 		
 		scrollPane.setContent(slideGroupContainer);
 		scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-		double scrollWidth = Screen.getPrimary().getBounds().getWidth() - divider1.getLayoutBounds().getWidth() - divider2.getLayoutBounds().getWidth()
+		final double scrollWidth = Screen.getPrimary().getBounds().getWidth() - divider1.getLayoutBounds().getWidth() - divider2.getLayoutBounds().getWidth()
 				- forward.getLayoutBounds().getWidth() - back.getLayoutBounds().getWidth();
 		scrollPane.setPrefViewportWidth(scrollWidth);
 		scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
@@ -210,7 +208,7 @@ public class LeapSlideBar extends VBox {
 		// onChanged gives variable that can be looped through to see what changes were made if necessary
 		// Update the slide count
 		
-		List<Slide> slideList = SlideManager.getInstance().getAllSlides();
+		final List<Slide> slideList = SlideManager.getInstance().getAllSlides();
 		numSlides = slideList.size();
 		currentSlide = SlideManager.getInstance().getCurrentSlideNumber();
 		slideContainer.getChildren().clear();
@@ -248,7 +246,7 @@ public class LeapSlideBar extends VBox {
 	}
 
 	public List<Button> getAllSlides() {
-		List<Button> buttons = new ArrayList<Button>();
+		final List<Button> buttons = new ArrayList<Button>();
 		for (int i = 0; i < slideContainer.getChildren().size(); i++) {
 			buttons.add((Button) slideContainer.getChildren().get(i));
 		}
@@ -258,7 +256,7 @@ public class LeapSlideBar extends VBox {
 	private class SlideButtonHandler implements EventHandler<MouseEvent>{
 		int position;
 		
-		public SlideButtonHandler(int pos){
+		private SlideButtonHandler(int pos){
 			super();
 			position = pos;
 		}

@@ -6,12 +6,12 @@ import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.FingerList;
 import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Gesture;
+import com.leapmotion.leap.Gesture.State;
 import com.leapmotion.leap.GestureList;
 import com.leapmotion.leap.Hand;
 import com.leapmotion.leap.HandList;
 import com.leapmotion.leap.Listener;
 import com.leapmotion.leap.SwipeGesture;
-import com.leapmotion.leap.Gesture.State;
 
 import edu.wpi.cs.lmp.slides.SlideManager;
 
@@ -37,13 +37,13 @@ public class HandStateController extends Listener {
 
 	@Override
 	public void onFrame(Controller controller) {
-		Frame frame = controller.frame();
+		final Frame frame = controller.frame();
 		final FingerList fingers = frame.fingers();
 		final HandList hands = frame.hands();
 		final GestureList gestures = frame.gestures();
 
 		if (hands.count() == 1) {
-			Hand thisHand = hands.get(0);
+			final Hand thisHand = hands.get(0);
 			if (thisHand.isValid() && thisHand.grabStrength() >= GRAB_STRENGTH) {
 				// The hand should be considered closed, change the state
 				if (!HandStateObservable.getInstance().get()
@@ -72,7 +72,7 @@ public class HandStateController extends Listener {
 				case TYPE_SWIPE:
 					// If a swipe hasnt been detected, perform a swipe
 					// This ensures multiple swipes from all fingers arent read
-					SwipeGesture swipe = new SwipeGesture(gestures.get(i));
+					final SwipeGesture swipe = new SwipeGesture(gestures.get(i));
 					// Classify as horizontal or vertical
 					boolean isHorizontal = Math.abs(swipe.direction().getX()) > Math
 							.abs(swipe.direction().getY());
@@ -96,8 +96,6 @@ public class HandStateController extends Listener {
 
 						break;
 					}
-				default:
-					break;
 				}
 			}
 		}

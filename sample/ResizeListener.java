@@ -1,6 +1,4 @@
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 
 import com.leapmotion.leap.CircleGesture;
 import com.leapmotion.leap.Controller;
@@ -17,8 +15,8 @@ import com.leapmotion.leap.Listener;
  */
 public class ResizeListener extends Listener {
 
-	public final static int SCREEN_HEIGHT = 1080;
-	public final static int SCREEN_WIDTH = 1920;
+	public static final int SCREEN_HEIGHT = 1080;
+	public static final int SCREEN_WIDTH = 1920;
 
 	int cnt = 0;
 	long start = 0;
@@ -39,7 +37,7 @@ public class ResizeListener extends Listener {
 
 	@Override
 	public void onFrame(Controller controller) {
-		Frame frame = controller.frame();
+		final Frame frame = controller.frame();
 		final FingerList fingers = frame.fingers();
 		final HandList hands = frame.hands();
 		final GestureList gestures = frame.gestures();
@@ -49,14 +47,14 @@ public class ResizeListener extends Listener {
 		if (hands.count() == 2
 				&& hands.get(0).fingers().extended().count() <= 2
 				&& hands.get(1).fingers().extended().count() <= 2) {
-			double xPos1 = hands.get(0).fingers().get(0).tipPosition().getX();
-			double xPos2 = hands.get(1).fingers().get(0).tipPosition().getX();
+			final double xPos1 = hands.get(0).fingers().get(0).tipPosition().getX();
+			final double xPos2 = hands.get(1).fingers().get(0).tipPosition().getX();
 
 			// Wasn't resizing before, new initial space needed
 			if (!isResizing) {
 				initialSpace = Math.abs(xPos2 - xPos1);
 			}
-			double newSize = Math.abs(xPos2 - xPos1);
+			final double newSize = Math.abs(xPos2 - xPos1);
 
 			final double percentageChange = (newSize * 100) / initialSpace;
 			isResizing = true;

@@ -2,13 +2,13 @@ package edu.wpi.cs.lmp.objects;
 
 import java.io.File;
 
-import edu.wpi.cs.lmp.leap.HandStateObservable;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
+import edu.wpi.cs.lmp.leap.HandStateObservable;
 
 public class Video extends MediaView implements IObject {
 	
@@ -21,11 +21,11 @@ public class Video extends MediaView implements IObject {
 	private boolean isPlaying;
 	
 	// Video source
-	private Media media;
+	private final Media media;
 	// Controls for the video
-	private MediaPlayer mediaPlayer;
+	private final MediaPlayer mediaPlayer;
 	
-	private Video instance;
+	private final Video instance;
 	
 	public Video () {
 		super();
@@ -76,10 +76,10 @@ public class Video extends MediaView implements IObject {
 	
 	@Override
 	public boolean inBounds(double x, double y) {
-		double xPos = vidX.doubleValue();
-		double yPos = vidY.doubleValue();
-		double width = vidWidth.doubleValue();
-		double height = vidHeight.doubleValue();
+		final double xPos = vidX.doubleValue();
+		final double yPos = vidY.doubleValue();
+		final double width = vidWidth.doubleValue();
+		final double height = vidHeight.doubleValue();
 		
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
 		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));

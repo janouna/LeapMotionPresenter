@@ -5,10 +5,10 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class HandStateObservable {
-	private static HandStateObservable INSTANCE = new HandStateObservable();
-	private ObjectProperty<HandState> handState = new SimpleObjectProperty<>();
-	private SimpleDoubleProperty handX = new SimpleDoubleProperty();
-	private SimpleDoubleProperty handY = new SimpleDoubleProperty();
+	private static final HandStateObservable INSTANCE = new HandStateObservable();
+	private final ObjectProperty<HandState> handState = new SimpleObjectProperty<>();
+	private final SimpleDoubleProperty handX = new SimpleDoubleProperty();
+	private final SimpleDoubleProperty handY = new SimpleDoubleProperty();
 	
 	private HandStateObservable(){
 		handState.set(HandState.GONE);

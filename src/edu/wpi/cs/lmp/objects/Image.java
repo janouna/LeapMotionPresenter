@@ -1,10 +1,10 @@
 package edu.wpi.cs.lmp.objects;
 
-import edu.wpi.cs.lmp.leap.HandStateObservable;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
+import edu.wpi.cs.lmp.leap.HandStateObservable;
 
 public class Image extends ImageView implements IObject {
 	
@@ -14,7 +14,7 @@ public class Image extends ImageView implements IObject {
 	private DoubleProperty imgX;
 	private DoubleProperty imgY;
 	
-	private Image instance;
+	private final Image instance;
 	
 	public Image() {
 		// TODO Pollice is default image for testing
@@ -61,10 +61,10 @@ public class Image extends ImageView implements IObject {
 
 	@Override
 	public boolean inBounds(double x, double y) {
-		double xPos = imgX.doubleValue();
-		double yPos = imgY.doubleValue();
-		double width = imgWidth.doubleValue();
-		double height = imgHeight.doubleValue();
+		final double xPos = imgX.doubleValue();
+		final double yPos = imgY.doubleValue();
+		final double width = imgWidth.doubleValue();
+		final double height = imgHeight.doubleValue();
 		
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
 		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
@@ -72,6 +72,7 @@ public class Image extends ImageView implements IObject {
 	
 	@Override
 	public void onScreenTap() {
+		// TODO Auto-generated method stub
 		
 	}
 

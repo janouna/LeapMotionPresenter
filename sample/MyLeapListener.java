@@ -21,14 +21,14 @@ import com.leapmotion.leap.Vector;
  */
 public class MyLeapListener extends Listener {
 
-	public final static int SCREEN_HEIGHT = 1080;
-	public final static int SCREEN_WIDTH = 1920;
+	public static final int SCREEN_HEIGHT = 1080;
+	public static final int SCREEN_WIDTH = 1920;
 
 	int cnt = 0;
 	long start = 0;
-	private BooleanProperty keyTap = new SimpleBooleanProperty(false);
+	private final BooleanProperty keyTap = new SimpleBooleanProperty(false);
 	private final LeapConcepts app;
-	private boolean isGrabbed = false;
+	private final boolean isGrabbed = false;
 
 	public MyLeapListener(LeapConcepts main) {
 		this.app = main;
@@ -47,7 +47,7 @@ public class MyLeapListener extends Listener {
 
 	@Override
 	public void onFrame(Controller controller) {
-		Frame frame = controller.frame();
+		final Frame frame = controller.frame();
 		final FingerList fingers = frame.fingers();
 		final HandList hands = frame.hands();
 		// locatedScreens() to calibrate on to screen cords is deprecated or
@@ -55,7 +55,7 @@ public class MyLeapListener extends Listener {
 		// A little research into this shows InteractionBox from the frame to be
 		// the most
 		// Accurate way of mapping leap coordinates on screen
-		InteractionBox screen = frame.interactionBox();
+		final InteractionBox screen = frame.interactionBox();
 
 		if (!fingers.isEmpty()) {
 			final List<Float> xPos = new ArrayList<Float>();
@@ -105,7 +105,7 @@ public class MyLeapListener extends Listener {
 		}
 		if (!hands.isEmpty()) {
 			final Hand thisHand = hands.get(0);
-			Vector intersect = screen.normalizePoint(thisHand
+			final Vector intersect = screen.normalizePoint(thisHand
 					.stabilizedPalmPosition());
 
 			final float x = (Math.min(1, Math.max(0, intersect.getX()) - 0.5f))

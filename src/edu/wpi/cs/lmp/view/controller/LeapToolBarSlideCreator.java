@@ -8,7 +8,7 @@ import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
 public class LeapToolBarSlideCreator extends LeapToolBarSelectedHandler {
 	
-	private LeapToolBarGroup container;
+	private final LeapToolBarGroup container;
 
 	public LeapToolBarSlideCreator(ToggleButton mousedButton,
 			LeapToolBar mousedBar, LeapToolBarGroup container) {
