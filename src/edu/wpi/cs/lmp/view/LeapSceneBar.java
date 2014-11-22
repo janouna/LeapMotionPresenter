@@ -28,39 +28,36 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.util.Duration;
-import edu.wpi.cs.lmp.slides.Slide;
-import edu.wpi.cs.lmp.slides.SlideManager;
+import edu.wpi.cs.lmp.scenes.LeapScene;
+import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
-public class LeapSlideBar extends VBox {
+public class LeapSceneBar extends VBox {
 
 	private static final double THUMBNAIL_WIDTH = 0.10;
 	private static final double THUMBNAIL_HEIGHT = 0.10;
 	// Number of seconds for slide in/out animations for the toolbar
 	private static final float ANIMATION_TIME = 0.5f;
 
-	private final LeapSlideBar instance;
+	private final LeapSceneBar instance;
 
-	private int numSlides;
-	private int currentSlide;
+	private int numScenes;
+	private int currentScene;
 
 	Separator divider1, divider2;
-	private HBox slideControlContainer;
-	private VBox slideGroupContainer;
-	private HBox slideLabelContainer;
-	private HBox slideContainer;
+	private HBox sceneControlContainer;
+	private VBox sceneGroupContainer;
+	private HBox sceneLabelContainer;
+	private HBox sceneContainer;
 	private Button forward;
 	private Button back;
-	private Label slideLabel;
+	private Label sceneLabel;
 	private ScrollPane scrollPane;
 
 	private TranslateTransition animationIn;
 	private TranslateTransition animationOut;
 	private boolean isAnimating;
 
-	public LeapSlideBar() {
-		// TODO Slide buttons
-		// TODO Display Slides properly
-
+	public LeapSceneBar() {
 		// Do all the VBox standard stuff and set the sizes
 		super();
 		instance = this;
@@ -74,11 +71,8 @@ public class LeapSlideBar extends VBox {
 		setupListeners();
 		setupAnimations();
 
-		// TODO Set button controls
-
-		slideManagerObservers();
-		
-		updateSlides();
+		sceneManagerObservers();
+		updateScenes();
 
 		Platform.runLater(new Runnable() {
 			@Override
@@ -94,14 +88,14 @@ public class LeapSlideBar extends VBox {
 	}
 
 	private void setupBarChildren() {
-		// The actual slide stuff:
-		// slideControlContainer: contains all of the slides, the back button
+		// The actual scene stuff:
+		// sceneControlContainer: contains all of the scenes, the back button
 		// and
 		// the forward button all in one horizontal row
-		// slideContainer: Should contain thumbnail of the slides for selection
+		// sceneContainer: Should contain thumbnail of the scenes for selection
 		// forward and back should be self explanatory
-		slideControlContainer = new HBox();
-		slideGroupContainer = new VBox();
+		sceneControlContainer = new HBox();
+		sceneGroupContainer = new VBox();
 		scrollPane = new ScrollPane();
 		
 		// Divider, I should style something better in a stylesheet
@@ -110,18 +104,18 @@ public class LeapSlideBar extends VBox {
 		divider2 = new Separator(Orientation.HORIZONTAL);
 		divider2.getStyleClass().add("slide-seperator-vertical");
 
-		// Instantiate the slide label, this is a placeholder to get the point
+		// Instantiate the scene label, this is a placeholder to get the point
 		// across but labels should be the only thing necessary in the final
 		// version of this UI bar
-		slideLabel = new Label("Slide: 0 / 0");
-		slideLabel.setTextFill(Color.WHITE);
-		slideLabelContainer = new HBox();
-		slideLabelContainer.getChildren().add(slideLabel);
-		this.getChildren().add(slideLabelContainer);
+		sceneLabel = new Label("scene: 0 / 0");
+		sceneLabel.setTextFill(Color.WHITE);
+		sceneLabelContainer = new HBox();
+		sceneLabelContainer.getChildren().add(sceneLabel);
+		this.getChildren().add(sceneLabelContainer);
 
-		slideContainer = new HBox();
-		slideContainer.getStyleClass().add("thumbnail-container");
-		slideGroupContainer.getChildren().add(slideContainer);
+		sceneContainer = new HBox();
+		sceneContainer.getStyleClass().add("thumbnail-container");
+		sceneGroupContainer.getChildren().add(sceneContainer);
 
 		forward = new Button(">");
 		forward.setPrefHeight(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_HEIGHT);
@@ -129,20 +123,20 @@ public class LeapSlideBar extends VBox {
 		back = new Button("<");
 		back.setPrefHeight(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_HEIGHT);
 		back.setTextOverrun(OverrunStyle.CLIP);
-		slideControlContainer.setPrefWidth(Screen.getPrimary().getBounds().getWidth());
+		sceneControlContainer.setPrefWidth(Screen.getPrimary().getBounds().getWidth());
 		
-		scrollPane.setContent(slideGroupContainer);
+		scrollPane.setContent(sceneGroupContainer);
 		scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
 		final double scrollWidth = Screen.getPrimary().getBounds().getWidth() - divider1.getLayoutBounds().getWidth() - divider2.getLayoutBounds().getWidth()
 				- forward.getLayoutBounds().getWidth() - back.getLayoutBounds().getWidth();
 		scrollPane.setPrefViewportWidth(scrollWidth);
 		scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
 
-		slideControlContainer.getChildren().addAll(divider1, back, scrollPane,
+		sceneControlContainer.getChildren().addAll(divider1, back, scrollPane,
 				forward, divider2);
-		HBox.setHgrow(slideContainer, Priority.ALWAYS);
+		HBox.setHgrow(sceneContainer, Priority.ALWAYS);
 
-		this.getChildren().add(slideControlContainer);
+		this.getChildren().add(sceneControlContainer);
 	}
 	private void setupListeners() {
 		// Instantiate main bar and behavior
@@ -186,45 +180,45 @@ public class LeapSlideBar extends VBox {
 		});
 	}
 
-	private void slideManagerObservers() {
-		// Observer for the list of slides, any changes made and the onChange is fired
-		SlideManager.getInstance().getSlidesProperty().addListener(new ListChangeListener<Slide>() {
+	private void sceneManagerObservers() {
+		// Observer for the list of scenes, any changes made and the onChange is fired
+		LeapSceneManager.getInstance().getScenesProperty().addListener(new ListChangeListener<LeapScene>() {
 			@Override
-			public void onChanged(javafx.collections.ListChangeListener.Change<? extends Slide> changes) {
-				updateSlides();
+			public void onChanged(javafx.collections.ListChangeListener.Change<? extends LeapScene> changes) {
+				updateScenes();
 			}
 		});
 		
-		SlideManager.getInstance().getCurrentSlideProperty().addListener(new ChangeListener<Number>() {
+		LeapSceneManager.getInstance().getCurrentSceneProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0,
 					Number arg1, Number arg2) {
-				updateSlides();
+				updateScenes();
 			}
 		});
 	}
-	private void updateSlides(){
-		// Ideally have a method to update the contents of the slide bar
+	private void updateScenes(){
+		// Ideally have a method to update the contents of the scene bar
 		// onChanged gives variable that can be looped through to see what changes were made if necessary
-		// Update the slide count
+		// Update the scene count
 		
-		final List<Slide> slideList = SlideManager.getInstance().getAllSlides();
-		numSlides = slideList.size();
-		currentSlide = SlideManager.getInstance().getCurrentSlideNumber();
-		slideContainer.getChildren().clear();
-		for(int i = 0; i < numSlides; i++){
-			ImageView image = new ImageView(slideList.get(i).snapshot(new SnapshotParameters(), null));
+		final List<LeapScene> sceneList = LeapSceneManager.getInstance().getAllScenes();
+		numScenes = sceneList.size();
+		currentScene = LeapSceneManager.getInstance().getCurrentSceneNumber();
+		sceneContainer.getChildren().clear();
+		for(int i = 0; i < numScenes; i++){
+			ImageView image = new ImageView(sceneList.get(i).snapshot(new SnapshotParameters(), null));
 			
 			Button thumbnail = new Button();
 			image.setFitWidth(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_WIDTH);
 			image.setFitHeight(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_HEIGHT);
 			thumbnail.setGraphic(image);
-			thumbnail.setOnMouseClicked(new SlideButtonHandler(i));
+			thumbnail.setOnMouseClicked(new SceneButtonHandler(i));
 			
-			slideContainer.getChildren().add(thumbnail);
+			sceneContainer.getChildren().add(thumbnail);
 		}
 		
-		slideLabel.setText("Slide: " + (currentSlide + 1) + " / " + numSlides);
+		sceneLabel.setText("Scene: " + (currentScene + 1) + " / " + numScenes);
 	}
 
 	public void transitionIn() {
@@ -241,31 +235,31 @@ public class LeapSlideBar extends VBox {
 		}
 	}
 
-	public Button getSlide(int num) {
-		return (Button) slideContainer.getChildren().get(num);
+	public Button getScene(int num) {
+		return (Button) sceneContainer.getChildren().get(num);
 	}
 
-	public List<Button> getAllSlides() {
+	public List<Button> getAllScenes() {
 		final List<Button> buttons = new ArrayList<Button>();
-		for (int i = 0; i < slideContainer.getChildren().size(); i++) {
-			buttons.add((Button) slideContainer.getChildren().get(i));
+		for (int i = 0; i < sceneContainer.getChildren().size(); i++) {
+			buttons.add((Button) sceneContainer.getChildren().get(i));
 		}
 		return buttons;
 	}
 	
-	private class SlideButtonHandler implements EventHandler<MouseEvent>{
+	private class SceneButtonHandler implements EventHandler<MouseEvent>{
 		int position;
 		
-		private SlideButtonHandler(int pos){
+		private SceneButtonHandler(int pos){
 			super();
 			position = pos;
 		}
 		
 		@Override
 		public void handle(MouseEvent arg0) {
-			System.out.println("Slide " + position + " selected");
-			SlideManager.getInstance().setCurrentSlide(position);
-			updateSlides();
+			System.out.println("Scene " + position + " selected");
+			LeapSceneManager.getInstance().setCurrentScene(position);
+			updateScenes();
 		}
 	}
 }

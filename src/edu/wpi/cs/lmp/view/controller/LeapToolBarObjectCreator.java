@@ -8,7 +8,7 @@ import edu.wpi.cs.lmp.FileChooser.FileChooserFactory;
 import edu.wpi.cs.lmp.objects.IObject;
 import edu.wpi.cs.lmp.objects.ObjectFactory;
 import edu.wpi.cs.lmp.objects.ObjectType;
-import edu.wpi.cs.lmp.slides.SlideManager;
+import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
@@ -31,12 +31,19 @@ public class LeapToolBarObjectCreator extends LeapToolBarSelectedHandler {
 		final File file = FileChooserFactory.getInstance().makeFileChooser(object).showOpenDialog(container.getScene().getWindow());
 
 		// Object instantiation
+<<<<<<< HEAD
 		if (file != null) {
 			final IObject newObject = ObjectFactory.getInstance().createObject(object, file.toString());
 			newObject.setX(event.getScreenX());
 			newObject.setY(event.getScreenY());
 			SlideManager.getInstance().getCurrentSlide().addObject(newObject);
 		}
+=======
+		final IObject newObject = ObjectFactory.getInstance().createObject(object);
+		newObject.setX(event.getScreenX());
+		newObject.setY(event.getScreenY());
+		LeapSceneManager.getInstance().getCurrentScene().addObject(newObject);
+>>>>>>> f5d30659aeb3b3b7bba771a09b930a306ff9c6f8
 		container.removeMenuAll();
 	}
 

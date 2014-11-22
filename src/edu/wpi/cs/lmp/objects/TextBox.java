@@ -19,13 +19,16 @@ public class TextBox extends Text implements IObject {
 	public TextBox() {
 		//TODO: Text is an interesting problem with bounds perhaps layout container?
 		super("TESTING TESTING");
-		// Resize will need to accound to for font sizing
+		
+		instance = this;
+		
 		Platform.runLater(new Runnable() {
-
 			@Override
 			public void run() {
 				textWidth = new SimpleDoubleProperty(instance.getScaleX());
 				textHeight = new SimpleDoubleProperty(instance.getScaleY());
+				textX = new SimpleDoubleProperty(instance.getX());
+				textY = new SimpleDoubleProperty(instance.getY());
 				instance.scaleXProperty().bind(textWidth);
 				instance.scaleYProperty().bind(textHeight);
 			}
@@ -34,15 +37,21 @@ public class TextBox extends Text implements IObject {
 	}
 
 	@Override
-	public void startMove() {
+	public void startMove() {		
+		instance.layoutXProperty().set(-instance.getX());
+		instance.layoutYProperty().set(-instance.getY());
 		this.translateXProperty().bind(HandStateObservable.getInstance().getObservableX());
 		this.translateYProperty().bind(HandStateObservable.getInstance().getObservableY());
+		textX.bind(HandStateObservable.getInstance().getObservableX());
+		textY.bind(HandStateObservable.getInstance().getObservableY());
 	}
 
 	@Override
 	public void endMove() {
 		this.translateXProperty().unbind();
 		this.translateYProperty().unbind();
+		textX.unbind();
+		textY.unbind();
 	}
 
 	@Override
@@ -53,6 +62,7 @@ public class TextBox extends Text implements IObject {
 	
 	@Override
 	public boolean inBounds(double x, double y) {
+		// TODO Auto-generated method stub
 		/*
 		double xPos = textX.doubleValue();
 		double yPos = textY.doubleValue();
