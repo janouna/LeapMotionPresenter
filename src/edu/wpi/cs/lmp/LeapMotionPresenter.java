@@ -16,9 +16,9 @@ import com.leapmotion.leap.Controller;
 
 import edu.wpi.cs.lmp.leap.HandStateController;
 import edu.wpi.cs.lmp.leap.MouseController;
-import edu.wpi.cs.lmp.slides.Slide;
-import edu.wpi.cs.lmp.slides.SlideManager;
-import edu.wpi.cs.lmp.view.LeapSlideBar;
+import edu.wpi.cs.lmp.scenes.LeapScene;
+import edu.wpi.cs.lmp.scenes.LeapSceneManager;
+import edu.wpi.cs.lmp.view.LeapSceneBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
 public class LeapMotionPresenter extends Application {
@@ -26,7 +26,7 @@ public class LeapMotionPresenter extends Application {
 	private Controller c;
 	private MouseController mouseController;
 	private HandStateController handController;
-	private Slide slide;
+	private LeapScene leapScene;
 
 	private LeapMotionPresenter instance;
 	private Pane root;
@@ -47,15 +47,15 @@ public class LeapMotionPresenter extends Application {
 		c.addListener(mouseController);
 		c.addListener(handController);
 		
-		slide = SlideManager.getInstance().getCurrentSlide();
-		root.getChildren().add(slide);
+		leapScene = LeapSceneManager.getInstance().getCurrentScene();
+		root.getChildren().add(leapScene);
 
 		// Leap UI toolbar
 		final LeapToolBarGroup topBar = new LeapToolBarGroup();
 		root.getChildren().add(topBar);
 		
 		// Leap UI slides bar
-		final LeapSlideBar bottomBar = new LeapSlideBar();
+		final LeapSceneBar bottomBar = new LeapSceneBar();
 		root.getChildren().add(bottomBar);
 
 		// Scene building
@@ -77,7 +77,7 @@ public class LeapMotionPresenter extends Application {
 		
 		// root.getChildren().add(webView);
 	     
-	    changeSlideObserver();
+	    changeSceneObserver();
 
 		scene.getStylesheets().add("file:stylesheet.css");
 		stage.setScene(scene);
@@ -88,32 +88,32 @@ public class LeapMotionPresenter extends Application {
 
 	}
 	
-	public void changeSlideObserver() {
-		SlideManager.getInstance().getCurrentSlideProperty().addListener(new ChangeListener<Number>() {
+	public void changeSceneObserver() {
+		LeapSceneManager.getInstance().getCurrentSceneProperty().addListener(new ChangeListener<Number>() {
 			
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
 				System.out.println("SLIDE CHANGING");
 				// Get information of current slide
-				Slide currentSlide = instance.getSlide();
-				final int position = instance.getRoot().getChildren().indexOf(currentSlide);
+				LeapScene currentScene = instance.getSlide();
+				final int position = instance.getRoot().getChildren().indexOf(currentScene);
 				
 				// Remove, replace, and readd the current slide with the new slide
 				instance.getRoot().getChildren().remove(position);
-				currentSlide = SlideManager.getInstance().getCurrentSlide();
-				instance.setSlide(currentSlide);
-				instance.getRoot().getChildren().add(position, currentSlide);
+				currentScene = LeapSceneManager.getInstance().getCurrentScene();
+				instance.setSlide(currentScene);
+				instance.getRoot().getChildren().add(position, currentScene);
 			}
 			
 		});
 	}
 	
-	public Slide getSlide() {
-		return slide;
+	public LeapScene getSlide() {
+		return leapScene;
 	}
 
-	public void setSlide(Slide slide) {
-		this.slide = slide;
+	public void setSlide(LeapScene scene) {
+		this.leapScene = scene;
 	}
 
 	public Pane getRoot() {

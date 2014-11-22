@@ -8,7 +8,7 @@ import edu.wpi.cs.lmp.FileChooser.FileChooserFactory;
 import edu.wpi.cs.lmp.objects.IObject;
 import edu.wpi.cs.lmp.objects.ObjectFactory;
 import edu.wpi.cs.lmp.objects.ObjectType;
-import edu.wpi.cs.lmp.slides.SlideManager;
+import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
@@ -35,7 +35,7 @@ public class LeapToolBarObjectCreator extends LeapToolBarSelectedHandler {
 		final IObject newObject = ObjectFactory.getInstance().createObject(object);
 		newObject.setX(event.getScreenX());
 		newObject.setY(event.getScreenY());
-		SlideManager.getInstance().getCurrentSlide().addObject(newObject);
+		LeapSceneManager.getInstance().getCurrentScene().addObject(newObject);
 		container.removeMenuAll();
 	}
 

@@ -13,7 +13,7 @@ import com.leapmotion.leap.HandList;
 import com.leapmotion.leap.Listener;
 import com.leapmotion.leap.SwipeGesture;
 
-import edu.wpi.cs.lmp.slides.SlideManager;
+import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
 public class HandStateController extends Listener {
 	
@@ -82,13 +82,13 @@ public class HandStateController extends Listener {
 
 							@Override
 							public void run() {
-								int currentSlide = SlideManager.getInstance().getCurrentSlideNumber();
+								int currentSlide = LeapSceneManager.getInstance().getCurrentSceneNumber();
 								if (swipe.direction().getX() > 0) {
 									// Right swipe
-									SlideManager.getInstance().setCurrentSlide(--currentSlide);
+									LeapSceneManager.getInstance().setCurrentScene(--currentSlide);
 								} else {
 									// Left swipe
-									SlideManager.getInstance().setCurrentSlide(++currentSlide);
+									LeapSceneManager.getInstance().setCurrentScene(++currentSlide);
 								}
 							}
 							

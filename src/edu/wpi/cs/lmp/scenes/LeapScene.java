@@ -1,4 +1,4 @@
-package edu.wpi.cs.lmp.slides;
+package edu.wpi.cs.lmp.scenes;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,14 +16,14 @@ import com.leapmotion.leap.Controller;
 import edu.wpi.cs.lmp.leap.ResizeListener;
 import edu.wpi.cs.lmp.objects.IObject;
 
-public class Slide extends Parent {
+public class LeapScene extends Parent {
 
 	private final List<IObject> children;
 	private final ImageView background;
 	private ResizeListener resizer;
 	private Controller c;
 
-	public Slide() {
+	public LeapScene() {
 		c = new Controller();
 		resizer = new ResizeListener();
 		c.addListener(resizer);
@@ -70,7 +70,7 @@ public class Slide extends Parent {
 		});
 	}
 
-	public Slide(String bgFile) {
+	public LeapScene(String bgFile) {
 		children = new ArrayList<IObject>();
 		background = new ImageView("file:" + bgFile);
 	}
