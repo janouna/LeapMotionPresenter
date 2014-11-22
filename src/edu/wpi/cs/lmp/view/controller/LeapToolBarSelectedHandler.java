@@ -1,9 +1,9 @@
 package edu.wpi.cs.lmp.view.controller;
 
-import edu.wpi.cs.lmp.view.LeapToolBar;
 import javafx.event.EventHandler;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
+import edu.wpi.cs.lmp.view.LeapToolBar;
 
 public abstract class LeapToolBarSelectedHandler implements
 		EventHandler<MouseEvent> {
@@ -12,7 +12,7 @@ public abstract class LeapToolBarSelectedHandler implements
 	protected LeapToolBar mousedBar;
 	protected boolean setSelection = true;
 
-	public LeapToolBarSelectedHandler(ToggleButton mousedButton, LeapToolBar mousedBar) {
+	protected LeapToolBarSelectedHandler(ToggleButton mousedButton, LeapToolBar mousedBar) {
 		this.mousedButton = mousedButton;
 		this.mousedBar = mousedBar;
 	}

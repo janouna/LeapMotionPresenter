@@ -12,12 +12,12 @@ import javafx.collections.ObservableList;
 public class SlideManager {
 
 	private static final SlideManager INSTANCE = new SlideManager();
-	private IntegerProperty currentSlide;
-	private ListProperty<Slide> slides;
+	private final IntegerProperty currentSlide;
+	private final ListProperty<Slide> slides;
 
 	private SlideManager() {
 		currentSlide = new SimpleIntegerProperty(0);
-		ObservableList<Slide> observableList = FXCollections
+		final ObservableList<Slide> observableList = FXCollections
 				.observableArrayList();
 		slides = new SimpleListProperty<Slide>(observableList);
 		slides.add(new Slide());
@@ -61,7 +61,7 @@ public class SlideManager {
 	}
 
 	public void moveSlide(int from, int to) {
-		Slide temp = slides.get(from);
+		final Slide temp = slides.get(from);
 		removeSlide(from);
 		slides.add(to, temp);
 	}

@@ -3,26 +3,25 @@ package edu.wpi.cs.lmp.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.wpi.cs.lmp.objects.ObjectType;
-import edu.wpi.cs.lmp.view.controller.LeapToolBarExitMenuHandler;
-//import edu.wpi.cs.lmp.view.controller.LeapToolBarExitProgramHandler;
-import edu.wpi.cs.lmp.view.controller.LeapToolBarObjectCreator;
-import edu.wpi.cs.lmp.view.controller.LeapToolBarSlideCreator;
-import edu.wpi.cs.lmp.view.controller.LeapToolBarSubMenuHandler;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import edu.wpi.cs.lmp.objects.ObjectType;
+import edu.wpi.cs.lmp.view.controller.LeapToolBarExitMenuHandler;
+import edu.wpi.cs.lmp.view.controller.LeapToolBarObjectCreator;
+import edu.wpi.cs.lmp.view.controller.LeapToolBarSlideCreator;
+import edu.wpi.cs.lmp.view.controller.LeapToolBarSubMenuHandler;
 
 public class LeapToolBarGroup extends VBox {
 
-	private LeapToolBarGroup instance;
+	private final LeapToolBarGroup instance;
 
-	private LeapToolBar mainBar;
+	private final LeapToolBar mainBar;
 
-	private LeapToolBar fileBar;
-	private LeapToolBar addBar;
+	private final LeapToolBar fileBar;
+	private final LeapToolBar addBar;
 	public LeapToolBarGroup() {
 		super();
 		instance = this;
@@ -67,7 +66,7 @@ public class LeapToolBarGroup extends VBox {
 	}
 
 	public LeapToolBar getMenuAt(int level) {
-		ObservableList<Node> children = this.getChildren();
+		final ObservableList<Node> children = this.getChildren();
 		for (int i = 0; i < children.size(); i++) {
 			LeapToolBar currentBar = (LeapToolBar) children.get(i);
 			if (currentBar.getMenuLevel() == level) {
@@ -89,8 +88,8 @@ public class LeapToolBarGroup extends VBox {
 	}
 
 	public void removeMenuAbove(int level) {
-		ObservableList<Node> children = this.getChildren();
-		List<LeapToolBar> toRemove = new ArrayList<LeapToolBar>();
+		final ObservableList<Node> children = this.getChildren();
+		final List<LeapToolBar> toRemove = new ArrayList<LeapToolBar>();
 		for (int i = 0; i < children.size(); i++) {
 			LeapToolBar currentBar = (LeapToolBar) children.get(i);
 			if (currentBar.getMenuLevel() > level) {

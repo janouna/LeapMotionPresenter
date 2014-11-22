@@ -1,8 +1,6 @@
 package edu.wpi.cs.lmp.leap;
 
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 
 import com.leapmotion.leap.CircleGesture;
 import com.leapmotion.leap.Controller;
@@ -40,7 +38,7 @@ public class ResizeListener extends Listener {
 
 	@Override
 	public void onFrame(Controller controller) {
-		Frame frame = controller.frame();
+		final Frame frame = controller.frame();
 		final FingerList fingers = frame.fingers();
 		final HandList hands = frame.hands();
 		final GestureList gestures = frame.gestures();
@@ -50,11 +48,11 @@ public class ResizeListener extends Listener {
 		if (hands.count() == 2
 				&& hands.get(0).fingers().extended().count() <= 2
 				&& hands.get(1).fingers().extended().count() <= 2) {
-			double xPos1 = hands.get(0).fingers().get(0).tipPosition().getX();
-			double xPos2 = hands.get(1).fingers().get(0).tipPosition().getX();
+			final double xPos1 = hands.get(0).fingers().get(0).tipPosition().getX();
+			final double xPos2 = hands.get(1).fingers().get(0).tipPosition().getX();
 
-			double zPos1 = hands.get(0).fingers().get(0).tipPosition().getZ();
-			double zPos2 = hands.get(1).fingers().get(0).tipPosition().getZ();
+			final double zPos1 = hands.get(0).fingers().get(0).tipPosition().getZ();
+			final double zPos2 = hands.get(1).fingers().get(0).tipPosition().getZ();
 
 			double initXPos1 = 0;
 			double initXPos2 = 0;
@@ -72,7 +70,7 @@ public class ResizeListener extends Listener {
 				
 				// double newSize = Math.abs(Math.abs(((initXPos2 - xPos2)/2.0)
 				// + xPos2) - ((initXPos1 - xPos1)/2.0) + xPos1);
-				double newSize = Math.abs(xPos2 - xPos1);
+				final double newSize = Math.abs(xPos2 - xPos1);
 
 				final double percentageChange = (newSize * 100) / initialSpace;
 				isResizing = true;
@@ -120,9 +118,9 @@ public class ResizeListener extends Listener {
 							if (circle.pointable().direction()
 									.angleTo(circle.normal()) <= Math.PI / 2) {
 								// Clockwise if angle is less than 90 degrees
-								if (obj != null) {
-									// obj.resize(101);
-								}
+//								if (obj != null) {
+//									obj.resize(101);
+//								}
 							} else {
 								// Testing acceptable circle
 								if (obj != null

@@ -52,29 +52,29 @@ import javafx.util.Duration;
 
 public class RadialOptionsMenu extends Group {
 	
-	private RadialOptionsMenuDemo callingObjetct;
+	private final RadialOptionsMenuDemo callingObjetct;
 
 	private double itemInnerRadius = 60;
 	private double itemRadius = 95;
 	private double centerClosedRadius = 28;
 	private double centerOpenedRadius = 40;
-	private String[] menus;
+	private final String[] menus;
 	
-	private final double minOffset = 0;
+	private static final double minOffset = 0;
 
-	private Circle center;
+	private final Circle center;
 	private final List<RadialMenuItem> items;
 	private final Group itemsGroup = new Group();
 	private final Group textsGroup = new Group();
-	private Circle fakeBackground;
-	private Text centerText;
-	private Circle radiusStroke;
-	private Circle innerRadiusStroke;
+	private final Circle fakeBackground;
+	private final Text centerText;
+	private final Circle radiusStroke;
+	private final Circle innerRadiusStroke;
 
 	private final Color centerColor = Color.web("ffffff");
 	private final Color itemColor = Color.web("ffffff80");
 	private final Paint textColor = Color.web("000000a0");
-	private Paint strokeColor = Color.web("c0c0c0");
+	private final Paint strokeColor = Color.web("c0c0c0");
 
 	final Font textFont = Font.font(java.awt.Font.SANS_SERIF,
 			FontWeight.NORMAL, 11);
@@ -83,7 +83,7 @@ public class RadialOptionsMenu extends Group {
 	final Font menuFont = Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD,
 			12);
 
-	private double animDuration = 350;
+	private final double animDuration = 350;
 	private Animation openTransition;
 	private final Map<RadialMenuItem, List<Text>> itemToTexts;
 
@@ -464,12 +464,12 @@ public class RadialOptionsMenu extends Group {
 
 					final double distanceToCenter = Point2D.distance(
 							event.getX(), event.getY(), 0, 0);
-					if (Math.abs(colorItem.getRadius() + colorItem.getOffset()
-							- distanceToCenter) < 20) {
-						// TODO Fill
-						// Exiting by the external item of the menu
-						// selectedColor.set(colorItem.getBackgroundFill());
-					}
+//					if (Math.abs(colorItem.getRadius() + colorItem.getOffset()
+//							- distanceToCenter) < 20) {
+//						// TODO Fill
+//						// Exiting by the external item of the menu
+//						selectedColor.set(colorItem.getBackgroundFill());
+//					}
 				}
 				enteredByInner = false;
 			} else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {

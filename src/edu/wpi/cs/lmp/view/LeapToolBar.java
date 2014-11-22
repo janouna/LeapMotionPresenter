@@ -22,13 +22,13 @@ public class LeapToolBar extends HBox {
 	// Number of seconds for slide in/out animations for the toolbar
 	private static final int ANIMATION_TIME = 1;
 
-	private LeapToolBar instance;
-	private HBox buttonBar;
-	private TranslateTransition animationIn;
-	private TranslateTransition animationOut;
+	private final LeapToolBar instance;
+	private final HBox buttonBar;
+	private final TranslateTransition animationIn;
+	private final TranslateTransition animationOut;
 	private boolean isAnimating;
 	private boolean isHidden;
-	private int menuLevel;
+	private final int menuLevel;
 
 	public LeapToolBar(String[] menuNames, int menuLevel, boolean isHidden) {
 		super();
@@ -167,7 +167,7 @@ public class LeapToolBar extends HBox {
 	}
 
 	public List<ToggleButton> getAllButton() {
-		List<ToggleButton> buttons = new ArrayList<ToggleButton>();
+		final List<ToggleButton> buttons = new ArrayList<ToggleButton>();
 		for (int i = 0; i < buttonBar.getChildren().size(); i++) {
 			buttons.add((ToggleButton) buttonBar.getChildren().get(i));
 		}

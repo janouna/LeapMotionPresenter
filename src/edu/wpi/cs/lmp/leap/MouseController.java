@@ -9,7 +9,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import com.leapmotion.leap.Controller;
-import com.leapmotion.leap.Finger;
 import com.leapmotion.leap.FingerList;
 import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Hand;
@@ -24,6 +23,7 @@ import com.leapmotion.leap.Vector;
  */
 public class MouseController extends Listener {
 	
+	// TODO Remove
 	private double SCREEN_HEIGHT= 1080;
 	private double SCREEN_WIDTH = 1920;
 	
@@ -81,7 +81,7 @@ public class MouseController extends Listener {
 
 	@Override
 	public void onFrame(Controller controller) {
-		Frame frame = controller.frame();
+		final Frame frame = controller.frame();
 		final HandList hands = frame.hands();
 		final FingerList fingers = frame.fingers();
 		// locatedScreens() to calibrate on to screen cords is deprecated or
@@ -89,7 +89,7 @@ public class MouseController extends Listener {
 		// A little research into this shows InteractionBox from the frame to be
 		// the most
 		// Accurate way of mapping leap coordinates on screen
-		InteractionBox screen = frame.interactionBox();
+		final InteractionBox screen = frame.interactionBox();
 		/*
 		if (fingers.extended().count() == 1) {
 			final Finger thisFinger = fingers.get(0);
@@ -111,7 +111,7 @@ public class MouseController extends Listener {
 		*/
 		if (!hands.isEmpty()) {
 			final Hand thisHand = hands.rightmost();
-			Vector intersect = screen.normalizePoint(thisHand
+			final Vector intersect = screen.normalizePoint(thisHand
 					.stabilizedPalmPosition());
 			// Vector unstableIntersect = screen.normalizePoint(thisHand.palmPosition());
 			

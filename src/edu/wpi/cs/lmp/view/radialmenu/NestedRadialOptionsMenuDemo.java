@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -45,23 +44,12 @@ import javax.imageio.ImageIO;
 import com.leapmotion.leap.Controller;
 // import com.sun.glass.ui.Cursor;
 
-
-
-
-
-
-
-
 import edu.wpi.cs.lmp.leap.MouseController;
 
 public class NestedRadialOptionsMenuDemo extends RadialOptionsMenuDemo {
 	
 	Controller c;
 	MouseController mouseController;
-
-	public static void main(final String[] args) {
-		launch(args);
-	}
 
 	private Group container;
 	private RadialOptionsMenu radialMenu;
@@ -87,7 +75,7 @@ public class NestedRadialOptionsMenuDemo extends RadialOptionsMenuDemo {
 		final double centerOpenedRadius = 40;
 
 		final String[] menus = new String[] { "File", "Add", "Present", "Exit" };
-		HashMap<String, List<String>> nestedItems = new HashMap<String, List<String>>();
+		final Map<String,List<String>> nestedItems = new HashMap<String, List<String>>();
 		nestedItems.put("File", Arrays.asList((new String[] {"Open, Save, Save As, Close"})));
 		nestedItems.put("Add", Arrays.asList((new String[] {"Text, Image, Video"})));
 		nestedItems.put("Present", new ArrayList<String>());
@@ -105,7 +93,7 @@ public class NestedRadialOptionsMenuDemo extends RadialOptionsMenuDemo {
 		mouseController = new MouseController(Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
 		c.addListener(mouseController);
 		
-		Image handCursor = new Image("file:hand_cursor.png");
+		final Image handCursor = new Image("file:hand_cursor.png");
 		
 		scene.setCursor(new ImageCursor(handCursor));
 

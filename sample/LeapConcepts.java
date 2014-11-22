@@ -28,16 +28,16 @@ import com.leapmotion.leap.Controller;
 public class LeapConcepts extends Application {
 	
 	// These control the position of the fingers circles
-	private List<DoubleProperty> centerY = new ArrayList<DoubleProperty>();
-	private List<DoubleProperty> centerX = new ArrayList<DoubleProperty>();
-	private List<DoubleProperty> radius = new ArrayList<DoubleProperty>();
+	private final List<DoubleProperty> centerY = new ArrayList<DoubleProperty>();
+	private final List<DoubleProperty> centerX = new ArrayList<DoubleProperty>();
+	private final List<DoubleProperty> radius = new ArrayList<DoubleProperty>();
 	// List of actual circle objects
-	private List<Circle> circleObjects = new ArrayList<Circle>();
+	private final List<Circle> circleObjects = new ArrayList<Circle>();
 	
 	// These control the position of the palm
-	private DoubleProperty palmX = new SimpleDoubleProperty(10);
-	private DoubleProperty palmY = new SimpleDoubleProperty(10);
-	private DoubleProperty palmZ = new SimpleDoubleProperty(0);
+	private final DoubleProperty palmX = new SimpleDoubleProperty(10);
+	private final DoubleProperty palmY = new SimpleDoubleProperty(10);
+	private final DoubleProperty palmZ = new SimpleDoubleProperty(0);
 	// Palm cursor rectangle
 	private Rectangle rectangleObject;
 	
@@ -85,10 +85,10 @@ public class LeapConcepts extends Application {
 	}
 	
 	public boolean dragImage(double handX, double handY) {
-		double x = img.getTranslateX();
-		double y = img.getTranslateY();
-		double width = imgWidth.doubleValue();
-		double height = imgHeight.doubleValue();
+		final double x = img.getTranslateX();
+		final double y = img.getTranslateY();
+		final double width = imgWidth.doubleValue();
+		final double height = imgHeight.doubleValue();
 		
 		return (handX > x-(width/2) && handX < x+(width/2)) && (handY > y-(height/2) && handY < y+(height/2));		
 	}
@@ -143,7 +143,7 @@ public class LeapConcepts extends Application {
 		root.getChildren().add(img);
 		root.getChildren().add(rectangleObject);
 
-		Scene scene = new Scene(root, MyLeapListener.SCREEN_WIDTH, MyLeapListener.SCREEN_HEIGHT);
+		final Scene scene = new Scene(root, MyLeapListener.SCREEN_WIDTH, MyLeapListener.SCREEN_HEIGHT);
 
 		primaryStage.setTitle("Hello World!");
 		primaryStage.setScene(scene);
@@ -170,7 +170,7 @@ public class LeapConcepts extends Application {
 		centerX.add(new SimpleDoubleProperty(0));
 		centerY.add(new SimpleDoubleProperty(0));
 		radius.add(new SimpleDoubleProperty(10));
-		Circle newCircle = new Circle(20);
+		final Circle newCircle = new Circle(20);
 		newCircle.setFill(Color.rgb((int) (Math.random() * 255),
 				(int) (Math.random() * 255), (int) (Math.random() * 255)));
 		newCircle.translateXProperty().bind(centerX.get(countCircles()));

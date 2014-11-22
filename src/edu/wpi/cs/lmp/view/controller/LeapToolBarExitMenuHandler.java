@@ -1,13 +1,13 @@
 package edu.wpi.cs.lmp.view.controller;
 
-import edu.wpi.cs.lmp.view.LeapToolBar;
-import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
+import edu.wpi.cs.lmp.view.LeapToolBar;
+import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
 public class LeapToolBarExitMenuHandler extends LeapToolBarSelectedHandler {
 	
-	private LeapToolBarGroup container;
+	private final LeapToolBarGroup container;
 
 	public LeapToolBarExitMenuHandler(ToggleButton mousedNode,
 			LeapToolBarGroup container, LeapToolBar mousedBar) {
