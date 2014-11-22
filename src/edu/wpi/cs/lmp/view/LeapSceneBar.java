@@ -35,8 +35,8 @@ public class LeapSceneBar extends VBox {
 
 	private static final double THUMBNAIL_WIDTH = 0.10;
 	private static final double THUMBNAIL_HEIGHT = 0.10;
-	// Number of seconds for scene in/out animations for the toolbar
-	private static final int ANIMATION_TIME = 1;
+	// Number of seconds for slide in/out animations for the toolbar
+	private static final float ANIMATION_TIME = 0.5f;
 
 	private final LeapSceneBar instance;
 
@@ -72,7 +72,6 @@ public class LeapSceneBar extends VBox {
 		setupAnimations();
 
 		sceneManagerObservers();
-		
 		updateScenes();
 
 		Platform.runLater(new Runnable() {
