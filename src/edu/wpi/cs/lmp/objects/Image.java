@@ -5,6 +5,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
 import edu.wpi.cs.lmp.leap.HandStateObservable;
+import edu.wpi.cs.lmp.scenes.LeapScene;
 
 public class Image extends ImageView implements IObject {
 	
@@ -64,13 +65,14 @@ public class Image extends ImageView implements IObject {
 	}
 
 	@Override
-	public boolean inBounds(double x, double y) {
+	public boolean inBounds(LeapScene parent, double x, double y) {
 		final double xPos = imgX.doubleValue();
 		final double yPos = imgY.doubleValue();
 		final double width = imgWidth.doubleValue();
 		final double height = imgHeight.doubleValue();
 		
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
+		
 		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
 	}
 	

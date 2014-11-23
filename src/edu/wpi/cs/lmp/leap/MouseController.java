@@ -110,7 +110,7 @@ public class MouseController extends Listener {
 		}
 		*/
 		if (!hands.isEmpty()) {
-			final Hand thisHand = hands.rightmost();
+			final Hand thisHand = hands.get(0);
 			final Vector intersect = screen.normalizePoint(thisHand
 					.stabilizedPalmPosition());
 			// Vector unstableIntersect = screen.normalizePoint(thisHand.palmPosition());

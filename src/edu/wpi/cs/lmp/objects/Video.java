@@ -9,6 +9,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 import edu.wpi.cs.lmp.leap.HandStateObservable;
+import edu.wpi.cs.lmp.scenes.LeapScene;
 
 public class Video extends MediaView implements IObject {
 	
@@ -98,13 +99,14 @@ public class Video extends MediaView implements IObject {
 	}
 	
 	@Override
-	public boolean inBounds(double x, double y) {
+	public boolean inBounds(LeapScene parent, double x, double y) {
 		final double xPos = vidX.doubleValue();
 		final double yPos = vidY.doubleValue();
 		final double width = vidWidth.doubleValue();
 		final double height = vidHeight.doubleValue();
 		
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
+		
 		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
 	}
 	

@@ -9,6 +9,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.RectangleBuilder;
 import javafx.stage.Screen;
 
 import com.leapmotion.leap.Controller;
@@ -29,16 +32,15 @@ public class LeapScene extends Parent {
 		c.addListener(resizer);
 		children = new ArrayList<IObject>();
 		background = new ImageView();
-		background
-				.setFitWidth(Screen.getPrimary().getBounds().getWidth());
-		background.setFitHeight(Screen.getPrimary().getBounds()
-				.getHeight());
+		background.setFitWidth(Screen.getPrimary().getBounds().getWidth());
+		background.setFitHeight(Screen.getPrimary().getBounds().getHeight());
 		// this.getChildren().add(background);
 		// Bind on click
 		this.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				final List<IObject> clickedOn = getAt(event.getX(), event.getY());
+				final List<IObject> clickedOn = getAt(event.getX(),
+						event.getY());
 				System.out.println("Binding to: " + clickedOn.get(0));
 				clickedOn.get(0).startMove();
 			}
@@ -57,7 +59,8 @@ public class LeapScene extends Parent {
 		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				final List<IObject> mouseOver = getAt(event.getX(), event.getY());
+				final List<IObject> mouseOver = getAt(event.getX(),
+						event.getY());
 				resizer.setIObject(mouseOver.get(0));
 			}
 		});
@@ -94,12 +97,20 @@ public class LeapScene extends Parent {
 	public List<IObject> getAt(double x, double y) {
 		final List<IObject> atList = new LinkedList<IObject>();
 		for (IObject i : children) {
-			if (i.inBounds(x, y)) {
+			if (i.inBounds(this, x, y)) {
 				atList.add(i);
 			}
 		}
 
 		return atList;
+	}
+
+	public void drawBounds(double x, double y, double width, double height) {
+		Rectangle bounds = new Rectangle(x, y, width, height);
+		bounds.setFill(Color.TRANSPARENT);
+		bounds.setStroke(Color.RED);
+		bounds.setStrokeWidth(2);
+		this.getChildren().add(bounds);
 	}
 
 }

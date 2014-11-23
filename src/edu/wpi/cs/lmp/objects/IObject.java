@@ -1,5 +1,7 @@
 package edu.wpi.cs.lmp.objects;
 
+import edu.wpi.cs.lmp.scenes.LeapScene;
+
 public interface IObject {
 	void startMove();
 	void endMove();
@@ -10,5 +12,5 @@ public interface IObject {
 	void onScreenTap();
 	void onCounterCircle();
 	
-	boolean inBounds(double x, double y);
+	boolean inBounds(LeapScene parent, double x, double y);
 }

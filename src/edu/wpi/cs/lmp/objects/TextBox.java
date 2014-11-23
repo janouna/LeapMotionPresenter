@@ -1,9 +1,11 @@
 package edu.wpi.cs.lmp.objects;
 
 import edu.wpi.cs.lmp.leap.HandStateObservable;
+import edu.wpi.cs.lmp.scenes.LeapScene;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class TextBox extends Text implements IObject {
@@ -21,6 +23,8 @@ public class TextBox extends Text implements IObject {
 		super("TESTING TESTING");
 		
 		instance = this;
+		
+		instance.setFont(new Font(45));
 		
 		Platform.runLater(new Runnable() {
 			@Override
@@ -61,19 +65,24 @@ public class TextBox extends Text implements IObject {
 	}
 	
 	@Override
-	public boolean inBounds(double x, double y) {
-		// TODO Auto-generated method stub
-		/*
+	public boolean inBounds(LeapScene parent, double x, double y) {
 		double xPos = textX.doubleValue();
 		double yPos = textY.doubleValue();
-		double width = textWidth.doubleValue();
-		double height = textHeight.doubleValue();
-		*/
-		return true;
+
+		double width = textWidth.doubleValue() * this.getLayoutBounds().getWidth();
+		double height = textHeight.doubleValue() * this.getLayoutBounds().getHeight();
+		
+		// Y as at the bottom left for text
+		yPos -= height;
+
+
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
-		//return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
+		
+		parent.drawBounds(xPos, yPos, width, height);
+
+		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
 	}
-	
+
 	@Override
 	public void onScreenTap() {
 		// TODO Auto-generated method stub
