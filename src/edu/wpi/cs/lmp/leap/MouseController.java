@@ -9,7 +9,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import com.leapmotion.leap.Controller;
-import com.leapmotion.leap.FingerList;
 import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Hand;
 import com.leapmotion.leap.HandList;
@@ -27,11 +26,11 @@ public class MouseController extends Listener {
 	private double SCREEN_HEIGHT= 1080;
 	private double SCREEN_WIDTH = 1920;
 	
-	private static final float HEIGHT_BOTTOM_CLAMP = 0.2f;
-	private static final float HEIGHT_TOP_CLAMP = 0.8f;
+	//private static final float HEIGHT_BOTTOM_CLAMP = 0.2f;
+	//private static final float HEIGHT_TOP_CLAMP = 0.8f;
 	
-	private static final float WIDTH_LEFT_CLAMP = 0.2f;
-	private static final float WIDTH_RIGHT_CLAMP = 0.8f;
+	//private static final float WIDTH_LEFT_CLAMP = 0.2f;
+	//private static final float WIDTH_RIGHT_CLAMP = 0.8f;
 
 	
 	private Robot mouse;
@@ -70,6 +69,8 @@ public class MouseController extends Listener {
 							System.out.println("No Hand detected");
 							mouse.mouseRelease(InputEvent.BUTTON1_MASK);
 							break;
+						case POINTING:
+							break;
 						}
 					}
 				});
@@ -83,7 +84,8 @@ public class MouseController extends Listener {
 	public void onFrame(Controller controller) {
 		final Frame frame = controller.frame();
 		final HandList hands = frame.hands();
-		final FingerList fingers = frame.fingers();
+		//final FingerList fingers = frame.fingers();
+
 		// locatedScreens() to calibrate on to screen cords is deprecated or
 		// shoddy at best
 		// A little research into this shows InteractionBox from the frame to be

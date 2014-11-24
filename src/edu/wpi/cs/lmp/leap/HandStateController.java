@@ -3,7 +3,6 @@ package edu.wpi.cs.lmp.leap;
 import javafx.application.Platform;
 
 import com.leapmotion.leap.Controller;
-import com.leapmotion.leap.FingerList;
 import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Gesture;
 import com.leapmotion.leap.Gesture.State;
@@ -38,7 +37,7 @@ public class HandStateController extends Listener {
 	@Override
 	public void onFrame(Controller controller) {
 		final Frame frame = controller.frame();
-		final FingerList fingers = frame.fingers();
+		//final FingerList fingers = frame.fingers();
 		final HandList hands = frame.hands();
 		final GestureList gestures = frame.gestures();
 
@@ -96,6 +95,14 @@ public class HandStateController extends Listener {
 
 						break;
 					}
+				case TYPE_CIRCLE:
+					break;
+				case TYPE_INVALID:
+					break;
+				case TYPE_KEY_TAP:
+					break;
+				case TYPE_SCREEN_TAP:
+					break;
 				}
 			}
 		}
