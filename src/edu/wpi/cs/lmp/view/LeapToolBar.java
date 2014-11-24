@@ -52,7 +52,7 @@ public class LeapToolBar extends HBox {
 			public void handle(ActionEvent arg0) {
 				isAnimating = false;
 				instance.isHidden = false;
-				instance.enableAllButton(true);
+				//instance.enableAllButton(true);
 			}
 		});
 
@@ -68,7 +68,7 @@ public class LeapToolBar extends HBox {
 				isAnimating = false;
 				instance.isHidden = true;
 				instance.setOpacity(0);
-				instance.enableAllButton(false);
+				//instance.enableAllButton(false);
 			}
 		});
 
@@ -113,7 +113,7 @@ public class LeapToolBar extends HBox {
 		
 		if (this.isHidden) {
 			this.setOpacity(0);
-			this.enableAllButton(false);
+			//this.enableAllButton(false);
 		}
 
 	}

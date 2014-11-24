@@ -10,6 +10,8 @@ import javafx.scene.text.Text;
 
 public class TextBox extends Text implements IObject {
 	
+	private static final float EXTRA_BOUNDS = 1.1f;
+	
 	private DoubleProperty textWidth;
 	private DoubleProperty textHeight;
 	
@@ -72,16 +74,16 @@ public class TextBox extends Text implements IObject {
 		double xPos = textX.doubleValue();
 		double yPos = textY.doubleValue();
 
-		double width = this.getLayoutBounds().getWidth();
-		double height = this.getLayoutBounds().getHeight();
+		double width = this.getLayoutBounds().getWidth() * EXTRA_BOUNDS;
+		double height = this.getLayoutBounds().getHeight() * EXTRA_BOUNDS;
 		
 		// Y as at the bottom left for text
-		yPos -= height;
+		yPos -= this.getLayoutBounds().getHeight() - (height - this.getLayoutBounds().getHeight())/2;
 
 
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
 		
-		//parent.drawBounds(xPos, yPos, width, height);
+		parent.drawBounds(xPos, yPos, width, height);
 
 		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
 	}

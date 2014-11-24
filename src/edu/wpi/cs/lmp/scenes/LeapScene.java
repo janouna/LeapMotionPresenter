@@ -61,13 +61,12 @@ public class LeapScene extends Parent {
 		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				List<IObject> mouseOver = null;
-				try {
-					mouseOver = getAt(event.getX(), event.getY());
+				final List<IObject> mouseOver = getAt(event.getX(), event.getY());
+				try { 
+					resizer.setIObject(mouseOver.get(0));
 				} catch (IndexOutOfBoundsException e) {
 					System.out.println("No object found: OnEntered()");
 				}
-				resizer.setIObject(mouseOver.get(0));
 			}
 		});
 		// Unbind resizer as cursor is not on anything
