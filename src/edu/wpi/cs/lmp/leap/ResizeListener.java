@@ -4,7 +4,6 @@ import javafx.application.Platform;
 
 import com.leapmotion.leap.CircleGesture;
 import com.leapmotion.leap.Controller;
-import com.leapmotion.leap.FingerList;
 import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Gesture;
 import com.leapmotion.leap.GestureList;
@@ -39,7 +38,7 @@ public class ResizeListener extends Listener {
 	@Override
 	public void onFrame(Controller controller) {
 		final Frame frame = controller.frame();
-		final FingerList fingers = frame.fingers();
+		//final FingerList fingers = frame.fingers();
 		final HandList hands = frame.hands();
 		final GestureList gestures = frame.gestures();
 
@@ -54,18 +53,12 @@ public class ResizeListener extends Listener {
 			final double zPos1 = hands.get(0).fingers().get(0).tipPosition().getZ();
 			final double zPos2 = hands.get(1).fingers().get(0).tipPosition().getZ();
 
-			double initXPos1 = 0;
-			double initXPos2 = 0;
-			
 			// Check if the fingers are aligned closely enough to begin resizing
 			if (Math.abs(zPos2 - zPos1) <= 30) {
 				
 				// Wasn't resizing before, new initial space needed
 				if (!isResizing) {
 					initialSpace = Math.abs(xPos2 - xPos1);
-					initXPos1 = xPos1;
-					initXPos2 = xPos2;
-
 				}
 				
 				// double newSize = Math.abs(Math.abs(((initXPos2 - xPos2)/2.0)
@@ -134,6 +127,12 @@ public class ResizeListener extends Listener {
 							if (obj != null) {
 								obj.onScreenTap();
 							}
+							break;
+						case TYPE_SWIPE:
+							break;
+						case TYPE_KEY_TAP:
+							break;
+						case TYPE_INVALID:
 							break;
 						}
 					}
