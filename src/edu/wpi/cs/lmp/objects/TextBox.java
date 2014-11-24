@@ -29,12 +29,12 @@ public class TextBox extends Text implements IObject {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				textWidth = new SimpleDoubleProperty(instance.getScaleX());
-				textHeight = new SimpleDoubleProperty(instance.getScaleY());
+				//textWidth = new SimpleDoubleProperty(instance.getScaleX());
+				//textHeight = new SimpleDoubleProperty(instance.getScaleY());
 				textX = new SimpleDoubleProperty(instance.getX());
 				textY = new SimpleDoubleProperty(instance.getY());
-				instance.scaleXProperty().bind(textWidth);
-				instance.scaleYProperty().bind(textHeight);
+				//instance.scaleXProperty().bind(textWidth);
+				//instance.scaleYProperty().bind(textHeight);
 			}
 			
 		});
@@ -60,8 +60,11 @@ public class TextBox extends Text implements IObject {
 
 	@Override
 	public void resize(double percentageChange) {
-		textWidth.set((textWidth.doubleValue()*percentageChange)/100);
-		textHeight.set((textHeight.doubleValue()*percentageChange)/100);
+		//textWidth.set((textWidth.doubleValue()*percentageChange)/100);
+		//textHeight.set((textHeight.doubleValue()*percentageChange)/100);
+		Double currentSize = this.getFont().getSize();
+		Font newFont = new Font(this.getFont().getName(), (currentSize*percentageChange)/100);
+		this.setFont(newFont);
 	}
 	
 	@Override
@@ -69,8 +72,8 @@ public class TextBox extends Text implements IObject {
 		double xPos = textX.doubleValue();
 		double yPos = textY.doubleValue();
 
-		double width = textWidth.doubleValue() * this.getLayoutBounds().getWidth();
-		double height = textHeight.doubleValue() * this.getLayoutBounds().getHeight();
+		double width = this.getLayoutBounds().getWidth();
+		double height = this.getLayoutBounds().getHeight();
 		
 		// Y as at the bottom left for text
 		yPos -= height;
@@ -78,7 +81,7 @@ public class TextBox extends Text implements IObject {
 
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
 		
-		parent.drawBounds(xPos, yPos, width, height);
+		//parent.drawBounds(xPos, yPos, width, height);
 
 		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
 	}

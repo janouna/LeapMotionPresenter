@@ -41,8 +41,11 @@ public class LeapScene extends Parent {
 			public void handle(MouseEvent event) {
 				final List<IObject> clickedOn = getAt(event.getX(),
 						event.getY());
-				System.out.println("Binding to: " + clickedOn.get(0));
-				clickedOn.get(0).startMove();
+				try {
+					clickedOn.get(0).startMove();
+				} catch (IndexOutOfBoundsException e) {
+					System.out.println("No object found: onPressed()");
+				}
 			}
 		});
 		// Unbind on release
@@ -59,8 +62,12 @@ public class LeapScene extends Parent {
 		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				final List<IObject> mouseOver = getAt(event.getX(),
-						event.getY());
+				List<IObject> mouseOver = null;
+				try {
+					mouseOver = getAt(event.getX(), event.getY());
+				} catch (IndexOutOfBoundsException e) {
+					System.out.println("No object found: OnEntered()");
+				}
 				resizer.setIObject(mouseOver.get(0));
 			}
 		});
