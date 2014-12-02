@@ -2,6 +2,8 @@ package edu.wpi.cs.lmp.objects;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.scenes.LeapScene;
@@ -82,8 +84,8 @@ public class TextBox extends Text implements IObject {
 
 
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
-
-		parent.drawBounds(xPos, yPos, width, height);
+		
+		// parent.drawBounds(xPos, yPos, width, height);
 
 		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
 	}

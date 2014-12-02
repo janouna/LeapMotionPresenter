@@ -59,9 +59,9 @@ public class LeapToolBarGroup extends VBox {
 		mainBar.getButton("ExitMenu").setOnMouseExited(new LeapToolBarExitMenuHandler(mainBar.getButton("ExitMenu"), this, mainBar));
 		
 		// Set add bar button controls
-		addBar.getButton("Image").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Image"), addBar, this, ObjectType.IMAGE));
-		addBar.getButton("Video").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Video"), addBar, this, ObjectType.VIDEO));
-		addBar.getButton("Text").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Text"), addBar, this, ObjectType.TEXT));
+		addBar.getButton("Image").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Image"), addBar, this, ObjectType.IMAGE, true));
+		addBar.getButton("Video").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Video"), addBar, this, ObjectType.VIDEO, true));
+		addBar.getButton("Text").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Text"), addBar, this, ObjectType.TEXT, false));
 		addBar.getButton("Slide").setOnMouseExited(new LeapToolBarSlideCreator(addBar.getButton("Slide"), addBar, this));
 
 		fileBar.getButton("Exit").setOnMouseExited(new LeapToolBarExitProgramHandler(fileBar.getButton("Exit"), fileBar));
