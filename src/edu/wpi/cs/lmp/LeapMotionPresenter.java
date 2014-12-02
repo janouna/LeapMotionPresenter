@@ -67,6 +67,21 @@ public class LeapMotionPresenter extends Application {
 		final javafx.scene.image.Image handCursor = new javafx.scene.image.Image("file:hand_cursor.png");
 		scene.setCursor(new ImageCursor(handCursor));
 		
+		stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0,
+					Boolean oldVal, Boolean newVal) {
+				if (!newVal) {
+					c.removeListener(handController);
+					c.removeListener(mouseController);
+				} else {
+					c.addListener(handController);
+					c.addListener(mouseController);
+				}
+			}
+		});
+		
+		/*
 		final String content_Url = "<iframe width=\"560\" height=\"315\" src=\"http://www.youtube.com/embed/C0DPdy98e4c\" frameborder=\"0\" allowfullscreen></iframe>";
 		
 		final WebView webView = new WebView();
@@ -76,6 +91,7 @@ public class LeapMotionPresenter extends Application {
 	    webView.setPrefWidth(560);
 		
 		// root.getChildren().add(webView);
+		*/
 	     
 	    changeSceneObserver();
 
@@ -89,7 +105,7 @@ public class LeapMotionPresenter extends Application {
 
 	}
 	
-	public void changeSceneObserver() {
+	private void changeSceneObserver() {
 		LeapSceneManager.getInstance().getCurrentSceneProperty().addListener(new ChangeListener<Number>() {
 			
 			@Override

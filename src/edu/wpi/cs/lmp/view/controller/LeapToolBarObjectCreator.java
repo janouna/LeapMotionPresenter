@@ -16,26 +16,38 @@ public class LeapToolBarObjectCreator extends LeapToolBarSelectedHandler {
 
 	private final ObjectType object;
 	private final LeapToolBarGroup container;
+	private boolean useFileChooser;
 
 	public LeapToolBarObjectCreator(ToggleButton mousedButton,
-			LeapToolBar mousedBar, LeapToolBarGroup container, ObjectType object) {
+			LeapToolBar mousedBar, LeapToolBarGroup container,
+			ObjectType object, Boolean useFileChooser) {
 		super(mousedButton, mousedBar);
 		setSelection = false;
 		this.object = object;
 		this.container = container;
+		this.useFileChooser = useFileChooser;
 	}
 
 	@Override
 	public void action(MouseEvent event) {
 		// Instantiate file chooser window and capture URI of file
-		final File file = FileChooserFactory.getInstance()
-				.makeFileChooser(object)
-				.showOpenDialog(container.getScene().getWindow());
+		if (useFileChooser) {
+			final File file = FileChooserFactory.getInstance()
+					.makeFileChooser(object)
+					.showOpenDialog(container.getScene().getWindow());
 
-		// Object instantiation
-		if (file != null) {
-			final IObject newObject = ObjectFactory.getInstance().createObject(
-					object, file.toString());
+			// Object instantiation
+			if (file != null) {
+				final IObject newObject = ObjectFactory.getInstance()
+						.createObject(object, file.toString());
+				newObject.setX(event.getScreenX());
+				newObject.setY(event.getScreenY());
+				LeapSceneManager.getInstance().getCurrentScene()
+						.addObject(newObject);
+			}
+		} else {
+			final IObject newObject = ObjectFactory.getInstance()
+					.createObject(object);
 			newObject.setX(event.getScreenX());
 			newObject.setY(event.getScreenY());
 			LeapSceneManager.getInstance().getCurrentScene()
