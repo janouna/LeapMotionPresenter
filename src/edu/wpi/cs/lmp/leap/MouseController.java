@@ -21,18 +21,16 @@ import com.leapmotion.leap.Vector;
  * @author johan Modified to track multiple hands
  */
 public class MouseController extends Listener {
-	
-	// TODO Remove
-	private double SCREEN_HEIGHT= 1080;
-	private double SCREEN_WIDTH = 1920;
-	
+	private double SCREEN_HEIGHT;
+	private double SCREEN_WIDTH;
+
 	//private static final float HEIGHT_BOTTOM_CLAMP = 0.2f;
 	//private static final float HEIGHT_TOP_CLAMP = 0.8f;
-	
+
 	//private static final float WIDTH_LEFT_CLAMP = 0.2f;
 	//private static final float WIDTH_RIGHT_CLAMP = 0.8f;
 
-	
+
 	private Robot mouse;
 
 	public MouseController(double width, double height) {
@@ -48,7 +46,7 @@ public class MouseController extends Listener {
 		} catch (AWTException e) {
 			e.printStackTrace();
 		}
-		
+
 		HandStateObservable.getInstance().getHandState().addListener(new ChangeListener<HandState>() {
 			@Override
 			public void changed(ObservableValue<? extends HandState> observable,
@@ -76,7 +74,7 @@ public class MouseController extends Listener {
 				});
 			}
 		});
-		
+
 		System.out.println("connected: MouseController");
 	}
 
@@ -97,7 +95,7 @@ public class MouseController extends Listener {
 			final Finger thisFinger = fingers.get(0);
 			Vector intersect = screen.normalizePoint(thisFinger
 					.stabilizedTipPosition());
-			
+
 			final double x = intersect.getX() * SCREEN_WIDTH;
 			final double y = (1 - intersect.getY()) * SCREEN_HEIGHT;
 
@@ -110,13 +108,13 @@ public class MouseController extends Listener {
 				}
 			});
 		}
-		*/
+		 */
 		if (!hands.isEmpty()) {
 			final Hand thisHand = hands.get(0);
 			final Vector intersect = screen.normalizePoint(thisHand
 					.stabilizedPalmPosition());
 			// Vector unstableIntersect = screen.normalizePoint(thisHand.palmPosition());
-			
+
 			final double x = intersect.getX() * SCREEN_WIDTH;
 			final double y = (1 - intersect.getY()) * SCREEN_HEIGHT;
 			// final double y = unstableIntersect.getZ() * SCREEN_HEIGHT;

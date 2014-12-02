@@ -55,12 +55,12 @@ public class ResizeListener extends Listener {
 
 			// Check if the fingers are aligned closely enough to begin resizing
 			if (Math.abs(zPos2 - zPos1) <= 30) {
-				
+
 				// Wasn't resizing before, new initial space needed
 				if (!isResizing) {
 					initialSpace = Math.abs(xPos2 - xPos1);
 				}
-				
+
 				// double newSize = Math.abs(Math.abs(((initXPos2 - xPos2)/2.0)
 				// + xPos2) - ((initXPos1 - xPos1)/2.0) + xPos1);
 				final double newSize = Math.abs(xPos2 - xPos1);
@@ -111,9 +111,9 @@ public class ResizeListener extends Listener {
 							if (circle.pointable().direction()
 									.angleTo(circle.normal()) <= Math.PI / 2) {
 								// Clockwise if angle is less than 90 degrees
-//								if (obj != null) {
-//									obj.resize(101);
-//								}
+								//								if (obj != null) {
+								//									obj.resize(101);
+								//								}
 							} else {
 								// Testing acceptable circle
 								if (obj != null

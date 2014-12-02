@@ -15,13 +15,13 @@ import com.leapmotion.leap.SwipeGesture;
 import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
 public class HandStateController extends Listener {
-	
+
 	// Used for ignoring swipe gestures recognized immediately after another
 	// Useful as all fingers count in the gesture and may be recognized in another frame
 	private static final long SWIPE_TIMEOUT = 200;
 	// Grab strength needed to trigger a closed hand (0.0-1.0)
 	private static final float GRAB_STRENGTH = 0.5f;
-	
+
 	private long lastSwipe = Long.MIN_VALUE;
 
 	@Override
@@ -90,7 +90,7 @@ public class HandStateController extends Listener {
 									LeapSceneManager.getInstance().setCurrentScene(++currentSlide);
 								}
 							}
-							
+
 						});
 
 						break;

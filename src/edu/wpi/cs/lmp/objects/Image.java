@@ -8,21 +8,20 @@ import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.scenes.LeapScene;
 
 public class Image extends ImageView implements IObject {
-	
+
 	private DoubleProperty imgWidth;
 	private DoubleProperty imgHeight;
-	
+
 	private DoubleProperty imgX;
 	private DoubleProperty imgY;
-	
+
 	private final Image instance;
-	
+
 	public Image() {
 		this("file:gary.JPG");
 	}
 
 	public Image(String path) {
-		// TODO Pollice is default image for testing
 		super("file:" + path);
 		instance = this;
 		Platform.runLater(new Runnable() {
@@ -36,7 +35,7 @@ public class Image extends ImageView implements IObject {
 				instance.fitWidthProperty().bind(imgWidth);
 				instance.fitHeightProperty().bind(imgHeight);
 			}
-			
+
 		});
 	}
 
@@ -70,22 +69,22 @@ public class Image extends ImageView implements IObject {
 		final double yPos = imgY.doubleValue();
 		final double width = imgWidth.doubleValue();
 		final double height = imgHeight.doubleValue();
-		
+
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
-		
+
 		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
 	}
-	
+
 	@Override
 	public void onScreenTap() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onCounterCircle() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -30,7 +30,7 @@ public class LeapMotionPresenter extends Application {
 
 	private LeapMotionPresenter instance;
 	private Pane root;
-	
+
 
 	@Override
 	public void start(Stage stage) {
@@ -46,14 +46,14 @@ public class LeapMotionPresenter extends Application {
 		handController = new HandStateController();
 		c.addListener(mouseController);
 		c.addListener(handController);
-		
+
 		leapScene = LeapSceneManager.getInstance().getCurrentScene();
 		root.getChildren().add(leapScene);
 
 		// Leap UI toolbar
 		final LeapToolBarGroup topBar = new LeapToolBarGroup();
 		root.getChildren().add(topBar);
-		
+
 		// Leap UI slides bar
 		final LeapSceneBar bottomBar = new LeapSceneBar();
 		root.getChildren().add(bottomBar);
@@ -66,18 +66,18 @@ public class LeapMotionPresenter extends Application {
 		// icon based on state (Open palm, closed palm, finger pointed, etc)
 		final javafx.scene.image.Image handCursor = new javafx.scene.image.Image("file:hand_cursor.png");
 		scene.setCursor(new ImageCursor(handCursor));
-		
+
 		final String content_Url = "<iframe width=\"560\" height=\"315\" src=\"http://www.youtube.com/embed/C0DPdy98e4c\" frameborder=\"0\" allowfullscreen></iframe>";
-		
+
 		final WebView webView = new WebView();
-	    final WebEngine webEngine = webView.getEngine();
-	    webEngine.loadContent(content_Url);
-	    webView.setPrefHeight(315);
-	    webView.setPrefWidth(560);
-		
+		final WebEngine webEngine = webView.getEngine();
+		webEngine.loadContent(content_Url);
+		webView.setPrefHeight(315);
+		webView.setPrefWidth(560);
+
 		// root.getChildren().add(webView);
-	     
-	    changeSceneObserver();
+
+		changeSceneObserver();
 
 		scene.getStylesheets().add("file:stylesheet.css");
 		stage.setTitle("Leap Motion Presenter");
@@ -88,27 +88,27 @@ public class LeapMotionPresenter extends Application {
 		stage.show();
 
 	}
-	
+
 	public void changeSceneObserver() {
 		LeapSceneManager.getInstance().getCurrentSceneProperty().addListener(new ChangeListener<Number>() {
-			
+
 			@Override
 			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
 				System.out.println("SLIDE CHANGING");
 				// Get information of current slide
 				LeapScene currentScene = instance.getSlide();
 				final int position = instance.getRoot().getChildren().indexOf(currentScene);
-				
+
 				// Remove, replace, and readd the current slide with the new slide
 				instance.getRoot().getChildren().remove(position);
 				currentScene = LeapSceneManager.getInstance().getCurrentScene();
 				instance.setSlide(currentScene);
 				instance.getRoot().getChildren().add(position, currentScene);
 			}
-			
+
 		});
 	}
-	
+
 	public LeapScene getSlide() {
 		return leapScene;
 	}

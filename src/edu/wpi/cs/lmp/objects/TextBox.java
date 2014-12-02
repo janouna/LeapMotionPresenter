@@ -1,5 +1,6 @@
 package edu.wpi.cs.lmp.objects;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import edu.wpi.cs.lmp.leap.HandStateObservable;
@@ -11,25 +12,22 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class TextBox extends Text implements IObject {
-	
+
 	private static final float EXTRA_BOUNDS = 1.1f;
-	
-	private DoubleProperty textWidth;
-	private DoubleProperty textHeight;
-	
+
 	private DoubleProperty textX;
 	private DoubleProperty textY;
-	
+
 	private TextBox instance;
-	
+
 	public TextBox() {
 		//TODO: Text is an interesting problem with bounds perhaps layout container?
 		super("TESTING TESTING");
-		
+
 		instance = this;
-		
+
 		instance.setFont(new Font(45));
-		
+
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -40,7 +38,7 @@ public class TextBox extends Text implements IObject {
 				//instance.scaleXProperty().bind(textWidth);
 				//instance.scaleYProperty().bind(textHeight);
 			}
-			
+
 		});
 	}
 
@@ -70,7 +68,7 @@ public class TextBox extends Text implements IObject {
 		Font newFont = new Font(this.getFont().getName(), (currentSize*percentageChange)/100);
 		this.setFont(newFont);
 	}
-	
+
 	@Override
 	public boolean inBounds(LeapScene parent, double x, double y) {
 		double xPos = textX.doubleValue();
@@ -78,13 +76,13 @@ public class TextBox extends Text implements IObject {
 
 		double width = this.getLayoutBounds().getWidth() * EXTRA_BOUNDS;
 		double height = this.getLayoutBounds().getHeight() * EXTRA_BOUNDS;
-		
+
 		// Y as at the bottom left for text
 		yPos -= this.getLayoutBounds().getHeight() - (height - this.getLayoutBounds().getHeight())/2;
 
 
 		// return (x > xPos-(width/2) && x < xPos+(width/2)) && (y > yPos-(height/2) && y < yPos+(height/2));
-		
+
 		parent.drawBounds(xPos, yPos, width, height);
 
 		return (x > xPos && x < xPos+(width)) && (y > yPos && y < yPos+(height));
@@ -92,15 +90,18 @@ public class TextBox extends Text implements IObject {
 
 	@Override
 	public void onScreenTap() {
-		// TODO Auto-generated method stub
-		String newText = JOptionPane.showInputDialog("Enter Text", this.getText());
-		this.setText(newText);
+		String newText = JOptionTextAreaPane.showInputDialog("Enter Text");
+		
+		
+		//String newText = JOptionPane.showInputDialog("Enter Text", this.getText());
+		if(newText != null)
+			this.setText(newText);
 	}
 
 	@Override
 	public void onCounterCircle() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

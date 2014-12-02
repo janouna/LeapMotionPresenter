@@ -46,7 +46,7 @@ public class FileChooserFactory {
 			fileChooser.getExtensionFilters().addAll(extAll, extMP4);
 			break;
 		}
-		
+
 		return fileChooser;
 	}
 
