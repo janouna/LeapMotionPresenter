@@ -1,5 +1,7 @@
 package edu.wpi.cs.lmp.objects;
 
+import javax.swing.JOptionPane;
+
 import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.scenes.LeapScene;
 import javafx.application.Platform;
@@ -91,7 +93,8 @@ public class TextBox extends Text implements IObject {
 	@Override
 	public void onScreenTap() {
 		// TODO Auto-generated method stub
-		
+		String newText = JOptionPane.showInputDialog("Enter Text", this.getText());
+		this.setText(newText);
 	}
 
 	@Override
