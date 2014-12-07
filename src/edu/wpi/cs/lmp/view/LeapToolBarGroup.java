@@ -7,6 +7,7 @@ import edu.wpi.cs.lmp.objects.ObjectType;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarExitMenuHandler;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarExitProgramHandler;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarObjectCreator;
+import edu.wpi.cs.lmp.view.controller.LeapToolBarSaveProject;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSlideCreator;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSubMenuHandler;
 import javafx.collections.ObservableList;
@@ -65,6 +66,7 @@ public class LeapToolBarGroup extends VBox {
 		addBar.getButton("Slide").setOnMouseExited(new LeapToolBarSlideCreator(addBar.getButton("Slide"), addBar, this));
 
 		fileBar.getButton("Exit").setOnMouseExited(new LeapToolBarExitProgramHandler(fileBar.getButton("Exit"), fileBar));
+		fileBar.getButton("Save As").setOnMouseExited(new LeapToolBarSaveProject(fileBar.getButton("Save As"), fileBar, this));
 	}
 
 	public LeapToolBar getMenuAt(int level) {
