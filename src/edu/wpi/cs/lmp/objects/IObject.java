@@ -1,5 +1,7 @@
 package edu.wpi.cs.lmp.objects;
 
+import org.w3c.dom.Element;
+
 import edu.wpi.cs.lmp.scenes.LeapScene;
 
 public interface IObject {
@@ -13,4 +15,6 @@ public interface IObject {
 	void onCounterCircle();
 
 	boolean inBounds(LeapScene parent, double x, double y);
+	
+	Element toXML();
 }

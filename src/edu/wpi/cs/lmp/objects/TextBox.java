@@ -5,6 +5,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.w3c.dom.Element;
+
 import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.scenes.LeapScene;
 import javafx.application.Platform;
@@ -104,6 +106,16 @@ public class TextBox extends Text implements IObject {
 	public void onCounterCircle() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Element toXML() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public static TextBox fromXML(Element e) {
+		return null;
 	}
 
 }

@@ -2,6 +2,8 @@ package edu.wpi.cs.lmp.objects;
 
 import java.io.File;
 
+import org.w3c.dom.Element;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.media.Media;
@@ -124,6 +126,16 @@ public class Video extends MediaView implements IObject {
 	@Override
 	public void onCounterCircle() {
 		mediaPlayer.seek(Duration.ZERO);
+	}
+
+	@Override
+	public Element toXML() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public static Video fromXML(Element e) {
+		return null;
 	}
 
 }

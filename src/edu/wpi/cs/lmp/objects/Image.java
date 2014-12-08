@@ -1,5 +1,7 @@
 package edu.wpi.cs.lmp.objects;
 
+import org.w3c.dom.Element;
+
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -85,6 +87,17 @@ public class Image extends ImageView implements IObject {
 	public void onCounterCircle() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Element toXML() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Image fromXML(Element e) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
