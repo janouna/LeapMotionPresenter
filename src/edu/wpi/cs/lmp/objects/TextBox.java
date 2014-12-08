@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import edu.wpi.cs.lmp.leap.HandStateObservable;
@@ -109,9 +110,33 @@ public class TextBox extends Text implements IObject {
 	}
 
 	@Override
-	public Element toXML() {
-		// TODO Auto-generated method stub
-		return null;
+	public Element toXML(Document doc) {
+		Element txt = doc.createElement("Text");
+		// Source field
+		Element src = doc.createElement("string");
+		src.appendChild(doc.createTextNode(this.getText()));
+		txt.appendChild(src);
+		// Position fields
+		Element x = doc.createElement("x");
+		x.appendChild(doc.createTextNode(String.valueOf(textX.doubleValue())));
+		txt.appendChild(x);
+		Element y = doc.createElement("y");
+		y.appendChild(doc.createTextNode(String.valueOf(textY.doubleValue())));
+		txt.appendChild(y);
+		// "Other" fields
+		Element fontSize = doc.createElement("fontSize");
+		fontSize.appendChild(doc.createTextNode(String.valueOf(this.getFont().getSize())));
+		txt.appendChild(fontSize);
+		
+		Element fontFamily = doc.createElement("fontFamily");
+		fontFamily.appendChild(doc.createTextNode(this.getFont().getFamily()));
+		txt.appendChild(fontFamily);
+		
+		Element fontColor = doc.createElement("fontColor");
+		fontColor.appendChild(doc.createTextNode(this.getFill().toString()));
+		txt.appendChild(fontColor);
+		
+		return txt;
 	}
 	
 	public static TextBox fromXML(Element e) {

@@ -1,5 +1,6 @@
 package edu.wpi.cs.lmp.objects;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import edu.wpi.cs.lmp.scenes.LeapScene;
@@ -16,5 +17,5 @@ public interface IObject {
 
 	boolean inBounds(LeapScene parent, double x, double y);
 	
-	Element toXML();
+	Element toXML(Document doc);
 }

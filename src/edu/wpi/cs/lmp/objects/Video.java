@@ -2,6 +2,7 @@ package edu.wpi.cs.lmp.objects;
 
 import java.io.File;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import javafx.beans.property.DoubleProperty;
@@ -129,9 +130,28 @@ public class Video extends MediaView implements IObject {
 	}
 
 	@Override
-	public Element toXML() {
-		// TODO Auto-generated method stub
-		return null;
+	public Element toXML(Document doc) {
+		Element vid = doc.createElement("Video");
+		// Source field
+		Element src = doc.createElement("src");
+		src.appendChild(doc.createTextNode(media.getSource()));
+		vid.appendChild(src);
+		// Position fields
+		Element x = doc.createElement("x");
+		x.appendChild(doc.createTextNode(String.valueOf(vidX.doubleValue())));
+		vid.appendChild(x);
+		Element y = doc.createElement("y");
+		y.appendChild(doc.createTextNode(String.valueOf(vidY.doubleValue())));
+		vid.appendChild(y);
+		// Size fields
+		Element width = doc.createElement("width");
+		width.appendChild(doc.createTextNode(String.valueOf(vidWidth.doubleValue())));
+		vid.appendChild(width);
+		Element height = doc.createElement("height");
+		height.appendChild(doc.createTextNode(String.valueOf(vidHeight.doubleValue())));
+		vid.appendChild(height);
+		
+		return vid;
 	}
 	
 	public static Video fromXML(Element e) {

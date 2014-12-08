@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -116,6 +119,14 @@ public class LeapScene extends Parent {
 		bounds.setStroke(Color.RED);
 		bounds.setStrokeWidth(2);
 		this.getChildren().add(bounds);
+	}
+	
+	public List<Element> toXML(Document doc) {
+		List<Element> xmlObjs = new ArrayList<Element>();
+		for(int i=0; i < children.size(); i++) {
+			xmlObjs.add(children.get(i).toXML(doc));
+		}
+		return xmlObjs;
 	}
 
 }

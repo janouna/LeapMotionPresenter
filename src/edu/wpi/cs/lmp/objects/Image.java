@@ -1,5 +1,6 @@
 package edu.wpi.cs.lmp.objects;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import javafx.application.Platform;
@@ -16,6 +17,8 @@ public class Image extends ImageView implements IObject {
 
 	private DoubleProperty imgX;
 	private DoubleProperty imgY;
+	
+	private String path;
 
 	private final Image instance;
 
@@ -25,6 +28,7 @@ public class Image extends ImageView implements IObject {
 
 	public Image(String path) {
 		super("file:" + path);
+		this.path = path;
 		instance = this;
 		Platform.runLater(new Runnable() {
 
@@ -90,9 +94,28 @@ public class Image extends ImageView implements IObject {
 	}
 
 	@Override
-	public Element toXML() {
-		// TODO Auto-generated method stub
-		return null;
+	public Element toXML(Document doc) {
+		Element img = doc.createElement("Image");
+		// Source field
+		Element src = doc.createElement("src");
+		src.appendChild(doc.createTextNode(path));
+		img.appendChild(src);
+		// Position fields
+		Element x = doc.createElement("x");
+		x.appendChild(doc.createTextNode(String.valueOf(imgX.doubleValue())));
+		img.appendChild(x);
+		Element y = doc.createElement("y");
+		y.appendChild(doc.createTextNode(String.valueOf(imgY.doubleValue())));
+		img.appendChild(y);
+		// Size fields
+		Element width = doc.createElement("width");
+		width.appendChild(doc.createTextNode(String.valueOf(imgWidth.doubleValue())));
+		img.appendChild(width);
+		Element height = doc.createElement("height");
+		height.appendChild(doc.createTextNode(String.valueOf(imgHeight.doubleValue())));
+		img.appendChild(height);
+		
+		return img;
 	}
 
 	public static Image fromXML(Element e) {
