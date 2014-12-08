@@ -2,6 +2,7 @@ package edu.wpi.cs.lmp.objects;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
@@ -118,9 +119,21 @@ public class Image extends ImageView implements IObject {
 		return img;
 	}
 
-	public static Image fromXML(Element e) {
-		// TODO Auto-generated method stub
-		return null;
+	public static Image fromXML(Node n) {
+		Node d = n.getFirstChild();
+		
+		Image i = new Image(d.getNodeValue());
+		
+		d = d.getNextSibling();
+		i.imgX.setValue(Double.parseDouble(d.getNodeValue()));
+		d = d.getNextSibling();
+		i.imgY.setValue(Double.parseDouble(d.getNodeValue()));
+		d = d.getNextSibling();
+		i.imgWidth.setValue(Double.parseDouble(d.getNodeValue()));
+		d = d.getNextSibling();
+		i.imgHeight.setValue(Double.parseDouble(d.getNodeValue()));
+		
+		return i;
 	}
 
 }

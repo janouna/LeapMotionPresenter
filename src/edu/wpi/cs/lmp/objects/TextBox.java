@@ -7,6 +7,7 @@ import javax.swing.JTextArea;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.scenes.LeapScene;
@@ -139,8 +140,21 @@ public class TextBox extends Text implements IObject {
 		return txt;
 	}
 	
-	public static TextBox fromXML(Element e) {
-		return null;
+	public static TextBox fromXML(Node n) {
+		Node d = n.getFirstChild();
+		
+		TextBox t = new TextBox();
+		t.setText(d.getNodeValue());
+		
+		d = d.getNextSibling();
+		t.textX.setValue(Double.parseDouble(d.getNodeValue()));
+		d = d.getNextSibling();
+		t.textY.setValue(Double.parseDouble(d.getNodeValue()));
+		d = d.getNextSibling();
+		Font newFont = new Font(t.getFont().getName(), Double.parseDouble(d.getNodeValue()));
+		t.setFont(newFont);
+		
+		return t;
 	}
 
 }
