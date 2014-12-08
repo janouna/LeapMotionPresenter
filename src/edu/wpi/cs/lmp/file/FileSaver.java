@@ -33,11 +33,11 @@ public abstract class FileSaver {
 			rootElement.appendChild(staff);
 	 
 			// set attribute to staff element
-			Attr attr = doc.createAttribute("id");
+			Attr attr = doc.createAttribute("id"); // TODO What is an attribute and how is it different than a tag?
 			attr.setValue("1");
 			staff.setAttributeNode(attr);
 	 
-			// shorten way
+			// shorter way
 			// staff.setAttribute("id", "1");
 	 
 			// firstname elements
