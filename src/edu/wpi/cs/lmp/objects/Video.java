@@ -162,16 +162,16 @@ public class Video extends MediaView implements IObject {
 	public static Video fromXML(Node n) {
 		Node d = n.getFirstChild();
 
-		Video i = new Video(d.getNodeValue());
+		Video i = new Video(d.getFirstChild().getNodeValue());
 
 		d = d.getNextSibling();
-		i.vidX.setValue(Double.parseDouble(d.getNodeValue()));
+		i.vidX.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
 		d = d.getNextSibling();
-		i.vidY.setValue(Double.parseDouble(d.getNodeValue()));
+		i.vidY.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
 		d = d.getNextSibling();
-		i.vidWidth.setValue(Double.parseDouble(d.getNodeValue()));
+		i.vidWidth.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
 		d = d.getNextSibling();
-		i.vidHeight.setValue(Double.parseDouble(d.getNodeValue()));
+		i.vidHeight.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
 
 		return i;
 	}

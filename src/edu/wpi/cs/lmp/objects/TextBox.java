@@ -147,14 +147,14 @@ public class TextBox extends Text implements IObject {
 		Node d = n.getFirstChild();
 		
 		TextBox t = new TextBox();
-		t.setText(d.getNodeValue());
+		t.setText(d.getFirstChild().getNodeValue());
 		
 		d = d.getNextSibling();
-		t.textX.setValue(Double.parseDouble(d.getNodeValue()));
+		t.textX.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
 		d = d.getNextSibling();
-		t.textY.setValue(Double.parseDouble(d.getNodeValue()));
+		t.textY.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
 		d = d.getNextSibling();
-		Font newFont = new Font(t.getFont().getName(), Double.parseDouble(d.getNodeValue()));
+		Font newFont = new Font(t.getFont().getName(), Double.parseDouble(d.getFirstChild().getNodeValue()));
 		t.setFont(newFont);
 		
 		return t;

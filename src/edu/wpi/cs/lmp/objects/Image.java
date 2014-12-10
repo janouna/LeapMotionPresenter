@@ -49,6 +49,33 @@ public class Image extends ImageView implements IObject {
 
 		});
 	}
+	
+	public Image(String path, double x, double y, double width, double height) {
+		super("file:" + path);
+		this.path = path;
+		instance = this;
+		imgWidth = new SimpleDoubleProperty();
+		imgHeight = new SimpleDoubleProperty();
+		imgX = new SimpleDoubleProperty();
+		imgY = new SimpleDoubleProperty();
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				imgWidth.set(width);
+				imgHeight.set(height);
+				imgX.set(x);
+				imgY.set(y);
+				instance.translateXProperty().bind(instance.imgX);
+				instance.translateYProperty().bind(instance.imgY);
+				instance.translateXProperty().unbind();
+				instance.translateYProperty().unbind();
+				instance.fitWidthProperty().bind(imgWidth);
+				instance.fitHeightProperty().bind(imgHeight);
+			}
+
+		});
+	}
 
 	public double getImgWidth() {
 		return imgWidth.doubleValue();
@@ -164,22 +191,17 @@ public class Image extends ImageView implements IObject {
 	}
 
 	public static Image fromXML(Element e) {
+		String file = e.getElementsByTagName("src").item(0).getTextContent();
 		
-		Image i = new Image(e.getElementsByTagName("src").item(0).getTextContent());
+		double x = (Double.parseDouble(e.getElementsByTagName("x").item(0).getTextContent()));
 
-		i.setImgX(Double.parseDouble(e.getElementsByTagName("x").item(0).getTextContent()));
+		double y = (Double.parseDouble(e.getElementsByTagName("y").item(0).getTextContent()));
 
-		i.setImgY(Double.parseDouble(e.getElementsByTagName("y").item(0).getTextContent()));
+		double width = (Double.parseDouble(e.getElementsByTagName("width").item(0).getTextContent()));
 
-		i.setImgWidth(Double.parseDouble(e.getElementsByTagName("width").item(0).getTextContent()));
-
-		i.setImgHeight(Double.parseDouble(e.getElementsByTagName("height").item(0).getTextContent()));
+		double height = (Double.parseDouble(e.getElementsByTagName("height").item(0).getTextContent()));
 		
-		i.translateXProperty().bind(i.imgX);
-		i.translateYProperty().bind(i.imgY);
-		
-		i.translateXProperty().unbind();
-		i.translateYProperty().unbind();
+		Image i = new Image(file, x, y, width, height);
 		
 		return i;
 	}
