@@ -51,7 +51,7 @@ public class TextBox extends Text implements IObject {
 		});
 	}
 
-	public TextBox(String text, double x, double y, double fontSize) {
+	public TextBox(String text, final double x, final double y, final double fontSize) {
 		//TODO: Text is an interesting problem with bounds perhaps layout container?
 		super(text);
 

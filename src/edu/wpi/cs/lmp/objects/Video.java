@@ -82,7 +82,7 @@ public class Video extends MediaView implements IObject {
 		});
 	}
 
-	public Video(String file, double x, double y, double width, double height) {
+	public Video(String file, final double x, final double y, final double width, final double height) {
 		super();
 		instance = this;
 		isPlaying = false;
