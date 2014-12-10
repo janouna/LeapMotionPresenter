@@ -122,16 +122,16 @@ public class Image extends ImageView implements IObject {
 	public static Image fromXML(Node n) {
 		Node d = n.getFirstChild();
 		
-		Image i = new Image(d.getNodeValue());
+		Image i = new Image(d.getFirstChild().getNodeValue());
 		
 		d = d.getNextSibling();
-		i.imgX.setValue(Double.parseDouble(d.getNodeValue()));
+		i.imgX.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
 		d = d.getNextSibling();
-		i.imgY.setValue(Double.parseDouble(d.getNodeValue()));
+		i.imgY.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
 		d = d.getNextSibling();
-		i.imgWidth.setValue(Double.parseDouble(d.getNodeValue()));
+		i.imgWidth.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
 		d = d.getNextSibling();
-		i.imgHeight.setValue(Double.parseDouble(d.getNodeValue()));
+		i.imgHeight.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
 		
 		return i;
 	}
