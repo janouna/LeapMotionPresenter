@@ -31,19 +31,63 @@ public class Image extends ImageView implements IObject {
 		super("file:" + path);
 		this.path = path;
 		instance = this;
+		imgWidth = new SimpleDoubleProperty();
+		imgHeight = new SimpleDoubleProperty();
+		imgX = new SimpleDoubleProperty();
+		imgY = new SimpleDoubleProperty();
 		Platform.runLater(new Runnable() {
 
 			@Override
 			public void run() {
-				imgWidth = new SimpleDoubleProperty(instance.getImage().getWidth());
-				imgHeight = new SimpleDoubleProperty(instance.getImage().getHeight());
-				imgX = new SimpleDoubleProperty(instance.getX());
-				imgY = new SimpleDoubleProperty(instance.getY());
+				imgWidth.set(instance.getImage().getWidth());
+				imgHeight.set(instance.getImage().getHeight());
+				imgX.set(instance.getX());
+				imgY.set(instance.getY());
 				instance.fitWidthProperty().bind(imgWidth);
 				instance.fitHeightProperty().bind(imgHeight);
 			}
 
 		});
+	}
+
+	public double getImgWidth() {
+		return imgWidth.doubleValue();
+	}
+
+	public void setImgWidth(double imgWidth) {
+		this.imgWidth.set(imgWidth);
+	}
+
+	public double getImgHeight() {
+		return imgHeight.doubleValue();
+	}
+
+	public void setImgHeight(double imgHeight) {
+		this.imgHeight.set(imgHeight);;
+	}
+
+	public double getImgX() {
+		return imgX.doubleValue();
+	}
+
+	public void setImgX(double imgX) {
+		this.imgX.set(imgX);;
+	}
+
+	public double getImgY() {
+		return imgY.doubleValue();
+	}
+
+	public void setImgY(double imgY) {
+		this.imgY.set(imgY);;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	@Override
@@ -119,19 +163,23 @@ public class Image extends ImageView implements IObject {
 		return img;
 	}
 
-	public static Image fromXML(Node n) {
-		Node d = n.getFirstChild();
+	public static Image fromXML(Element e) {
 		
-		Image i = new Image(d.getNodeValue());
+		Image i = new Image(e.getElementsByTagName("src").item(0).getTextContent());
+
+		i.setImgX(Double.parseDouble(e.getElementsByTagName("x").item(0).getTextContent()));
+
+		i.setImgY(Double.parseDouble(e.getElementsByTagName("y").item(0).getTextContent()));
+
+		i.setImgWidth(Double.parseDouble(e.getElementsByTagName("width").item(0).getTextContent()));
+
+		i.setImgHeight(Double.parseDouble(e.getElementsByTagName("height").item(0).getTextContent()));
 		
-		d = d.getNextSibling();
-		i.imgX.setValue(Double.parseDouble(d.getNodeValue()));
-		d = d.getNextSibling();
-		i.imgY.setValue(Double.parseDouble(d.getNodeValue()));
-		d = d.getNextSibling();
-		i.imgWidth.setValue(Double.parseDouble(d.getNodeValue()));
-		d = d.getNextSibling();
-		i.imgHeight.setValue(Double.parseDouble(d.getNodeValue()));
+		i.translateXProperty().bind(i.imgX);
+		i.translateYProperty().bind(i.imgY);
+		
+		i.translateXProperty().unbind();
+		i.translateYProperty().unbind();
 		
 		return i;
 	}

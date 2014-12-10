@@ -33,14 +33,17 @@ public class TextBox extends Text implements IObject {
 		instance = this;
 
 		instance.setFont(new Font(45));
-
+		
+		textX = new SimpleDoubleProperty(instance.getX());
+		textY = new SimpleDoubleProperty(instance.getY());
+		
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
 				//textWidth = new SimpleDoubleProperty(instance.getScaleX());
 				//textHeight = new SimpleDoubleProperty(instance.getScaleY());
-				textX = new SimpleDoubleProperty(instance.getX());
-				textY = new SimpleDoubleProperty(instance.getY());
+				textX.set(instance.getX());
+				textY.set(instance.getY());
 				//instance.scaleXProperty().bind(textWidth);
 				//instance.scaleYProperty().bind(textHeight);
 			}

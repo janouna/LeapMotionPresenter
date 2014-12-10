@@ -40,14 +40,18 @@ public class Video extends MediaView implements IObject {
 		media = new Media(new File("big_buck_bunny.mp4").toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
 		this.setMediaPlayer(mediaPlayer);
+		vidWidth = new SimpleDoubleProperty(mediaPlayer.getMedia().getWidth());
+		vidHeight = new SimpleDoubleProperty(mediaPlayer.getMedia().getHeight());
+		vidX = new SimpleDoubleProperty();
+		vidY = new SimpleDoubleProperty(instance.getY());
 
 		mediaPlayer.setOnReady(new Runnable() {
 			@Override
 			public void run() {
-				vidWidth = new SimpleDoubleProperty(mediaPlayer.getMedia().getWidth());
-				vidHeight = new SimpleDoubleProperty(mediaPlayer.getMedia().getHeight());
-				vidX = new SimpleDoubleProperty(instance.getX());
-				vidY = new SimpleDoubleProperty(instance.getY());
+				vidWidth.set(mediaPlayer.getMedia().getWidth());
+				vidHeight.set(mediaPlayer.getMedia().getHeight());
+				vidX.set(instance.getX());
+				vidY.set(instance.getY());
 				instance.fitWidthProperty().bind(vidWidth);
 				instance.fitHeightProperty().bind(vidHeight);
 				System.out.println(instance.getFitWidth());

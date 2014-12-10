@@ -4,6 +4,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import edu.wpi.cs.lmp.file.FileOpener;
 import edu.wpi.cs.lmp.file.FileSaver;
+import edu.wpi.cs.lmp.objects.Image;
+import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
