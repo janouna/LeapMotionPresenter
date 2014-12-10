@@ -50,7 +50,7 @@ public class Image extends ImageView implements IObject {
 		});
 	}
 	
-	public Image(String path, double x, double y, double width, double height) {
+	public Image(String path, final double x, final double y, final double width, final double height) {
 		super("file:" + path);
 		this.path = path;
 		instance = this;
