@@ -51,6 +51,33 @@ public class TextBox extends Text implements IObject {
 		});
 	}
 
+	public TextBox(String text, double x, double y, double fontSize) {
+		//TODO: Text is an interesting problem with bounds perhaps layout container?
+		super(text);
+
+		instance = this;
+
+		instance.setFont(new Font(fontSize));
+		
+		textX = new SimpleDoubleProperty(x);
+		textY = new SimpleDoubleProperty(y);
+		
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				//textWidth = new SimpleDoubleProperty(instance.getScaleX());
+				//textHeight = new SimpleDoubleProperty(instance.getScaleY());
+				instance.translateXProperty().bind(instance.textX);
+				instance.translateYProperty().bind(instance.textY);
+				instance.translateXProperty().unbind();
+				instance.translateYProperty().unbind();
+				//instance.scaleXProperty().bind(textWidth);
+				//instance.scaleYProperty().bind(textHeight);
+			}
+
+		});
+	}
+
 	@Override
 	public void startMove() {		
 		instance.layoutXProperty().set(-instance.getX());
@@ -143,21 +170,16 @@ public class TextBox extends Text implements IObject {
 		return txt;
 	}
 	
-	public static TextBox fromXML(Node n) {
-		Node d = n.getFirstChild();
+	public static TextBox fromXML(Element e) {
+		String text = e.getElementsByTagName("string").item(0).getTextContent();
 		
-		TextBox t = new TextBox();
-		t.setText(d.getFirstChild().getNodeValue());
+		double x = (Double.parseDouble(e.getElementsByTagName("x").item(0).getTextContent()));
+
+		double y = (Double.parseDouble(e.getElementsByTagName("y").item(0).getTextContent()));
+
+		double fontSize = (Double.parseDouble(e.getElementsByTagName("fontSize").item(0).getTextContent()));
 		
-		d = d.getNextSibling();
-		t.textX.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
-		d = d.getNextSibling();
-		t.textY.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
-		d = d.getNextSibling();
-		Font newFont = new Font(t.getFont().getName(), Double.parseDouble(d.getFirstChild().getNodeValue()));
-		t.setFont(newFont);
-		
-		return t;
+		return new TextBox(text, x, y, fontSize);
 	}
 
 }

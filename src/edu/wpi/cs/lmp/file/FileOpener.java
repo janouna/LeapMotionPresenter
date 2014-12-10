@@ -104,11 +104,11 @@ public abstract class FileOpener {
 				recurse = false;
 			} else if (n.getNodeName().equals("Video")) {
 				LeapSceneManager.getInstance().getCurrentScene()
-						.addObject(Video.fromXML(n));
+						.addObject(Video.fromXML((Element) n));
 				recurse = false;
 			} else if (n.getNodeName().equals("Text")) {
 				LeapSceneManager.getInstance().getCurrentScene()
-						.addObject(TextBox.fromXML(n));
+						.addObject(TextBox.fromXML((Element) n));
 				recurse = false;
 			}
 

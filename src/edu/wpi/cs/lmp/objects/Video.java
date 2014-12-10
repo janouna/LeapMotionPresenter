@@ -82,6 +82,32 @@ public class Video extends MediaView implements IObject {
 		});
 	}
 
+	public Video(String file, double x, double y, double width, double height) {
+		super();
+		instance = this;
+		isPlaying = false;
+		// Modify the media variable to take in desired URL or FILE
+		media = new Media(file);
+		mediaPlayer = new MediaPlayer(media);
+		this.setMediaPlayer(mediaPlayer);
+
+		mediaPlayer.setOnReady(new Runnable() {
+			@Override
+			public void run() {
+				vidWidth = new SimpleDoubleProperty(width);
+				vidHeight = new SimpleDoubleProperty(height);
+				vidX = new SimpleDoubleProperty(x);
+				vidY = new SimpleDoubleProperty(y);
+				instance.translateXProperty().bind(instance.vidX);
+				instance.translateYProperty().bind(instance.vidY);
+				instance.translateXProperty().unbind();
+				instance.translateYProperty().unbind();
+				instance.fitWidthProperty().bind(vidWidth);
+				instance.fitHeightProperty().bind(vidHeight);
+			}
+		});
+	}
+
 	@Override
 	public void startMove() {
 		instance.layoutXProperty().set(-instance.getX());
@@ -159,20 +185,17 @@ public class Video extends MediaView implements IObject {
 		return vid;
 	}
 
-	public static Video fromXML(Node n) {
-		Node d = n.getFirstChild();
+	public static Video fromXML(Element e) {
+		String file = e.getElementsByTagName("src").item(0).getTextContent();
+		
+		double x = (Double.parseDouble(e.getElementsByTagName("x").item(0).getTextContent()));
 
-		Video i = new Video(d.getFirstChild().getNodeValue());
+		double y = (Double.parseDouble(e.getElementsByTagName("y").item(0).getTextContent()));
 
-		d = d.getNextSibling();
-		i.vidX.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
-		d = d.getNextSibling();
-		i.vidY.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
-		d = d.getNextSibling();
-		i.vidWidth.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
-		d = d.getNextSibling();
-		i.vidHeight.setValue(Double.parseDouble(d.getFirstChild().getNodeValue()));
+		double width = (Double.parseDouble(e.getElementsByTagName("width").item(0).getTextContent()));
 
-		return i;
+		double height = (Double.parseDouble(e.getElementsByTagName("height").item(0).getTextContent()));
+
+		return new Video(file, x, y, width, height);
 	}
 }

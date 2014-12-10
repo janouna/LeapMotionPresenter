@@ -201,9 +201,8 @@ public class Image extends ImageView implements IObject {
 
 		double height = (Double.parseDouble(e.getElementsByTagName("height").item(0).getTextContent()));
 		
-		Image i = new Image(file, x, y, width, height);
+		return new Image(file, x, y, width, height);
 		
-		return i;
 	}
 
 }

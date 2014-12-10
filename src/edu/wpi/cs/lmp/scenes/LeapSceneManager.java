@@ -59,6 +59,11 @@ public class LeapSceneManager {
 	public void removeScene(int i) {
 		scenes.remove(i);
 	}
+	
+	public void removeAllScenes() {
+		scenes.clear();
+		currentScene.set(-1);
+	}
 
 	public void moveScene(int from, int to) {
 		final LeapScene temp = scenes.get(from);
