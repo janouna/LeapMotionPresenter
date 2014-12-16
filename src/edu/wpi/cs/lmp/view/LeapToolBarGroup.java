@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.cs.lmp.objects.ObjectType;
+import edu.wpi.cs.lmp.state.PresenterState;
+import edu.wpi.cs.lmp.state.PresenterStateObservable;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarExitMenuHandler;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarExitProgramHandler;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarObjectCreator;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarOpenProject;
+import edu.wpi.cs.lmp.view.controller.LeapToolBarPresent;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSaveProject;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSlideCreator;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSubMenuHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -25,21 +30,28 @@ public class LeapToolBarGroup extends VBox {
 
 	private final LeapToolBar fileBar;
 	private final LeapToolBar addBar;
+
+	private boolean isActive;
+
 	public LeapToolBarGroup() {
 		super();
 		instance = this;
 
+		isActive = true;
+
 		// Instantiate main bar and behavior
-		mainBar = new LeapToolBar(new String[] { "File", "Add", "Present", "ExitMenu" }, 0,
-				true);
+		mainBar = new LeapToolBar(new String[] { "File", "Add", "Present",
+				"ExitMenu" }, 0, true);
 		mainBar.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
-				if (mainBar.isHidden()) {
-					mainBar.transitionIn();
-				} else {
-					instance.removeMenuAbove(mainBar.getMenuLevel());
-					mainBar.unselectAllButton();
+				if (isActive) {
+					if (mainBar.isHidden()) {
+						mainBar.transitionIn();
+					} else {
+						instance.removeMenuAbove(mainBar.getMenuLevel());
+						mainBar.unselectAllButton();
+					}
 				}
 			}
 		});
@@ -58,17 +70,38 @@ public class LeapToolBarGroup extends VBox {
 		mainBar.getButton("Add").setOnMouseExited(
 				new LeapToolBarSubMenuHandler(mainBar.getButton("Add"), this,
 						mainBar, addBar));
-		mainBar.getButton("ExitMenu").setOnMouseExited(new LeapToolBarExitMenuHandler(mainBar.getButton("ExitMenu"), this, mainBar));
-		
+		mainBar.getButton("Present").setOnMouseExited(
+				new LeapToolBarPresent(mainBar.getButton("Present"), this,
+						mainBar));
+		mainBar.getButton("ExitMenu").setOnMouseExited(
+				new LeapToolBarExitMenuHandler(mainBar.getButton("ExitMenu"),
+						this, mainBar));
+
 		// Set add bar button controls
-		addBar.getButton("Image").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Image"), addBar, this, ObjectType.IMAGE, true));
-		addBar.getButton("Video").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Video"), addBar, this, ObjectType.VIDEO, true));
-		addBar.getButton("Text").setOnMouseExited(new LeapToolBarObjectCreator(addBar.getButton("Text"), addBar, this, ObjectType.TEXT, false));
-		addBar.getButton("Slide").setOnMouseExited(new LeapToolBarSlideCreator(addBar.getButton("Slide"), addBar, this));
+		addBar.getButton("Image").setOnMouseExited(
+				new LeapToolBarObjectCreator(addBar.getButton("Image"), addBar,
+						this, ObjectType.IMAGE, true));
+		addBar.getButton("Video").setOnMouseExited(
+				new LeapToolBarObjectCreator(addBar.getButton("Video"), addBar,
+						this, ObjectType.VIDEO, true));
+		addBar.getButton("Text").setOnMouseExited(
+				new LeapToolBarObjectCreator(addBar.getButton("Text"), addBar,
+						this, ObjectType.TEXT, false));
+		addBar.getButton("Slide").setOnMouseExited(
+				new LeapToolBarSlideCreator(addBar.getButton("Slide"), addBar,
+						this));
+
+		fileBar.getButton("Open").setOnMouseExited(
+				new LeapToolBarOpenProject(fileBar.getButton("Open"), fileBar,
+						this));
+		fileBar.getButton("Save As").setOnMouseExited(
+				new LeapToolBarSaveProject(fileBar.getButton("Save As"),
+						fileBar, this));
+		fileBar.getButton("Exit").setOnMouseExited(
+				new LeapToolBarExitProgramHandler(fileBar.getButton("Exit"),
+						fileBar));
 		
-		fileBar.getButton("Open").setOnMouseExited(new LeapToolBarOpenProject(fileBar.getButton("Open"), fileBar, this));
-		fileBar.getButton("Save As").setOnMouseExited(new LeapToolBarSaveProject(fileBar.getButton("Save As"), fileBar, this));
-		fileBar.getButton("Exit").setOnMouseExited(new LeapToolBarExitProgramHandler(fileBar.getButton("Exit"), fileBar));
+		createObservers();
 	}
 
 	public LeapToolBar getMenuAt(int level) {
@@ -105,9 +138,29 @@ public class LeapToolBarGroup extends VBox {
 		}
 		this.getChildren().removeAll(toRemove);
 	}
-	
+
 	public void removeMenuAll() {
 		this.removeMenuAbove(0);
 		this.removeMenuAt(0);
+	}
+	
+	private void createObservers() {
+		PresenterStateObservable.getInstance().getPresenterState()
+		.addListener(new ChangeListener<PresenterState>() {
+
+			@Override
+			public void changed(
+					ObservableValue<? extends PresenterState> observable,
+					PresenterState oldValue, PresenterState newValue) {
+				if (newValue == PresenterState.PRESENTING) {
+					instance.setDisabled(true);
+					isActive = false;
+				} else {
+					instance.setDisabled(false);
+					isActive = true;
+				}
+			}
+
+		});
 	}
 }

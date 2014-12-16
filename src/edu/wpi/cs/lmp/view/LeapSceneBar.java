@@ -30,6 +30,8 @@ import javafx.stage.Screen;
 import javafx.util.Duration;
 import edu.wpi.cs.lmp.scenes.LeapScene;
 import edu.wpi.cs.lmp.scenes.LeapSceneManager;
+import edu.wpi.cs.lmp.state.PresenterState;
+import edu.wpi.cs.lmp.state.PresenterStateObservable;
 
 public class LeapSceneBar extends VBox {
 
@@ -57,10 +59,14 @@ public class LeapSceneBar extends VBox {
 	private TranslateTransition animationOut;
 	private boolean isAnimating;
 
+	private boolean isActive;
+
 	public LeapSceneBar() {
 		// Do all the VBox standard stuff and set the sizes
 		super();
 		instance = this;
+
+		isActive = true;
 
 		// Positioning
 		this.setPrefHeight(Control.USE_COMPUTED_SIZE);
@@ -71,17 +77,20 @@ public class LeapSceneBar extends VBox {
 		setupListeners();
 		setupAnimations();
 
-		sceneManagerObservers();
+		createObservers();
 		updateScenes();
 
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				final double screen_height = Screen.getPrimary().getBounds().getHeight();
+				final double screen_height = Screen.getPrimary().getBounds()
+						.getHeight();
 				instance.setTranslateY(screen_height);
 				animationIn.setFromY(screen_height);
-				animationIn.setToY(screen_height - instance.getLayoutBounds().getHeight());
-				animationOut.setFromY(screen_height - instance.getLayoutBounds().getHeight());
+				animationIn.setToY(screen_height
+						- instance.getLayoutBounds().getHeight());
+				animationOut.setFromY(screen_height
+						- instance.getLayoutBounds().getHeight());
 				animationOut.setToY(screen_height);
 			}
 		});
@@ -97,7 +106,7 @@ public class LeapSceneBar extends VBox {
 		sceneControlContainer = new HBox();
 		sceneGroupContainer = new VBox();
 		scrollPane = new ScrollPane();
-		
+
 		// Divider, I should style something better in a stylesheet
 		divider1 = new Separator(Orientation.HORIZONTAL);
 		divider1.getStyleClass().add("slide-seperator-vertical");
@@ -118,17 +127,23 @@ public class LeapSceneBar extends VBox {
 		sceneGroupContainer.getChildren().add(sceneContainer);
 
 		forward = new Button(">");
-		forward.setPrefHeight(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_HEIGHT);
+		forward.setPrefHeight(Screen.getPrimary().getBounds().getWidth()
+				* THUMBNAIL_HEIGHT);
 		forward.setTextOverrun(OverrunStyle.CLIP);
 		back = new Button("<");
-		back.setPrefHeight(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_HEIGHT);
+		back.setPrefHeight(Screen.getPrimary().getBounds().getWidth()
+				* THUMBNAIL_HEIGHT);
 		back.setTextOverrun(OverrunStyle.CLIP);
-		sceneControlContainer.setPrefWidth(Screen.getPrimary().getBounds().getWidth());
-		
+		sceneControlContainer.setPrefWidth(Screen.getPrimary().getBounds()
+				.getWidth());
+
 		scrollPane.setContent(sceneGroupContainer);
 		scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-		final double scrollWidth = Screen.getPrimary().getBounds().getWidth() - divider1.getLayoutBounds().getWidth() - divider2.getLayoutBounds().getWidth()
-				- forward.getLayoutBounds().getWidth() - back.getLayoutBounds().getWidth();
+		final double scrollWidth = Screen.getPrimary().getBounds().getWidth()
+				- divider1.getLayoutBounds().getWidth()
+				- divider2.getLayoutBounds().getWidth()
+				- forward.getLayoutBounds().getWidth()
+				- back.getLayoutBounds().getWidth();
 		scrollPane.setPrefViewportWidth(scrollWidth);
 		scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
 
@@ -138,21 +153,27 @@ public class LeapSceneBar extends VBox {
 
 		this.getChildren().add(sceneControlContainer);
 	}
+
 	private void setupListeners() {
 		// Instantiate main bar and behavior
 		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
-				instance.transitionIn();
+				if (isActive) {
+					instance.transitionIn();
+				}
 			}
 		});
 		this.setOnMouseExited(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
-				instance.transitionOut();
+				if (isActive) {
+					instance.transitionOut();
+				}
 			}
 		});
 	}
+
 	private void setupAnimations() {
 		animationIn = new TranslateTransition();
 		animationIn.setDuration(new Duration(ANIMATION_TIME * 1000));
@@ -180,44 +201,72 @@ public class LeapSceneBar extends VBox {
 		});
 	}
 
-	private void sceneManagerObservers() {
-		// Observer for the list of scenes, any changes made and the onChange is fired
-		LeapSceneManager.getInstance().getScenesProperty().addListener(new ListChangeListener<LeapScene>() {
-			@Override
-			public void onChanged(javafx.collections.ListChangeListener.Change<? extends LeapScene> changes) {
-				updateScenes();
-			}
-		});
-		
-		LeapSceneManager.getInstance().getCurrentSceneProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> arg0,
-					Number arg1, Number arg2) {
-				updateScenes();
-			}
-		});
+	private void createObservers() {
+		// Observer for the list of scenes, any changes made and the onChange is
+		// fired
+		LeapSceneManager.getInstance().getScenesProperty()
+				.addListener(new ListChangeListener<LeapScene>() {
+					@Override
+					public void onChanged(
+							javafx.collections.ListChangeListener.Change<? extends LeapScene> changes) {
+						updateScenes();
+					}
+				});
+
+		LeapSceneManager.getInstance().getCurrentSceneProperty()
+				.addListener(new ChangeListener<Number>() {
+					@Override
+					public void changed(ObservableValue<? extends Number> arg0,
+							Number arg1, Number arg2) {
+						updateScenes();
+					}
+				});
+
+		PresenterStateObservable.getInstance().getPresenterState()
+				.addListener(new ChangeListener<PresenterState>() {
+
+					@Override
+					public void changed(
+							ObservableValue<? extends PresenterState> observable,
+							PresenterState oldValue, PresenterState newValue) {
+						if (newValue == PresenterState.PRESENTING) {
+							instance.setDisabled(true);
+							isActive = false;
+						} else {
+							instance.setDisabled(false);
+							isActive = true;
+						}
+					}
+
+				});
 	}
-	private void updateScenes(){
+
+	private void updateScenes() {
 		// Ideally have a method to update the contents of the scene bar
-		// onChanged gives variable that can be looped through to see what changes were made if necessary
+		// onChanged gives variable that can be looped through to see what
+		// changes were made if necessary
 		// Update the scene count
-		
-		final List<LeapScene> sceneList = LeapSceneManager.getInstance().getAllScenes();
+
+		final List<LeapScene> sceneList = LeapSceneManager.getInstance()
+				.getAllScenes();
 		numScenes = sceneList.size();
 		currentScene = LeapSceneManager.getInstance().getCurrentSceneNumber();
 		sceneContainer.getChildren().clear();
-		for(int i = 0; i < numScenes; i++){
-			ImageView image = new ImageView(sceneList.get(i).snapshot(new SnapshotParameters(), null));
-			
+		for (int i = 0; i < numScenes; i++) {
+			ImageView image = new ImageView(sceneList.get(i).snapshot(
+					new SnapshotParameters(), null));
+
 			Button thumbnail = new Button();
-			image.setFitWidth(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_WIDTH);
-			image.setFitHeight(Screen.getPrimary().getBounds().getWidth()*THUMBNAIL_HEIGHT);
+			image.setFitWidth(Screen.getPrimary().getBounds().getWidth()
+					* THUMBNAIL_WIDTH);
+			image.setFitHeight(Screen.getPrimary().getBounds().getWidth()
+					* THUMBNAIL_HEIGHT);
 			thumbnail.setGraphic(image);
 			thumbnail.setOnMouseClicked(new SceneButtonHandler(i));
-			
+
 			sceneContainer.getChildren().add(thumbnail);
 		}
-		
+
 		sceneLabel.setText("Scene: " + (currentScene + 1) + " / " + numScenes);
 	}
 
@@ -228,6 +277,7 @@ public class LeapSceneBar extends VBox {
 			isAnimating = true;
 		}
 	}
+
 	public void transitionOut() {
 		if (!isAnimating) {
 			animationOut.play();
@@ -246,15 +296,15 @@ public class LeapSceneBar extends VBox {
 		}
 		return buttons;
 	}
-	
-	private class SceneButtonHandler implements EventHandler<MouseEvent>{
+
+	private class SceneButtonHandler implements EventHandler<MouseEvent> {
 		int position;
-		
-		private SceneButtonHandler(int pos){
+
+		private SceneButtonHandler(int pos) {
 			super();
 			position = pos;
 		}
-		
+
 		@Override
 		public void handle(MouseEvent arg0) {
 			System.out.println("Scene " + position + " selected");
