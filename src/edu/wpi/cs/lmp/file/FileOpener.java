@@ -40,42 +40,54 @@ public abstract class FileOpener {
 			NodeList sceneList = doc.getElementsByTagName("Scene");
 
 			// Loop through all the scenes
-
+			// Possible Temp Fix?
 			Platform.runLater(new Runnable() {
 
 				@Override
 				public void run() {
-					/*
-					 * for (int i = 0; i < sceneList.getLength(); i++) {
-					 * LeapSceneManager.getInstance().addScene();
-					 * LeapSceneManager.getInstance() .setCurrentScene(
-					 * LeapSceneManager.getInstance().getAllScenes() .size() -
-					 * 1); Node scene = sceneList.item(i);
-					 * 
-					 * NodeList objects = scene.getChildNodes();
-					 * 
-					 * for (int j = 0; j < objects.getLength(); j++) { Node
-					 * object = objects.item(j);
-					 * 
-					 * if (object.getNodeType() == Node.ELEMENT_NODE) {
-					 * 
-					 * Element e = (Element) object;
-					 * 
-					 * if (e.getNodeName().equals("Image")) {
-					 * LeapSceneManager.getInstance().getCurrentScene()
-					 * .addObject(Image.fromXML(e));
-					 * 
-					 * }
-					 * 
-					 * }
-					 * 
-					 * } }
-					 */
+
+					for (int i = 0; i < sceneList.getLength(); i++) {
+						LeapSceneManager.getInstance().addScene();
+						LeapSceneManager.getInstance().setCurrentScene(
+								LeapSceneManager.getInstance().getAllScenes()
+										.size() - 1);
+						Node scene = sceneList.item(i);
+
+						NodeList objects = scene.getChildNodes();
+
+						for (int j = 0; j < objects.getLength(); j++) {
+							Node object = objects.item(j);
+
+							if (object.getNodeType() == Node.ELEMENT_NODE) {
+
+								Element e = (Element) object;
+
+								if (e.getNodeName().equals("Image")) {
+									LeapSceneManager.getInstance()
+											.getCurrentScene()
+											.addObject(Image.fromXML(e));
+
+								} else if (e.getNodeName().equals("Video")) {
+									LeapSceneManager.getInstance()
+									.getCurrentScene()
+									.addObject(Video.fromXML(e));
+								} else if (e.getNodeName().equals("Text")) {
+									LeapSceneManager.getInstance()
+									.getCurrentScene()
+									.addObject(TextBox.fromXML(e));
+								} else {
+									// What is this thing?
+								}
+
+							}
+
+						}
+					}
 				}
 
 			});
 
-			parseNode(root.getFirstChild());
+			// parseNode(root.getFirstChild());
 
 		} catch (ParserConfigurationException e) {
 
