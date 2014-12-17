@@ -2,6 +2,8 @@ package edu.wpi.cs.lmp.scenes;
 
 import java.util.List;
 
+import edu.wpi.cs.lmp.state.PresenterState;
+import edu.wpi.cs.lmp.state.PresenterStateObservable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -32,7 +34,11 @@ public class LeapSceneManager {
 	}
 
 	public LeapScene setCurrentScene(int i) {
-		if (i < scenes.size() && i >= 0) {
+		if (i >= scenes.size()) {
+			PresenterStateObservable.getInstance().set(PresenterState.CREATING);
+			return null;
+		}
+		if (i >= 0) {
 			currentScene.set(i);
 			return getCurrentScene();
 		} else {
