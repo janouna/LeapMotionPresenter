@@ -9,6 +9,8 @@ import com.leapmotion.leap.Gesture;
 import com.leapmotion.leap.GestureList;
 import com.leapmotion.leap.HandList;
 import com.leapmotion.leap.Listener;
+import com.leapmotion.leap.Gesture.State;
+import com.leapmotion.leap.ScreenTapGesture;
 
 import edu.wpi.cs.lmp.objects.IObject;
 
@@ -22,6 +24,10 @@ public class ResizeListener extends Listener {
 	private boolean isResizing = false;
 	private boolean unbindRequest = false;
 	private double initialSpace = 0;
+	
+	private static final long TAP_TIMEOUT = 200;
+
+	private long lastTap = Long.MIN_VALUE;
 
 	public ResizeListener() {
 		this.obj = null;
@@ -124,7 +130,8 @@ public class ResizeListener extends Listener {
 							}
 							break;
 						case TYPE_SCREEN_TAP:
-							if (obj != null) {
+							ScreenTapGesture tap = new ScreenTapGesture(gestures.get(i));
+							if (obj != null && tap.state().equals(State.STATE_STOP) && (lastTap < System.currentTimeMillis() - TAP_TIMEOUT)) {
 								obj.onScreenTap();
 							}
 							break;

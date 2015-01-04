@@ -83,6 +83,8 @@ public abstract class FileOpener {
 
 						}
 					}
+					
+					LeapSceneManager.getInstance().setCurrentScene(1);
 				}
 
 			});

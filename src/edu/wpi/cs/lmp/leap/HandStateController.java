@@ -28,7 +28,8 @@ public class HandStateController extends Listener {
 	public void onConnect(Controller controller) {
 		// Enable the gestures you intend to use onConnect
 		controller.enableGesture(Gesture.Type.TYPE_SWIPE);
-		controller.config().setFloat("Gesture.Swipe.MinLength", 400);
+		// 400 best for linux, 200 for windows 
+		controller.config().setFloat("Gesture.Swipe.MinLength", 200);
 		// controller.config().setFloat("Gesture.Swipe.MinVelocity", arg1);
 		controller.config().save();
 		System.out.println("connected: HandStateController");
