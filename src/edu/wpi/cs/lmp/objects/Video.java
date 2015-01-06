@@ -1,6 +1,9 @@
 package edu.wpi.cs.lmp.objects;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -31,6 +34,8 @@ public class Video extends MediaView implements IObject {
 	private final MediaPlayer mediaPlayer;
 
 	private final Video instance;
+	
+	private String path;
 
 	public Video () {
 		super();
@@ -61,6 +66,7 @@ public class Video extends MediaView implements IObject {
 
 	public Video (String path) {
 		super();
+		this.path = path;
 		instance = this;
 		isPlaying = false;
 		// Modify the media variable to take in desired URL or FILE
@@ -164,8 +170,9 @@ public class Video extends MediaView implements IObject {
 	public Element toXML(Document doc) {
 		Element vid = doc.createElement("Video");
 		// Source field
+		File file = new File(media.getSource());
 		Element src = doc.createElement("src");
-		src.appendChild(doc.createTextNode(media.getSource()));
+		src.appendChild(doc.createTextNode("Assets/" + file.getName()));
 		vid.appendChild(src);
 		// Position fields
 		Element x = doc.createElement("x");
@@ -197,5 +204,18 @@ public class Video extends MediaView implements IObject {
 		double height = (Double.parseDouble(e.getElementsByTagName("height").item(0).getTextContent()));
 
 		return new Video(file, x, y, width, height);
+	}
+	
+	public void copyTo(File to) {
+		File thisFile = new File(path);
+		File newFile = new File(to.toString() + "/" + thisFile.getName());
+		try {
+			Files.copy(thisFile.toPath(), newFile.toPath());
+		} catch (FileAlreadyExistsException e) {
+			// Do nothing, it already exists
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

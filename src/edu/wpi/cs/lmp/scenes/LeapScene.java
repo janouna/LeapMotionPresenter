@@ -1,5 +1,6 @@
 package edu.wpi.cs.lmp.scenes;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -127,6 +128,12 @@ public class LeapScene extends Parent {
 			xmlObjs.add(children.get(i).toXML(doc));
 		}
 		return xmlObjs;
+	}
+	
+	public void copyTo(File to) {
+		for(int i=0; i < children.size(); i++) {
+			children.get(i).copyTo(to);
+		}
 	}
 
 }

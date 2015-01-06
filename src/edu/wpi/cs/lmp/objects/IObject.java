@@ -1,5 +1,7 @@
 package edu.wpi.cs.lmp.objects;
 
+import java.io.File;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -14,6 +16,8 @@ public interface IObject {
 
 	void onScreenTap();
 	void onCounterCircle();
+	
+	void copyTo(File to);
 
 	boolean inBounds(LeapScene parent, double x, double y);
 	

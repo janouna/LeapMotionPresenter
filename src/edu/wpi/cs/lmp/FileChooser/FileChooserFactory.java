@@ -45,6 +45,11 @@ public class FileChooserFactory {
 					"MP4 files (*.mp4)", "*.MP4");
 			fileChooser.getExtensionFilters().addAll(extAll, extMP4);
 			break;
+		case PRESENTATION:
+			fileChooser.setTitle("Open Presentation File");
+			FileChooser.ExtensionFilter extLMP = new FileChooser.ExtensionFilter("LeapMotion Presentation files (*.lmp)", "*.lmp", "*.LMP");
+			fileChooser.getExtensionFilters().add(extLMP);
+			break;
 		}
 
 		return fileChooser;

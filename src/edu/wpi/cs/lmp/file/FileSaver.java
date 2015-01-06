@@ -21,8 +21,15 @@ import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
 public abstract class FileSaver {
 
-	public static void savePresentation() {
+	public static void savePresentation(File file) {
 		try {
+			
+			// Make the directory
+			file.mkdir();
+			
+			// Make assets folder	
+			File assets = new File(file.toString() + "/Assets");
+			assets.mkdir();
 
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory
 					.newInstance();
@@ -42,6 +49,7 @@ public abstract class FileSaver {
 				Element scene = doc.createElement("Scene");
 				rootElement.appendChild(scene);
 				List<Element> sceneObjs = allScenes.get(i).toXML(doc);
+				allScenes.get(i).copyTo(assets);
 				for (int j = 0; j < sceneObjs.size(); j++) {
 					scene.appendChild(sceneObjs.get(j));
 				}
@@ -51,7 +59,7 @@ public abstract class FileSaver {
 					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File("file.xml"));
+			StreamResult result = new StreamResult(new File(file.toString() + "/" + file.getName()) + ".lmp");
 
 			// Output to console for testing
 			// StreamResult result = new StreamResult(System.out);

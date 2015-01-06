@@ -1,5 +1,11 @@
 package edu.wpi.cs.lmp.objects;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -168,9 +174,10 @@ public class Image extends ImageView implements IObject {
 	@Override
 	public Element toXML(Document doc) {
 		Element img = doc.createElement("Image");
-		// Source field
+		// Source field + copying
+		File file = new File(path);
 		Element src = doc.createElement("src");
-		src.appendChild(doc.createTextNode(path));
+		src.appendChild(doc.createTextNode("Assets/" + file.getName()));
 		img.appendChild(src);
 		// Position fields
 		Element x = doc.createElement("x");
@@ -203,6 +210,20 @@ public class Image extends ImageView implements IObject {
 		
 		return new Image(file, x, y, width, height);
 		
+	}
+	
+	public void copyTo(File to) {
+		File thisFile = new File(path);
+		File newFile = new File(to.toString() + "/" + thisFile.getName());
+		try {
+			Files.copy(thisFile.toPath(), newFile.toPath());
+		} catch (FileAlreadyExistsException e) {
+			// Do nothing, it already exists
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

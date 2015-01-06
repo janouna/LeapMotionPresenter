@@ -1,5 +1,9 @@
 package edu.wpi.cs.lmp.objects;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -195,6 +199,10 @@ public class TextBox extends Text implements IObject {
 				.getElementsByTagName("fontSize").item(0).getTextContent()));
 
 		return new TextBox(text, x, y, fontSize);
+	}
+	
+	public void copyTo(File to) {
+		// No need to copy
 	}
 
 }

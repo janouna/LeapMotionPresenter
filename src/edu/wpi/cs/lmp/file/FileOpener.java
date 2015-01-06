@@ -21,11 +21,10 @@ import edu.wpi.cs.lmp.objects.Video;
 import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
 public abstract class FileOpener {
-	public static void openPresentation() {
+	public static void openPresentation(File file) {
 		// TODO File Chooser
 
 		try {
-			File file = new File("file.xml");
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document doc = db.parse(file);
