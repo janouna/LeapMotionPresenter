@@ -1,5 +1,6 @@
 package edu.wpi.cs.lmp.scenes;
 
+import java.io.File;
 import java.util.List;
 
 import edu.wpi.cs.lmp.state.PresenterState;
@@ -14,6 +15,7 @@ import javafx.collections.ObservableList;
 public class LeapSceneManager {
 
 	private static final LeapSceneManager INSTANCE = new LeapSceneManager();
+	private File projectDir;
 	private final IntegerProperty currentScene;
 	private final ListProperty<LeapScene> scenes;
 
@@ -22,6 +24,7 @@ public class LeapSceneManager {
 		final ObservableList<LeapScene> observableList = FXCollections
 				.observableArrayList();
 		scenes = new SimpleListProperty<LeapScene>(observableList);
+		projectDir = null;
 		scenes.add(new LeapScene());
 	}
 
@@ -83,6 +86,14 @@ public class LeapSceneManager {
 
 	public IntegerProperty getCurrentSceneProperty() {
 		return currentScene;
+	}
+	
+	public void setProjectDirectory(File path) {
+		this.projectDir = path;
+	}
+	
+	public File getProjectDirectory() {
+		return projectDir;
 	}
 
 }

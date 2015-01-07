@@ -93,7 +93,7 @@ public class Video extends MediaView implements IObject {
 		instance = this;
 		isPlaying = false;
 		// Modify the media variable to take in desired URL or FILE
-		media = new Media(file);
+		media = new Media(new File(file).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
 		this.setMediaPlayer(mediaPlayer);
 
@@ -192,7 +192,7 @@ public class Video extends MediaView implements IObject {
 		return vid;
 	}
 
-	public static Video fromXML(Element e) {
+	public static Video fromXML(Element e, File directory) {
 		String file = e.getElementsByTagName("src").item(0).getTextContent();
 		
 		double x = (Double.parseDouble(e.getElementsByTagName("x").item(0).getTextContent()));
@@ -203,7 +203,7 @@ public class Video extends MediaView implements IObject {
 
 		double height = (Double.parseDouble(e.getElementsByTagName("height").item(0).getTextContent()));
 
-		return new Video(file, x, y, width, height);
+		return new Video(directory.toString()+ "/" + file, x, y, width, height);
 	}
 	
 	public void copyTo(File to) {

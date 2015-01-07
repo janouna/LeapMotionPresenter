@@ -24,12 +24,12 @@ public abstract class FileOpener {
 	public static void openPresentation(File file) {
 		// TODO File Chooser
 
-		try {
+		try {			
+			LeapSceneManager.getInstance().setProjectDirectory(file.getParentFile());
+			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document doc = db.parse(file);
-
-			Element root = doc.getDocumentElement();
 
 			// optional, but recommended
 			// read this -
@@ -39,7 +39,6 @@ public abstract class FileOpener {
 			NodeList sceneList = doc.getElementsByTagName("Scene");
 
 			// Loop through all the scenes
-			// Possible Temp Fix?
 			Platform.runLater(new Runnable() {
 
 				@Override
@@ -64,16 +63,16 @@ public abstract class FileOpener {
 								if (e.getNodeName().equals("Image")) {
 									LeapSceneManager.getInstance()
 											.getCurrentScene()
-											.addObject(Image.fromXML(e));
+											.addObject(Image.fromXML(e, LeapSceneManager.getInstance().getProjectDirectory()));
 
 								} else if (e.getNodeName().equals("Video")) {
 									LeapSceneManager.getInstance()
 									.getCurrentScene()
-									.addObject(Video.fromXML(e));
+									.addObject(Video.fromXML(e, LeapSceneManager.getInstance().getProjectDirectory()));
 								} else if (e.getNodeName().equals("Text")) {
 									LeapSceneManager.getInstance()
 									.getCurrentScene()
-									.addObject(TextBox.fromXML(e));
+									.addObject(TextBox.fromXML(e, LeapSceneManager.getInstance().getProjectDirectory()));
 								} else {
 									// What is this thing?
 								}
@@ -88,45 +87,12 @@ public abstract class FileOpener {
 
 			});
 
-			// parseNode(root.getFirstChild());
-
 		} catch (ParserConfigurationException e) {
 
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-		}
-	}
-
-	private static void parseNode(Node node) {
-		boolean recurse = true;
-		for (Node n = node; n != null; n = n.getNextSibling()) { // Iterates
-																	// through
-																	// sibling
-																	// nodes
-			if (n.getNodeName().equals("Scene")) {
-				LeapSceneManager.getInstance().addScene();
-				LeapSceneManager.getInstance()
-						.setCurrentScene(
-								LeapSceneManager.getInstance().getAllScenes()
-										.size() - 1);
-			} else if (n.getNodeName().equals("Image")) {
-				LeapSceneManager.getInstance().getCurrentScene()
-						.addObject(Image.fromXML((Element) n));
-				recurse = false;
-			} else if (n.getNodeName().equals("Video")) {
-				LeapSceneManager.getInstance().getCurrentScene()
-						.addObject(Video.fromXML((Element) n));
-				recurse = false;
-			} else if (n.getNodeName().equals("Text")) {
-				LeapSceneManager.getInstance().getCurrentScene()
-						.addObject(TextBox.fromXML((Element) n));
-				recurse = false;
-			}
-
-			if (recurse && n.hasChildNodes()) // Recursive call to child nodes
-				parseNode(n.getFirstChild());
 		}
 	}
 }

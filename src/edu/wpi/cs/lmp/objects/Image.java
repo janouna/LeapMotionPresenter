@@ -197,7 +197,7 @@ public class Image extends ImageView implements IObject {
 		return img;
 	}
 
-	public static Image fromXML(Element e) {
+	public static Image fromXML(Element e, File directory) {
 		String file = e.getElementsByTagName("src").item(0).getTextContent();
 		
 		double x = (Double.parseDouble(e.getElementsByTagName("x").item(0).getTextContent()));
@@ -208,7 +208,7 @@ public class Image extends ImageView implements IObject {
 
 		double height = (Double.parseDouble(e.getElementsByTagName("height").item(0).getTextContent()));
 		
-		return new Image(file, x, y, width, height);
+		return new Image(directory.toString()+ "/" + file, x, y, width, height);
 		
 	}
 	

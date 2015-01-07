@@ -186,7 +186,7 @@ public class TextBox extends Text implements IObject {
 		return txt;
 	}
 
-	public static TextBox fromXML(Element e) {
+	public static TextBox fromXML(Element e, File directory) {
 		String text = e.getElementsByTagName("string").item(0).getTextContent();
 
 		double x = (Double.parseDouble(e.getElementsByTagName("x").item(0)
