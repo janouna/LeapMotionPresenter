@@ -22,6 +22,10 @@ public class ObjectFactory {
 		case VIDEO:
 			o = new Video();
 			break;
+		case PRESENTATION:
+			break;
+		default:
+			break;
 		}
 
 		return o;
@@ -39,6 +43,10 @@ public class ObjectFactory {
 			break;
 		case VIDEO:
 			o = new Video(path);
+			break;
+		case PRESENTATION:
+			break;
+		default:
 			break;
 		}
 

@@ -96,6 +96,16 @@ public class ResizeListener extends Listener {
 								app.resizeImage(99);
 							}
 							break;
+						case TYPE_INVALID:
+							break;
+						case TYPE_KEY_TAP:
+							break;
+						case TYPE_SCREEN_TAP:
+							break;
+						case TYPE_SWIPE:
+							break;
+						default:
+							break;
 						}
 					}
 				}

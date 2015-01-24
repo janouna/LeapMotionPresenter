@@ -36,7 +36,7 @@ public abstract class FileOpener {
 			// http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 			doc.getDocumentElement().normalize();
 
-			NodeList sceneList = doc.getElementsByTagName("Scene");
+			final NodeList sceneList = doc.getElementsByTagName("Scene");
 
 			// Loop through all the scenes
 			Platform.runLater(new Runnable() {

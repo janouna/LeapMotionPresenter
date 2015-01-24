@@ -416,7 +416,6 @@ public class NestedRadialOptionsMenu extends RadialOptionsMenu {
 	private final class ItemOnEventHandler implements EventHandler<MouseEvent> {
 
 		private Timeline outTransition;
-		private RadialOptionsMenu parent;
 		private final RadialMenuItem colorItemSel;
 		private final RadialMenuItem colorItem;
 		private final RadialMenuItem colorItemExt;
@@ -432,7 +431,6 @@ public class NestedRadialOptionsMenu extends RadialOptionsMenu {
 			this.colorItem = colorItem;
 			this.colorItemExt = colorItemExt;
 			this.nestedList = nestedList;
-			this.parent = parent;
 		}
 
 		@Override
@@ -473,10 +471,7 @@ public class NestedRadialOptionsMenu extends RadialOptionsMenu {
 							event.getX(), event.getY(), 0, 0);
 					if (Math.abs(colorItem.getRadius() + colorItem.getOffset()
 							- distanceToCenter) < 20) {
-						// TODO Fill
-						// Exiting by the external item of the menu
-						// selectedColor.set(colorItem.getBackgroundFill());
-						parent = new RadialOptionsMenu(callingObjetct, nestedList.toArray(new String[0]), distanceToCenter, distanceToCenter, distanceToCenter, distanceToCenter);
+						new RadialOptionsMenu(callingObjetct, nestedList.toArray(new String[0]), distanceToCenter, distanceToCenter, distanceToCenter, distanceToCenter);
 						
 					}
 				}

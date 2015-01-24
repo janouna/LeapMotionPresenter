@@ -52,8 +52,6 @@ import javafx.util.Duration;
 
 public class RadialOptionsMenu extends Group {
 	
-	private final RadialOptionsMenuDemo callingObjetct;
-
 	private double itemInnerRadius = 60;
 	private double itemRadius = 95;
 	private double centerClosedRadius = 28;
@@ -91,8 +89,6 @@ public class RadialOptionsMenu extends Group {
 			final double radius, final double centerClosedRadius,
 			final double centerOpenedRadius) {
 		
-		callingObjetct = caller;
-
 		menus = itemNames;
 		itemInnerRadius = innerRadius;
 		itemRadius = radius;
@@ -462,8 +458,8 @@ public class RadialOptionsMenu extends Group {
 											minOffset)));
 					outTransition.playFromStart();
 
-					final double distanceToCenter = Point2D.distance(
-							event.getX(), event.getY(), 0, 0);
+//					final double distanceToCenter = Point2D.distance(
+//							event.getX(), event.getY(), 0, 0);
 //					if (Math.abs(colorItem.getRadius() + colorItem.getOffset()
 //							- distanceToCenter) < 20) {
 //						// TODO Fill

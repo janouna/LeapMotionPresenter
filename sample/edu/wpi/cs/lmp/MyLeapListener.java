@@ -29,8 +29,7 @@ public class MyLeapListener extends Listener {
 	long start = 0;
 	private final BooleanProperty keyTap = new SimpleBooleanProperty(false);
 	private final LeapConcepts app;
-	private final boolean isGrabbed = false;
-
+	
 	public MyLeapListener(LeapConcepts main) {
 		this.app = main;
 	}

@@ -1,8 +1,13 @@
 package edu.wpi.cs.lmp.objects;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+
+import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -11,12 +16,6 @@ import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.scenes.LeapScene;
 import edu.wpi.cs.lmp.state.PresenterState;
 import edu.wpi.cs.lmp.state.PresenterStateObservable;
-import javafx.application.Platform;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 public class TextBox extends Text implements IObject {
 

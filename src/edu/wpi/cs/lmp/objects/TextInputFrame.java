@@ -1,8 +1,6 @@
 package edu.wpi.cs.lmp.objects;
 
 import java.awt.BorderLayout;
-import java.awt.GraphicsConfiguration;
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,8 +21,9 @@ public class TextInputFrame extends JFrame {
 		JButton btn = new JButton("OK");
 		btn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				new JOptionTextAreaPane();
 				lbl.setText("<html>Text entered = <br>"+
-						new JOptionTextAreaPane().showInputDialog("Enter some text").replaceAll("\\n","<br>")+
+						JOptionTextAreaPane.showInputDialog("Enter some text").replaceAll("\\n","<br>")+
 						"</html>");}});
 		main.add(btn,BorderLayout.SOUTH);
 		getContentPane().add(main);
