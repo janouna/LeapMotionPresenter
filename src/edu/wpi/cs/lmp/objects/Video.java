@@ -133,9 +133,9 @@ public class Video extends MediaView implements IObject {
 	}
 
 	@Override
-	public void resize(double percentageChange) {
-		vidWidth.set((vidWidth.doubleValue()*percentageChange)/100);
-		vidHeight.set((vidHeight.doubleValue()*percentageChange)/100);
+	public void resize(double percentageChangeWidth, double percentageChangeHeight) {
+		vidWidth.set((vidWidth.doubleValue()*percentageChangeWidth)/100);
+		vidHeight.set((vidHeight.doubleValue()*percentageChangeWidth)/100);
 	}
 
 	@Override

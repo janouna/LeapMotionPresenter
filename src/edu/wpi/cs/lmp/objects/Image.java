@@ -120,9 +120,9 @@ public class Image extends ImageView implements IObject {
 	}
 
 	@Override
-	public void resize(double percentageChange) {
-		imgWidth.set((imgWidth.doubleValue()*percentageChange)/100);
-		imgHeight.set((imgHeight.doubleValue()*percentageChange)/100);
+	public void resize(double percentageChangeWidth, double percentageChangeHeight) {
+		imgWidth.set((imgWidth.doubleValue()*percentageChangeWidth)/100);
+		imgHeight.set((imgHeight.doubleValue()*percentageChangeHeight)/100);
 	}
 
 	@Override

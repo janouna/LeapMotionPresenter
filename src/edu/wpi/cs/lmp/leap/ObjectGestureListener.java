@@ -18,18 +18,20 @@ import edu.wpi.cs.lmp.objects.IObject;
  * 
  * @author johan Modified to track multiple hands
  */
-public class ResizeListener extends Listener {
+public class ObjectGestureListener extends Listener {
 
 	private IObject obj;
 	private boolean isResizing = false;
 	private boolean unbindRequest = false;
-	private double initialSpace = 0;
+	private double initialSpaceX = 0;
+	private double initialSpaceY = 0;
 	
 	private static final long TAP_TIMEOUT = 200;
+	private static final long ALIGNMENT_THRESHOLD = 30;
 
 	private long lastTap = Long.MIN_VALUE;
 
-	public ResizeListener() {
+	public ObjectGestureListener() {
 		this.obj = null;
 	}
 
@@ -55,23 +57,29 @@ public class ResizeListener extends Listener {
 				&& hands.get(1).fingers().extended().count() <= 2) {
 			final double xPos1 = hands.get(0).fingers().get(0).tipPosition().getX();
 			final double xPos2 = hands.get(1).fingers().get(0).tipPosition().getX();
+			
+			final double yPos1 = hands.get(0).fingers().get(0).tipPosition().getY();
+			final double yPos2 = hands.get(1).fingers().get(0).tipPosition().getY();
 
 			final double zPos1 = hands.get(0).fingers().get(0).tipPosition().getZ();
 			final double zPos2 = hands.get(1).fingers().get(0).tipPosition().getZ();
 
 			// Check if the fingers are aligned closely enough to begin resizing
-			if (Math.abs(zPos2 - zPos1) <= 30) {
+			if (Math.abs(zPos2 - zPos1) <= ALIGNMENT_THRESHOLD) {
 
 				// Wasn't resizing before, new initial space needed
 				if (!isResizing) {
-					initialSpace = Math.abs(xPos2 - xPos1);
+					initialSpaceX = Math.abs(xPos2 - xPos1);
+					initialSpaceY = Math.abs(yPos2 - yPos1);
 				}
 
 				// double newSize = Math.abs(Math.abs(((initXPos2 - xPos2)/2.0)
 				// + xPos2) - ((initXPos1 - xPos1)/2.0) + xPos1);
-				final double newSize = Math.abs(xPos2 - xPos1);
+				final double newSizeX = Math.abs(xPos2 - xPos1);
+				final double newSizeY = Math.abs(yPos2 - yPos1);
 
-				final double percentageChange = (newSize * 100) / initialSpace;
+				final double percentageChangeX = (newSizeX * 100) / initialSpaceX;
+				final double percentageChangeY = (newSizeY * 100) / initialSpaceY;
 				isResizing = true;
 
 				Platform.runLater(new Runnable() {
@@ -79,13 +87,14 @@ public class ResizeListener extends Listener {
 					@Override
 					public void run() {
 						if (obj != null) {
-							obj.resize(percentageChange);
+							obj.resize(percentageChangeX, percentageChangeY);
 						}
 					}
 
 				});
 
-				initialSpace = newSize;
+				initialSpaceX = newSizeX;
+				initialSpaceY = newSizeY;
 			} else {
 				// Two hand count is there, but not aligned therefore not resizing
 				isResizing = false;

@@ -102,12 +102,12 @@ public class TextBox extends Text implements IObject {
 	}
 
 	@Override
-	public void resize(double percentageChange) {
+	public void resize(double percentageChangeWidth, double percentageChangeHeight) {
 		// textWidth.set((textWidth.doubleValue()*percentageChange)/100);
 		// textHeight.set((textHeight.doubleValue()*percentageChange)/100);
 		Double currentSize = this.getFont().getSize();
 		Font newFont = new Font(this.getFont().getName(),
-				(currentSize * percentageChange) / 100);
+				(currentSize * percentageChangeWidth) / 100);
 		this.setFont(newFont);
 	}
 

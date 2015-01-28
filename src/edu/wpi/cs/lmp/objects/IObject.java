@@ -10,7 +10,7 @@ import edu.wpi.cs.lmp.scenes.LeapScene;
 public interface IObject {
 	void startMove();
 	void endMove();
-	void resize(double percentChange);
+	void resize(double percentChangeWidth, double percentChangeHeight);
 	void setX(double x);
 	void setY(double y);
 

@@ -19,19 +19,19 @@ import javafx.stage.Screen;
 
 import com.leapmotion.leap.Controller;
 
-import edu.wpi.cs.lmp.leap.ResizeListener;
+import edu.wpi.cs.lmp.leap.ObjectGestureListener;
 import edu.wpi.cs.lmp.objects.IObject;
 
 public class LeapScene extends Parent {
 
 	private final List<IObject> children;
 	private final ImageView background;
-	private ResizeListener resizer;
+	private ObjectGestureListener resizer;
 	private Controller c;
 
 	public LeapScene() {
 		c = new Controller();
-		resizer = new ResizeListener();
+		resizer = new ObjectGestureListener();
 		c.addListener(resizer);
 		children = new ArrayList<IObject>();
 		background = new ImageView();
