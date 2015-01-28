@@ -58,8 +58,8 @@ public class ObjectGestureListener extends Listener {
 			final double xPos1 = hands.get(0).fingers().get(0).tipPosition().getX();
 			final double xPos2 = hands.get(1).fingers().get(0).tipPosition().getX();
 			
-			final double yPos1 = hands.get(0).fingers().get(0).tipPosition().getY();
-			final double yPos2 = hands.get(1).fingers().get(0).tipPosition().getY();
+			final double yPos1 = hands.get(0).fingers().get(0).stabilizedTipPosition().getY();
+			final double yPos2 = hands.get(1).fingers().get(0).stabilizedTipPosition().getY();
 
 			final double zPos1 = hands.get(0).fingers().get(0).tipPosition().getZ();
 			final double zPos2 = hands.get(1).fingers().get(0).tipPosition().getZ();
@@ -126,14 +126,10 @@ public class ObjectGestureListener extends Listener {
 							if (circle.pointable().direction()
 									.angleTo(circle.normal()) <= Math.PI / 2) {
 								// Clockwise if angle is less than 90 degrees
-								//								if (obj != null) {
-								//									obj.resize(101);
-								//								}
 							} else {
 								// Testing acceptable circle
 								if (obj != null
 										&& circle.durationSeconds() >= 0.5) {
-									// obj.resize(99);
 									obj.onCounterCircle();
 								}
 							}
