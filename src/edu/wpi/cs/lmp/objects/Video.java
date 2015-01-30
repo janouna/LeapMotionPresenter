@@ -137,6 +137,12 @@ public class Video extends MediaView implements IObject {
 		vidWidth.set((vidWidth.doubleValue()*percentageChangeWidth)/100);
 		vidHeight.set((vidHeight.doubleValue()*percentageChangeWidth)/100);
 	}
+	
+	@Override
+	public void rotate(double angle) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public boolean inBounds(LeapScene parent, double x, double y) {

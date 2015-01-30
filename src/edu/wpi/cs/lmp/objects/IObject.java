@@ -13,6 +13,7 @@ public interface IObject {
 	void resize(double percentChangeWidth, double percentChangeHeight);
 	void setX(double x);
 	void setY(double y);
+	void rotate(double angle);
 
 	void onScreenTap();
 	void onCounterCircle();

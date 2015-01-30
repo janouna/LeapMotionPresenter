@@ -110,6 +110,12 @@ public class TextBox extends Text implements IObject {
 				(currentSize * percentageChangeWidth) / 100);
 		this.setFont(newFont);
 	}
+	
+	@Override
+	public void rotate(double angle) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public boolean inBounds(LeapScene parent, double x, double y) {

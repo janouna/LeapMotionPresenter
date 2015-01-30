@@ -21,6 +21,8 @@ public class Image extends ImageView implements IObject {
 	private DoubleProperty imgX;
 	private DoubleProperty imgY;
 	
+	private DoubleProperty imgAngle;
+	
 	private String path;
 
 	private final Image instance;
@@ -37,6 +39,7 @@ public class Image extends ImageView implements IObject {
 		imgHeight = new SimpleDoubleProperty();
 		imgX = new SimpleDoubleProperty();
 		imgY = new SimpleDoubleProperty();
+		imgAngle = new SimpleDoubleProperty();
 		Platform.runLater(new Runnable() {
 
 			@Override
@@ -45,6 +48,7 @@ public class Image extends ImageView implements IObject {
 				imgHeight.set(instance.getImage().getHeight());
 				imgX.set(instance.getX());
 				imgY.set(instance.getY());
+				imgAngle.set(instance.getRotate());
 				instance.fitWidthProperty().bind(imgWidth);
 				instance.fitHeightProperty().bind(imgHeight);
 			}
@@ -52,7 +56,7 @@ public class Image extends ImageView implements IObject {
 		});
 	}
 	
-	public Image(String path, final double x, final double y, final double width, final double height) {
+	public Image(String path, final double x, final double y, final double width, final double height, final double angle) {
 		super("file:" + path);
 		this.path = path;
 		instance = this;
@@ -60,6 +64,7 @@ public class Image extends ImageView implements IObject {
 		imgHeight = new SimpleDoubleProperty();
 		imgX = new SimpleDoubleProperty();
 		imgY = new SimpleDoubleProperty();
+		imgAngle = new SimpleDoubleProperty();
 		Platform.runLater(new Runnable() {
 
 			@Override
@@ -68,12 +73,14 @@ public class Image extends ImageView implements IObject {
 				imgHeight.set(height);
 				imgX.set(x);
 				imgY.set(y);
+				imgAngle.set(angle);
 				instance.translateXProperty().bind(instance.imgX);
 				instance.translateYProperty().bind(instance.imgY);
 				instance.translateXProperty().unbind();
 				instance.translateYProperty().unbind();
 				instance.fitWidthProperty().bind(imgWidth);
 				instance.fitHeightProperty().bind(imgHeight);
+				instance.rotateProperty().bind(imgAngle);
 			}
 
 		});
@@ -142,6 +149,11 @@ public class Image extends ImageView implements IObject {
 		imgX.unbind();
 		imgY.unbind();
 	}
+	
+	@Override
+	public void rotate(double angle) {
+		imgAngle.set(imgAngle.doubleValue() + angle);
+	}
 
 	@Override
 	public boolean inBounds(LeapScene parent, double x, double y) {
@@ -189,6 +201,9 @@ public class Image extends ImageView implements IObject {
 		Element height = doc.createElement("height");
 		height.appendChild(doc.createTextNode(String.valueOf(imgHeight.doubleValue())));
 		img.appendChild(height);
+		Element angle = doc.createElement("angle");
+		angle.appendChild(doc.createTextNode(String.valueOf(imgAngle.doubleValue())));
+		img.appendChild(angle);
 		
 		return img;
 	}
@@ -204,7 +219,9 @@ public class Image extends ImageView implements IObject {
 
 		double height = (Double.parseDouble(e.getElementsByTagName("height").item(0).getTextContent()));
 		
-		return new Image(directory.toString()+ "/" + file, x, y, width, height);
+		double angle = (Double.parseDouble(e.getElementsByTagName("angle").item(0).getTextContent()));
+		
+		return new Image(directory.toString()+ "/" + file, x, y, width, height, angle);
 		
 	}
 	
