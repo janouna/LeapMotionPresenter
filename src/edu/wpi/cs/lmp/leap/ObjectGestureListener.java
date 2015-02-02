@@ -11,6 +11,7 @@ import com.leapmotion.leap.HandList;
 import com.leapmotion.leap.Listener;
 import com.leapmotion.leap.Gesture.State;
 import com.leapmotion.leap.ScreenTapGesture;
+import com.leapmotion.leap.Vector;
 
 import edu.wpi.cs.lmp.objects.IObject;
 
@@ -22,10 +23,13 @@ public class ObjectGestureListener extends Listener {
 
 	private IObject obj;
 	private boolean isResizing = false;
+	private boolean isRotating = false;
 	private boolean unbindRequest = false;
 	private double initialSpaceX = 0;
 	private double initialSpaceY = 0;
-	
+
+	private double initialRotation = 0;
+
 	private static final long TAP_TIMEOUT = 200;
 	private static final long ALIGNMENT_THRESHOLD = 30;
 
@@ -46,67 +50,15 @@ public class ObjectGestureListener extends Listener {
 	@Override
 	public void onFrame(Controller controller) {
 		final Frame frame = controller.frame();
-		//final FingerList fingers = frame.fingers();
+		// final FingerList fingers = frame.fingers();
 		final HandList hands = frame.hands();
 		final GestureList gestures = frame.gestures();
 
+		resizeObject(hands);
+		rotateObject(hands);
+
 		// This portion resizes with the both hands, the reason I use two
 		// fingers is due to how bad the extended check is
-		if (hands.count() == 2
-				&& hands.get(0).fingers().extended().count() <= 2
-				&& hands.get(1).fingers().extended().count() <= 2) {
-			final double xPos1 = hands.get(0).fingers().get(0).tipPosition().getX();
-			final double xPos2 = hands.get(1).fingers().get(0).tipPosition().getX();
-			
-			final double yPos1 = hands.get(0).fingers().get(0).stabilizedTipPosition().getY();
-			final double yPos2 = hands.get(1).fingers().get(0).stabilizedTipPosition().getY();
-
-			final double zPos1 = hands.get(0).fingers().get(0).tipPosition().getZ();
-			final double zPos2 = hands.get(1).fingers().get(0).tipPosition().getZ();
-
-			// Check if the fingers are aligned closely enough to begin resizing
-			if (Math.abs(zPos2 - zPos1) <= ALIGNMENT_THRESHOLD) {
-
-				// Wasn't resizing before, new initial space needed
-				if (!isResizing) {
-					initialSpaceX = Math.abs(xPos2 - xPos1);
-					initialSpaceY = Math.abs(yPos2 - yPos1);
-				}
-
-				// double newSize = Math.abs(Math.abs(((initXPos2 - xPos2)/2.0)
-				// + xPos2) - ((initXPos1 - xPos1)/2.0) + xPos1);
-				final double newSizeX = Math.abs(xPos2 - xPos1);
-				final double newSizeY = Math.abs(yPos2 - yPos1);
-
-				final double percentageChangeX = (newSizeX * 100) / initialSpaceX;
-				final double percentageChangeY = (newSizeY * 100) / initialSpaceY;
-				isResizing = true;
-
-				Platform.runLater(new Runnable() {
-
-					@Override
-					public void run() {
-						if (obj != null) {
-							obj.resize(percentageChangeX, percentageChangeY);
-						}
-					}
-
-				});
-
-				initialSpaceX = newSizeX;
-				initialSpaceY = newSizeY;
-			} else {
-				// Two hand count is there, but not aligned therefore not resizing
-				isResizing = false;
-			}
-
-		} else {
-			// Second hand is gone, resizing is done.
-			isResizing = false;
-			if (unbindRequest) {
-				setIObject(null);
-			}
-		}
 
 		// Implementing circle gesture for resizing
 		/*
@@ -135,8 +87,12 @@ public class ObjectGestureListener extends Listener {
 							}
 							break;
 						case TYPE_SCREEN_TAP:
-							ScreenTapGesture tap = new ScreenTapGesture(gestures.get(i));
-							if (obj != null && tap.state().equals(State.STATE_STOP) && (lastTap < System.currentTimeMillis() - TAP_TIMEOUT)) {
+							ScreenTapGesture tap = new ScreenTapGesture(
+									gestures.get(i));
+							if (obj != null
+									&& tap.state().equals(State.STATE_STOP)
+									&& (lastTap < System.currentTimeMillis()
+											- TAP_TIMEOUT)) {
 								obj.onScreenTap();
 							}
 							break;
@@ -151,6 +107,102 @@ public class ObjectGestureListener extends Listener {
 				}
 			}
 		});
+	}
+
+	private void resizeObject(HandList hands) {
+		if (hands.count() == 2
+				&& hands.get(0).fingers().extended().count() <= 2
+				&& hands.get(1).fingers().extended().count() <= 2) {
+			final double xPos1 = hands.get(0).fingers().get(0).tipPosition()
+					.getX();
+			final double xPos2 = hands.get(1).fingers().get(0).tipPosition()
+					.getX();
+
+			final double yPos1 = hands.get(0).fingers().get(0)
+					.stabilizedTipPosition().getY();
+			final double yPos2 = hands.get(1).fingers().get(0)
+					.stabilizedTipPosition().getY();
+
+			final double zPos1 = hands.get(0).fingers().get(0).tipPosition()
+					.getZ();
+			final double zPos2 = hands.get(1).fingers().get(0).tipPosition()
+					.getZ();
+
+			// Check if the fingers are aligned closely enough to begin resizing
+			if (Math.abs(zPos2 - zPos1) <= ALIGNMENT_THRESHOLD) {
+
+				// Wasn't resizing before, new initial space needed
+				if (!isResizing) {
+					initialSpaceX = Math.abs(xPos2 - xPos1);
+					initialSpaceY = Math.abs(yPos2 - yPos1);
+				}
+
+				// double newSize = Math.abs(Math.abs(((initXPos2 - xPos2)/2.0)
+				// + xPos2) - ((initXPos1 - xPos1)/2.0) + xPos1);
+				final double newSizeX = Math.abs(xPos2 - xPos1);
+				final double newSizeY = Math.abs(yPos2 - yPos1);
+
+				final double percentageChangeX = (newSizeX * 100)
+						/ initialSpaceX;
+				final double percentageChangeY = (newSizeY * 100)
+						/ initialSpaceY;
+				isResizing = true;
+
+				Platform.runLater(new Runnable() {
+
+					@Override
+					public void run() {
+						if (obj != null) {
+							obj.resize(percentageChangeX, percentageChangeY);
+						}
+					}
+
+				});
+
+				initialSpaceX = newSizeX;
+				initialSpaceY = newSizeY;
+			} else {
+				// Two hand count is there, but not aligned therefore not
+				// resizing
+				isResizing = false;
+			}
+
+		} else {
+			// Second hand is gone, resizing is done.
+			isResizing = false;
+			if (unbindRequest) {
+				setIObject(null);
+			}
+		}
+	}
+
+	private void rotateObject(HandList hands) {
+		if (hands.count() == 1) {
+			
+			Vector handNormal = hands.get(0).palmNormal();
+			
+			if (isRotating == false) {
+				initialRotation = Math.toDegrees(handNormal.roll());
+				isRotating = true;
+			}
+			
+			// Possible options for rotation detection: roll and yaw
+			double degreeChange = Math.toDegrees(handNormal.roll());
+
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					if (obj != null) {
+						//System.out.println("Rotating: " + degreeChange);
+						obj.rotate(degreeChange);
+					}
+				}
+
+			});
+
+			initialRotation = degreeChange;
+		}
 	}
 
 	public void setIObject(IObject obj) {

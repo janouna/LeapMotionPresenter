@@ -4,12 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
+import javafx.scene.transform.Rotate;
 import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.scenes.LeapScene;
 
@@ -51,6 +54,7 @@ public class Image extends ImageView implements IObject {
 				imgAngle.set(instance.getRotate());
 				instance.fitWidthProperty().bind(imgWidth);
 				instance.fitHeightProperty().bind(imgHeight);
+				instance.rotateProperty().bind(imgAngle);
 			}
 
 		});
@@ -152,7 +156,7 @@ public class Image extends ImageView implements IObject {
 	
 	@Override
 	public void rotate(double angle) {
-		imgAngle.set(imgAngle.doubleValue() + angle);
+		imgAngle.set(angle * -1);
 	}
 
 	@Override
