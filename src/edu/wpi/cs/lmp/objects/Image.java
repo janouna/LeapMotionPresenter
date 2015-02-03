@@ -132,8 +132,9 @@ public class Image extends ImageView implements IObject {
 
 	@Override
 	public void resize(double percentageChangeWidth, double percentageChangeHeight) {
+		// This is to keep aspect ratio
 		imgWidth.set((imgWidth.doubleValue()*percentageChangeWidth)/100);
-		imgHeight.set((imgHeight.doubleValue()*percentageChangeHeight)/100);
+		imgHeight.set((imgHeight.doubleValue()*percentageChangeWidth)/100);
 	}
 
 	@Override
