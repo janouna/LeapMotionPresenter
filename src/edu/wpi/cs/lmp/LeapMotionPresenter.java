@@ -67,6 +67,9 @@ public class LeapMotionPresenter extends Application {
 		scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(),
 				Screen.getPrimary().getBounds().getHeight());
 		
+		// Setting cursor
+		scene.setCursor(new ImageCursor(new Image("file:icons/hand_cursor_open.png")));
+		
 		// Hand cursor placement, this should be its own object that chnages
 		// icon based on state (Open palm, closed palm, finger pointed, etc)
 		changeHandObserver();
