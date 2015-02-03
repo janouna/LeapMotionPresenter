@@ -187,7 +187,7 @@ public class ObjectGestureListener extends Listener {
 			}
 			
 			// Possible options for rotation detection: roll and yaw
-			double degreeChange = Math.toDegrees(handNormal.roll());
+			final double degreeChange = Math.toDegrees(handNormal.roll());
 
 			Platform.runLater(new Runnable() {
 
