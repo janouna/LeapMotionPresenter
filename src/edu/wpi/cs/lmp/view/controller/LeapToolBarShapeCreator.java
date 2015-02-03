@@ -28,6 +28,7 @@ public class LeapToolBarShapeCreator extends LeapToolBarSelectedHandler {
 		newShape.setX(event.getScreenX());
 		newShape.setY(event.getScreenY());
 		LeapSceneManager.getInstance().getCurrentScene().addObject(newShape);
+		System.out.println(newShape);
 		container.removeMenuAll();
 	}
 

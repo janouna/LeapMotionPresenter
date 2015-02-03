@@ -3,7 +3,7 @@ package edu.wpi.cs.lmp.objects.shapes;
 import edu.wpi.cs.lmp.objects.IObject;
 
 public class Circle extends Shape implements IObject {
-	private static String path = "file:Shapes/Circle";	
+	private static String path = "Shapes/Circle.png";	
 	
 	public Circle() {
 		super(path);

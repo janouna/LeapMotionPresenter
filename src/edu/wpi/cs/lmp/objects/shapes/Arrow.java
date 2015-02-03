@@ -3,7 +3,7 @@ package edu.wpi.cs.lmp.objects.shapes;
 import edu.wpi.cs.lmp.objects.IObject;
 
 public class Arrow extends Shape implements IObject {
-	private static String path = "file:Shapes/Arrow";	
+	private static String path = "Shapes/Arrow.png";	
 	
 	public Arrow() {
 		super(path);
