@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
@@ -145,6 +146,7 @@ public class LeapMotionPresenter extends Application {
 							handCursor = new javafx.scene.image.Image("file:icons/hand_cursor_closed.png");
 							break;
 						case GONE:
+							scene.setCursor(Cursor.DISAPPEAR);
 							break;
 						case POINTING:
 							handCursor = new javafx.scene.image.Image("file:icons/hand_cursor_point1.png");
