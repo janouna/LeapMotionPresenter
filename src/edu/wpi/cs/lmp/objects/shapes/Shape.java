@@ -131,7 +131,7 @@ public abstract class Shape extends ImageView implements IObject {
 	public void resize(double percentageChangeWidth, double percentageChangeHeight) {
 		// This is to keep aspect ratio
 		shapeWidth.set((shapeWidth.doubleValue()*percentageChangeWidth)/100);
-		shapeHeight.set((shapeHeight.doubleValue()*percentageChangeWidth)/100);
+		shapeHeight.set((shapeHeight.doubleValue()*percentageChangeHeight)/100);
 	}
 
 	@Override
