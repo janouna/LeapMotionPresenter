@@ -30,6 +30,7 @@ public class LeapToolBarGroup extends VBox {
 
 	private final LeapToolBar fileBar;
 	private final LeapToolBar addBar;
+	private final LeapToolBar shapesBar;
 
 	private boolean isActive;
 
@@ -58,7 +59,9 @@ public class LeapToolBarGroup extends VBox {
 
 		// Instantiate other bars
 		addBar = new LeapToolBar(new String[] { "Slide", "Text", "Image",
-				"Video" }, 1, false);
+				"Video", "Shapes" }, 1, false);
+		shapesBar = new LeapToolBar(new String[] { "Line", "Arrow", "Circle",
+				"Square" }, 2, false);
 		fileBar = new LeapToolBar(new String[] { "Open", "Save", "Save As",
 				"Exit" }, 1, false);
 		this.getChildren().add(mainBar);
@@ -90,6 +93,9 @@ public class LeapToolBarGroup extends VBox {
 		addBar.getButton("Slide").setOnMouseExited(
 				new LeapToolBarSlideCreator(addBar.getButton("Slide"), addBar,
 						this));
+		addBar.getButton("Shapes").setOnMouseExited(
+				new LeapToolBarSubMenuHandler(addBar.getButton("Shapes"), this,
+						addBar, shapesBar));
 
 		fileBar.getButton("Open").setOnMouseExited(
 				new LeapToolBarOpenProject(fileBar.getButton("Open"), fileBar,
@@ -100,7 +106,7 @@ public class LeapToolBarGroup extends VBox {
 		fileBar.getButton("Exit").setOnMouseExited(
 				new LeapToolBarExitProgramHandler(fileBar.getButton("Exit"),
 						fileBar));
-		
+
 		createObservers();
 	}
 
@@ -143,24 +149,24 @@ public class LeapToolBarGroup extends VBox {
 		this.removeMenuAbove(0);
 		this.removeMenuAt(0);
 	}
-	
+
 	private void createObservers() {
 		PresenterStateObservable.getInstance().getPresenterState()
-		.addListener(new ChangeListener<PresenterState>() {
+				.addListener(new ChangeListener<PresenterState>() {
 
-			@Override
-			public void changed(
-					ObservableValue<? extends PresenterState> observable,
-					PresenterState oldValue, PresenterState newValue) {
-				if (newValue == PresenterState.PRESENTING) {
-					instance.setDisabled(true);
-					isActive = false;
-				} else {
-					instance.setDisabled(false);
-					isActive = true;
-				}
-			}
+					@Override
+					public void changed(
+							ObservableValue<? extends PresenterState> observable,
+							PresenterState oldValue, PresenterState newValue) {
+						if (newValue == PresenterState.PRESENTING) {
+							instance.setDisabled(true);
+							isActive = false;
+						} else {
+							instance.setDisabled(false);
+							isActive = true;
+						}
+					}
 
-		});
+				});
 	}
 }
