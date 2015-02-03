@@ -4,8 +4,10 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
@@ -34,8 +36,6 @@ public class LeapMotionPresenter extends Application {
 	private LeapToolBarGroup topBar;
 	private LeapSceneBar bottomBar;
 	private Scene scene;
-	private javafx.scene.image.Image handCursor;
-
 
 	@Override
 	public void start(Stage stage) {
@@ -139,22 +139,20 @@ public class LeapMotionPresenter extends Application {
 					public void run() {
 						switch(newValue) {
 						case OPEN:
-							handCursor = new javafx.scene.image.Image("file:icons/hand_cursor_open.png");
+							scene.setCursor(new ImageCursor(new Image("file:icons/hand_cursor_open.png")));
 							break;
 						case CLOSED:
-							handCursor = new javafx.scene.image.Image("file:icons/hand_cursor_closed.png");
+							scene.setCursor(new ImageCursor(new Image("file:icons/hand_cursor_closed.png")));
 							break;
 						case GONE:
+							scene.setCursor(Cursor.NONE);
 							break;
 						case POINTING:
-							handCursor = new javafx.scene.image.Image("file:icons/hand_cursor_point1.png");
+							scene.setCursor(new ImageCursor(new Image("file:icons/hand_cursor_point1.png")));
 							break;
 						default:
-							handCursor = new javafx.scene.image.Image("file:icons/hand_cursor_open.png");
 							break;
 						}
-						
-						scene.setCursor(new ImageCursor(handCursor));
 					}
 				});
 			}
