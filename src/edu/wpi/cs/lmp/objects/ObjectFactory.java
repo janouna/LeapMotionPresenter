@@ -14,13 +14,11 @@ public class ObjectFactory {
 
 		switch(type){
 		case IMAGE:
-			o = new Image();
 			break;
 		case TEXT:
 			o = new TextBox();
 			break;
 		case VIDEO:
-			o = new Video();
 			break;
 		case PRESENTATION:
 			break;

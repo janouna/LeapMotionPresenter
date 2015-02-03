@@ -1,6 +1,7 @@
 package edu.wpi.cs.lmp.view.controller;
 
 import edu.wpi.cs.lmp.objects.IObject;
+import edu.wpi.cs.lmp.objects.shapes.ShapeFactory;
 import edu.wpi.cs.lmp.objects.shapes.ShapeType;
 import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 import edu.wpi.cs.lmp.view.LeapToolBar;
