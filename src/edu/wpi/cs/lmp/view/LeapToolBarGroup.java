@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.cs.lmp.objects.ObjectType;
+import edu.wpi.cs.lmp.objects.shapes.ShapeType;
 import edu.wpi.cs.lmp.state.PresenterState;
 import edu.wpi.cs.lmp.state.PresenterStateObservable;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarExitMenuHandler;
@@ -12,6 +13,7 @@ import edu.wpi.cs.lmp.view.controller.LeapToolBarObjectCreator;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarOpenProject;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarPresent;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSaveProject;
+import edu.wpi.cs.lmp.view.controller.LeapToolBarShapeCreator;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSlideCreator;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSubMenuHandler;
 import javafx.beans.value.ChangeListener;
@@ -60,6 +62,12 @@ public class LeapToolBarGroup extends VBox {
 		// Instantiate other bars
 		addBar = new LeapToolBar(new String[] { "Slide", "Text", "Image",
 				"Video", "Shapes" }, 1, false);
+		addBar.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent arg0) {
+				instance.removeMenuAbove(addBar.getMenuLevel());
+			}
+		});
 		shapesBar = new LeapToolBar(new String[] { "Line", "Arrow", "Circle",
 				"Square" }, 2, false);
 		fileBar = new LeapToolBar(new String[] { "Open", "Save", "Save As",
@@ -106,6 +114,19 @@ public class LeapToolBarGroup extends VBox {
 		fileBar.getButton("Exit").setOnMouseExited(
 				new LeapToolBarExitProgramHandler(fileBar.getButton("Exit"),
 						fileBar));
+		
+		shapesBar.getButton("Line").setOnMouseExited(
+				new LeapToolBarShapeCreator(shapesBar.getButton("Line"),
+						shapesBar, this, ShapeType.LINE));
+		shapesBar.getButton("Arrow").setOnMouseExited(
+				new LeapToolBarShapeCreator(shapesBar.getButton("Arrow"),
+						shapesBar, this, ShapeType.ARROW));
+		shapesBar.getButton("Circle").setOnMouseExited(
+				new LeapToolBarShapeCreator(shapesBar.getButton("Circle"),
+						shapesBar, this, ShapeType.CIRCLE));
+		shapesBar.getButton("Square").setOnMouseExited(
+				new LeapToolBarShapeCreator(shapesBar.getButton("Square"),
+						shapesBar, this, ShapeType.SQUARE));
 
 		createObservers();
 	}
