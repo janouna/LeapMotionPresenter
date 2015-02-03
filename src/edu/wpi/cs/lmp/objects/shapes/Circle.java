@@ -7,13 +7,11 @@ public class Circle extends Shape implements IObject {
 	
 	public Circle() {
 		super(path);
-		// TODO Auto-generated constructor stub
 	}
 
 	public Circle(double x, double y, double width, double height,
 			double angle) {
 		super(path, x, y, width, height, angle);
-		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -22,8 +22,6 @@ import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
 public abstract class FileOpener {
 	public static void openPresentation(File file) {
-		// TODO File Chooser
-
 		try {			
 			LeapSceneManager.getInstance().setProjectDirectory(file.getParentFile());
 			

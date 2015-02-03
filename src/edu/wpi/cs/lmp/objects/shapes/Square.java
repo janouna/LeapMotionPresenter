@@ -7,12 +7,10 @@ public class Square extends Shape implements IObject {
 	
 	public Square() {
 		super(path);
-		// TODO Auto-generated constructor stub
 	}
 
 	public Square(double x, double y, double width, double height,
 			double angle) {
 		super(path, x, y, width, height, angle);
-		// TODO Auto-generated constructor stub
 	}
 }

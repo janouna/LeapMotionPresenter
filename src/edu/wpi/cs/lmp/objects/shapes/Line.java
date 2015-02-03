@@ -7,13 +7,11 @@ public class Line extends Shape implements IObject {
 	
 	public Line() {
 		super(path);
-		// TODO Auto-generated constructor stub
 	}
 
 	public Line(double x, double y, double width, double height,
 			double angle) {
 		super(path, x, y, width, height, angle);
-		// TODO Auto-generated constructor stub
 	}
 
 }
