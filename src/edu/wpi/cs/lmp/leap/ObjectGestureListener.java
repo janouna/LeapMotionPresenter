@@ -177,7 +177,7 @@ public class ObjectGestureListener extends Listener {
 	}
 
 	private void rotateObject(HandList hands) {
-		if (hands.count() == 1) {
+		if (hands.count() == 1 && hands.get(0).fingers().extended().count() == 2) {
 			
 			Vector handNormal = hands.get(0).palmNormal();
 			
