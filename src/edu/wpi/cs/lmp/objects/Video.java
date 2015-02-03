@@ -37,33 +37,6 @@ public class Video extends MediaView implements IObject {
 	
 	private String path;
 
-	public Video () {
-		super();
-		instance = this;
-		isPlaying = false;
-		// Modify the media variable to take in desired URL or FILE
-		media = new Media(new File("big_buck_bunny.mp4").toURI().toString());
-		mediaPlayer = new MediaPlayer(media);
-		this.setMediaPlayer(mediaPlayer);
-		vidWidth = new SimpleDoubleProperty(mediaPlayer.getMedia().getWidth());
-		vidHeight = new SimpleDoubleProperty(mediaPlayer.getMedia().getHeight());
-		vidX = new SimpleDoubleProperty();
-		vidY = new SimpleDoubleProperty(instance.getY());
-
-		mediaPlayer.setOnReady(new Runnable() {
-			@Override
-			public void run() {
-				vidWidth.set(mediaPlayer.getMedia().getWidth());
-				vidHeight.set(mediaPlayer.getMedia().getHeight());
-				vidX.set(instance.getX());
-				vidY.set(instance.getY());
-				instance.fitWidthProperty().bind(vidWidth);
-				instance.fitHeightProperty().bind(vidHeight);
-				System.out.println(instance.getFitWidth());
-			}
-		});
-	}
-
 	public Video (String path) {
 		super();
 		this.path = path;
