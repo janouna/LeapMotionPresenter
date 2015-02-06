@@ -19,12 +19,8 @@ package edu.wpi.cs.lmp.view.radialmenu;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -44,12 +40,18 @@ import javax.imageio.ImageIO;
 import com.leapmotion.leap.Controller;
 // import com.sun.glass.ui.Cursor;
 
+
+
 import edu.wpi.cs.lmp.leap.MouseController;
 
-public class NestedRadialOptionsMenuDemo extends RadialOptionsMenuDemo {
+public class RadialOptionsMenuDemo extends Application {
 	
 	Controller c;
 	MouseController mouseController;
+
+	public static void main(final String[] args) {
+		launch(args);
+	}
 
 	private Group container;
 	private RadialOptionsMenu radialMenu;
@@ -74,15 +76,11 @@ public class NestedRadialOptionsMenuDemo extends RadialOptionsMenuDemo {
 		final double centerClosedRadius = 28;
 		final double centerOpenedRadius = 40;
 
-		final String[] menus = new String[] { "File", "Add", "Present", "Exit" };
-		final Map<String,List<String>> nestedItems = new HashMap<String, List<String>>();
-		nestedItems.put("File", Arrays.asList((new String[] {"Open, Save, Save As, Close"})));
-		nestedItems.put("Add", Arrays.asList((new String[] {"Text, Image, Video"})));
-		nestedItems.put("Present", new ArrayList<String>());
-		nestedItems.put("Exit", new ArrayList<String>());
+		final String[] menus = new String[] { "DOWLOADS", "SYNOPSIS", "VIDEO",
+				"PHOTO", "GAME", "CAST & CREW" };
 
-		radialMenu = new NestedRadialOptionsMenu(this, menus, nestedItems, itemInnerRadius, itemRadius,
-				centerClosedRadius, centerOpenedRadius);
+		//radialMenu = new RadialOptionsMenu(this, menus, itemInnerRadius, itemRadius,
+				//centerClosedRadius, centerOpenedRadius);
 
 		radialMenu.setTranslateX(1920/2);
 		radialMenu.setTranslateY(1080/2);
@@ -114,7 +112,7 @@ public class NestedRadialOptionsMenuDemo extends RadialOptionsMenuDemo {
 			public void handle(final KeyEvent event) {
 				System.out.println(event);
 				if (event.getCode() == KeyCode.F5) {
-					NestedRadialOptionsMenuDemo.this.takeSnapshot(scene);
+					RadialOptionsMenuDemo.this.takeSnapshot(scene);
 				}
 			}
 		});

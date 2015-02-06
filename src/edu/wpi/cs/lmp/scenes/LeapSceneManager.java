@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.Pane;
 
 public class LeapSceneManager {
 
@@ -18,6 +19,7 @@ public class LeapSceneManager {
 	private File projectDir;
 	private final IntegerProperty currentScene;
 	private final ListProperty<LeapScene> scenes;
+	private Pane root = null;
 
 	private LeapSceneManager() {
 		currentScene = new SimpleIntegerProperty(0);
@@ -94,6 +96,14 @@ public class LeapSceneManager {
 	
 	public File getProjectDirectory() {
 		return projectDir;
+	}
+	
+	public void addRoot(Pane root) {
+		this.root = root;
+	}
+	
+	public Pane getRoot() {
+		return root;
 	}
 
 }

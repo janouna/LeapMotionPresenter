@@ -43,6 +43,7 @@ public class LeapMotionPresenter extends Application {
 		instance = this;
 		root = new Pane();
 		root.setId("background");
+		LeapSceneManager.getInstance().addRoot(root);
 
 		// Binding leap controls to the mouse
 		c = new Controller();

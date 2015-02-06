@@ -26,6 +26,8 @@ public class Image extends ImageView implements IObject {
 	
 	private DoubleProperty imgAngle;
 	
+	private LeapScene container;
+	
 	private String path;
 
 	private final Image instance;

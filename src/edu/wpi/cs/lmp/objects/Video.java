@@ -27,6 +27,8 @@ public class Video extends MediaView implements IObject {
 	private DoubleProperty vidY;
 
 	private boolean isPlaying;
+	
+	private LeapScene container;
 
 	// Video source
 	private final Media media;

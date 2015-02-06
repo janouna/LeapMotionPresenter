@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.wpi.cs.lmp.objects.IObject;
+import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
@@ -50,10 +52,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-public class NestedRadialOptionsMenu extends RadialOptionsMenu {
+public class RadialOptionsMenu extends Group {
 	
-	private final RadialOptionsMenuDemo callingObjetct;
-
 	private double itemInnerRadius = 60;
 	private double itemRadius = 95;
 	private double centerClosedRadius = 28;
@@ -86,14 +86,14 @@ public class NestedRadialOptionsMenu extends RadialOptionsMenu {
 	private final double animDuration = 350;
 	private Animation openTransition;
 	private final Map<RadialMenuItem, List<Text>> itemToTexts;
+	
+	private RadialOptionsMenu thisInstance;
 
-	public NestedRadialOptionsMenu(NestedRadialOptionsMenuDemo caller, final String[] itemNames, final Map<String,List<String>> nestedListMap, final double innerRadius,
+	public RadialOptionsMenu(IObject caller, final String[] itemNames, final double innerRadius,
 			final double radius, final double centerClosedRadius,
 			final double centerOpenedRadius) {
-		super(caller, itemNames, innerRadius, radius, centerClosedRadius, centerOpenedRadius);
 		
-		callingObjetct = caller;
-
+		thisInstance = this;
 		menus = itemNames;
 		itemInnerRadius = innerRadius;
 		itemRadius = radius;
@@ -149,8 +149,8 @@ public class NestedRadialOptionsMenu extends RadialOptionsMenu {
 			item.setOnMouseExited(itemEventHandler);
 			item.setOnMouseClicked(itemEventHandler);
 			*/
-			List<String> nestedList = nestedListMap.get(itemTitle);
-			final EventHandler<MouseEvent> mouseHandler = new ItemOnEventHandler(this, item, item, item, nestedList);
+			final EventHandler<MouseEvent> mouseHandler = new ItemOnEventHandler(
+					item, item, item);
 			item.setOnMouseEntered(mouseHandler);
 			item.setOnMouseExited(mouseHandler);
 			item.setOnMouseMoved(mouseHandler);
@@ -161,7 +161,7 @@ public class NestedRadialOptionsMenu extends RadialOptionsMenu {
 		center = CircleBuilder.create().fill(centerColor)
 				.radius(centerClosedRadius).stroke(strokeColor).centerX(0)
 				.centerX(0).build();
-		centerText = new Text("MENU");
+		centerText = new Text("TEXT");
 		centerText.setFont(menuFont);
 		centerText.setFontSmoothingType(FontSmoothingType.LCD);
 
@@ -195,8 +195,7 @@ public class NestedRadialOptionsMenu extends RadialOptionsMenu {
 
 		setOnMouseEntered(expansionEventHandler);
 		setOnMouseExited(expansionEventHandler);
-		
-		getChildren().clear();
+
 		getChildren().addAll(fakeBackground, itemsGroup, textsGroup, stack);
 	}
 
@@ -419,18 +418,15 @@ public class NestedRadialOptionsMenu extends RadialOptionsMenu {
 		private final RadialMenuItem colorItemSel;
 		private final RadialMenuItem colorItem;
 		private final RadialMenuItem colorItemExt;
-		private final List<String> nestedList;
 		double offset = 0;
 		boolean enteredByInner = false;
 
-		private ItemOnEventHandler(NestedRadialOptionsMenu parent, final RadialMenuItem colorItemSel,
+		private ItemOnEventHandler(final RadialMenuItem colorItemSel,
 				final RadialMenuItem colorItem,
-				final RadialMenuItem colorItemExt,
-				final List<String> nestedList) {
+				final RadialMenuItem colorItemExt) {
 			this.colorItemSel = colorItemSel;
 			this.colorItem = colorItem;
 			this.colorItemExt = colorItemExt;
-			this.nestedList = nestedList;
 		}
 
 		@Override
@@ -443,10 +439,8 @@ public class NestedRadialOptionsMenu extends RadialOptionsMenu {
 						- distanceToCenter) < 20) {
 					// Entering by the center of the menu
 					enteredByInner = true;
-					System.out.println("Inner");
 					colorItemSel.setOpacity(1.0);
 				} else {
-					System.out.println("Outer");
 					enteredByInner = false;
 				}
 			} else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
@@ -467,15 +461,17 @@ public class NestedRadialOptionsMenu extends RadialOptionsMenu {
 											minOffset)));
 					outTransition.playFromStart();
 
-					final double distanceToCenter = Point2D.distance(
-							event.getX(), event.getY(), 0, 0);
-					if (Math.abs(colorItem.getRadius() + colorItem.getOffset()
-							- distanceToCenter) < 20) {
-						new RadialOptionsMenu(callingObjetct, nestedList.toArray(new String[0]), distanceToCenter, distanceToCenter, distanceToCenter, distanceToCenter);
-						
-					}
+//					final double distanceToCenter = Point2D.distance(
+//							event.getX(), event.getY(), 0, 0);
+//					if (Math.abs(colorItem.getRadius() + colorItem.getOffset()
+//							- distanceToCenter) < 20) {
+//						// TODO Fill
+//						// Exiting by the external item of the menu
+//						selectedColor.set(colorItem.getBackgroundFill());
+//					}
+					LeapSceneManager.getInstance().getRoot().getChildren().remove(thisInstance);
 				}
-				enteredByInner = false;				
+				enteredByInner = false;
 			} else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {
 				if (enteredByInner) {
 					final double distanceToCenter = Point2D.distance(

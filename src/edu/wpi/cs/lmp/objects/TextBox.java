@@ -8,14 +8,18 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.scenes.LeapScene;
+import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 import edu.wpi.cs.lmp.state.PresenterState;
 import edu.wpi.cs.lmp.state.PresenterStateObservable;
+import edu.wpi.cs.lmp.view.radialmenu.RadialMenuFactory;
+import edu.wpi.cs.lmp.view.radialmenu.RadialOptionsMenu;
 
 public class TextBox extends Text implements IObject {
 
@@ -156,8 +160,8 @@ public class TextBox extends Text implements IObject {
 
 	@Override
 	public void onCounterCircle() {
-		// TODO Auto-generated method stub
-
+		RadialOptionsMenu radialMenu = RadialMenuFactory.getInstance().createRadialMenu(this, ObjectType.TEXT);
+		LeapSceneManager.getInstance().getRoot().getChildren().add(radialMenu);
 	}
 
 	@Override
