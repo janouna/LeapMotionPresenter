@@ -93,9 +93,8 @@ public class HandStateController extends Listener {
 							}
 
 						});
-
-						break;
 					}
+					break;
 				case TYPE_CIRCLE:
 					break;
 				case TYPE_INVALID:
@@ -103,6 +102,8 @@ public class HandStateController extends Listener {
 				case TYPE_KEY_TAP:
 					break;
 				case TYPE_SCREEN_TAP:
+					break;
+				default:
 					break;
 				}
 			}

@@ -1,11 +1,11 @@
 package edu.wpi.cs.lmp.view.controller;
 
+import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 import edu.wpi.cs.lmp.state.PresenterState;
 import edu.wpi.cs.lmp.state.PresenterStateObservable;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.input.MouseEvent;
 
 public class LeapToolBarPresent extends LeapToolBarSelectedHandler {
 

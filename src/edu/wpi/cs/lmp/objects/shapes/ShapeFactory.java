@@ -1,11 +1,6 @@
 package edu.wpi.cs.lmp.objects.shapes;
 
 import edu.wpi.cs.lmp.objects.IObject;
-import edu.wpi.cs.lmp.objects.Image;
-import edu.wpi.cs.lmp.objects.ObjectFactory;
-import edu.wpi.cs.lmp.objects.ObjectType;
-import edu.wpi.cs.lmp.objects.TextBox;
-import edu.wpi.cs.lmp.objects.Video;
 
 public class ShapeFactory {
 	private static final ShapeFactory INSTANCE = new ShapeFactory();

@@ -25,9 +25,9 @@ public abstract class FileOpener {
 		try {			
 			LeapSceneManager.getInstance().setProjectDirectory(file.getParentFile());
 			
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(file);
+			final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			final DocumentBuilder db = dbf.newDocumentBuilder();
+			final Document doc = db.parse(file);
 
 			// optional, but recommended
 			// read this -
@@ -86,7 +86,7 @@ public abstract class FileOpener {
 			});
 
 		} catch (ParserConfigurationException e) {
-
+			// TODO Auto-generated catch block
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
 		} catch (IOException e) {

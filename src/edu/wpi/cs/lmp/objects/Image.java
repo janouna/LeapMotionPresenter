@@ -5,14 +5,14 @@ import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
-import javafx.scene.transform.Rotate;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.scenes.LeapScene;
 
@@ -103,7 +103,7 @@ public class Image extends ImageView implements IObject {
 	}
 
 	public void setImgHeight(double imgHeight) {
-		this.imgHeight.set(imgHeight);;
+		this.imgHeight.set(imgHeight);
 	}
 
 	public double getImgX() {
@@ -111,7 +111,7 @@ public class Image extends ImageView implements IObject {
 	}
 
 	public void setImgX(double imgX) {
-		this.imgX.set(imgX);;
+		this.imgX.set(imgX);
 	}
 
 	public double getImgY() {
@@ -119,7 +119,7 @@ public class Image extends ImageView implements IObject {
 	}
 
 	public void setImgY(double imgY) {
-		this.imgY.set(imgY);;
+		this.imgY.set(imgY);
 	}
 
 	public String getPath() {
@@ -186,27 +186,27 @@ public class Image extends ImageView implements IObject {
 
 	@Override
 	public Element toXML(Document doc) {
-		Element img = doc.createElement("Image");
+		final Element img = doc.createElement("Image");
 		// Source field + copying
-		File file = new File(path);
-		Element src = doc.createElement("src");
+		final File file = new File(path);
+		final Element src = doc.createElement("src");
 		src.appendChild(doc.createTextNode("Assets/" + file.getName()));
 		img.appendChild(src);
 		// Position fields
-		Element x = doc.createElement("x");
+		final Element x = doc.createElement("x");
 		x.appendChild(doc.createTextNode(String.valueOf(imgX.doubleValue())));
 		img.appendChild(x);
-		Element y = doc.createElement("y");
+		final Element y = doc.createElement("y");
 		y.appendChild(doc.createTextNode(String.valueOf(imgY.doubleValue())));
 		img.appendChild(y);
 		// Size fields
-		Element width = doc.createElement("width");
+		final Element width = doc.createElement("width");
 		width.appendChild(doc.createTextNode(String.valueOf(imgWidth.doubleValue())));
 		img.appendChild(width);
-		Element height = doc.createElement("height");
+		final Element height = doc.createElement("height");
 		height.appendChild(doc.createTextNode(String.valueOf(imgHeight.doubleValue())));
 		img.appendChild(height);
-		Element angle = doc.createElement("angle");
+		final Element angle = doc.createElement("angle");
 		angle.appendChild(doc.createTextNode(String.valueOf(imgAngle.doubleValue())));
 		img.appendChild(angle);
 		
@@ -214,25 +214,25 @@ public class Image extends ImageView implements IObject {
 	}
 
 	public static Image fromXML(Element e, File directory) {
-		String file = e.getElementsByTagName("src").item(0).getTextContent();
+		final String file = e.getElementsByTagName("src").item(0).getTextContent();
 		
-		double x = (Double.parseDouble(e.getElementsByTagName("x").item(0).getTextContent()));
+		final double x = (Double.parseDouble(e.getElementsByTagName("x").item(0).getTextContent()));
 
-		double y = (Double.parseDouble(e.getElementsByTagName("y").item(0).getTextContent()));
+		final double y = (Double.parseDouble(e.getElementsByTagName("y").item(0).getTextContent()));
 
-		double width = (Double.parseDouble(e.getElementsByTagName("width").item(0).getTextContent()));
+		final double width = (Double.parseDouble(e.getElementsByTagName("width").item(0).getTextContent()));
 
-		double height = (Double.parseDouble(e.getElementsByTagName("height").item(0).getTextContent()));
+		final double height = (Double.parseDouble(e.getElementsByTagName("height").item(0).getTextContent()));
 		
-		double angle = (Double.parseDouble(e.getElementsByTagName("angle").item(0).getTextContent()));
+		final double angle = (Double.parseDouble(e.getElementsByTagName("angle").item(0).getTextContent()));
 		
 		return new Image(directory.toString()+ "/" + file, x, y, width, height, angle);
 		
 	}
 	
 	public void copyTo(File to) {
-		File thisFile = new File(path);
-		File newFile = new File(to.toString() + "/" + thisFile.getName());
+		final File thisFile = new File(path);
+		final File newFile = new File(to.toString() + "/" + thisFile.getName());
 		try {
 			Files.copy(thisFile.toPath(), newFile.toPath());
 		} catch (FileAlreadyExistsException e) {

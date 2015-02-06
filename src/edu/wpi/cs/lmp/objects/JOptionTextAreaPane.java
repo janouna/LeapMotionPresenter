@@ -29,7 +29,7 @@ public class JOptionTextAreaPane extends JOptionPane {
 				setLocation(400,300);
 				getContentPane().add(new JLabel(message),BorderLayout.NORTH);
 				getContentPane().add(ta,BorderLayout.CENTER);
-				JPanel jp = new JPanel();
+				final JPanel jp = new JPanel();
 				btnOK.addActionListener(this);
 				btnCancel.addActionListener(this);
 				jp.add(btnOK);

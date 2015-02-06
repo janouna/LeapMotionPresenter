@@ -6,10 +6,10 @@ import com.leapmotion.leap.CircleGesture;
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Gesture;
+import com.leapmotion.leap.Gesture.State;
 import com.leapmotion.leap.GestureList;
 import com.leapmotion.leap.HandList;
 import com.leapmotion.leap.Listener;
-import com.leapmotion.leap.Gesture.State;
 import com.leapmotion.leap.ScreenTapGesture;
 import com.leapmotion.leap.Vector;
 
@@ -33,7 +33,7 @@ public class ObjectGestureListener extends Listener {
 	private static final long TAP_TIMEOUT = 200;
 	private static final long ALIGNMENT_THRESHOLD = 30;
 
-	private long lastTap = Long.MIN_VALUE;
+	private final long lastTap = Long.MIN_VALUE;
 
 	public ObjectGestureListener() {
 		this.obj = null;
@@ -101,6 +101,8 @@ public class ObjectGestureListener extends Listener {
 						case TYPE_KEY_TAP:
 							break;
 						case TYPE_INVALID:
+							break;
+						default:
 							break;
 						}
 					}
@@ -179,9 +181,9 @@ public class ObjectGestureListener extends Listener {
 	private void rotateObject(HandList hands) {
 		if (hands.count() == 1 && hands.get(0).fingers().extended().count() == 2) {
 			
-			Vector handNormal = hands.get(0).palmNormal();
+			final Vector handNormal = hands.get(0).palmNormal();
 			
-			if (isRotating == false) {
+			if (!isRotating) {
 				initialRotation = Math.toDegrees(handNormal.roll());
 				isRotating = true;
 			}

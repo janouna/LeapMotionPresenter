@@ -3,6 +3,13 @@ package edu.wpi.cs.lmp.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import edu.wpi.cs.lmp.objects.ObjectType;
 import edu.wpi.cs.lmp.objects.shapes.ShapeType;
 import edu.wpi.cs.lmp.state.PresenterState;
@@ -16,13 +23,6 @@ import edu.wpi.cs.lmp.view.controller.LeapToolBarSaveProject;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarShapeCreator;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSlideCreator;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSubMenuHandler;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 
 public class LeapToolBarGroup extends VBox {
 

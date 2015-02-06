@@ -1,13 +1,13 @@
 package edu.wpi.cs.lmp.view.controller;
 
+import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 import edu.wpi.cs.lmp.objects.IObject;
 import edu.wpi.cs.lmp.objects.shapes.ShapeFactory;
 import edu.wpi.cs.lmp.objects.shapes.ShapeType;
 import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.input.MouseEvent;
 
 public class LeapToolBarShapeCreator extends LeapToolBarSelectedHandler {
 

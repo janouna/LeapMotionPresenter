@@ -23,9 +23,9 @@ public class LeapToolBarSaveProject extends LeapToolBarSelectedHandler {
 	@Override
 	public void action(MouseEvent event) {
 		// Choose file directory
-		FileChooser fileChooser = new FileChooser();
+		final FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save Project As...");
-		FileChooser.ExtensionFilter extLMP = new FileChooser.ExtensionFilter(
+		final FileChooser.ExtensionFilter extLMP = new FileChooser.ExtensionFilter(
 				"LeapMotion Presentation (*.lmp)", "*.lmp", "*.LMP");
 		fileChooser.getExtensionFilters().add(extLMP);
 		final File file = fileChooser.showSaveDialog(container.getScene()

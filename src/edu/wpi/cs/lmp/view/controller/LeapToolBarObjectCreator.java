@@ -4,7 +4,7 @@ import java.io.File;
 
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
-import edu.wpi.cs.lmp.FileChooser.FileChooserFactory;
+import edu.wpi.cs.lmp.fileChooser.FileChooserFactory;
 import edu.wpi.cs.lmp.objects.IObject;
 import edu.wpi.cs.lmp.objects.ObjectFactory;
 import edu.wpi.cs.lmp.objects.ObjectType;
@@ -16,7 +16,7 @@ public class LeapToolBarObjectCreator extends LeapToolBarSelectedHandler {
 
 	private final ObjectType object;
 	private final LeapToolBarGroup container;
-	private boolean useFileChooser;
+	private final boolean useFileChooser;
 
 	public LeapToolBarObjectCreator(ToggleButton mousedButton,
 			LeapToolBar mousedBar, LeapToolBarGroup container,

@@ -1,14 +1,13 @@
-package edu.wpi.cs.lmp.FileChooser;
+package edu.wpi.cs.lmp.fileChooser;
 
-import edu.wpi.cs.lmp.objects.ObjectType;
 import javafx.stage.FileChooser;
+import edu.wpi.cs.lmp.objects.ObjectType;
 
 public class FileChooserFactory {
 
 	private static final FileChooserFactory INSTANCE = new FileChooserFactory();
 
-	private FileChooserFactory() {
-	}
+	private FileChooserFactory() {}
 
 	public static FileChooserFactory getInstance() {
 		return INSTANCE;
@@ -49,6 +48,8 @@ public class FileChooserFactory {
 			fileChooser.setTitle("Open Presentation File");
 			FileChooser.ExtensionFilter extLMP = new FileChooser.ExtensionFilter("LeapMotion Presentation files (*.lmp)", "*.lmp", "*.LMP");
 			fileChooser.getExtensionFilters().add(extLMP);
+			break;
+		default:
 			break;
 		}
 
