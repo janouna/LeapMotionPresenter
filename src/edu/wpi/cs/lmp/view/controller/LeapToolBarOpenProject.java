@@ -4,8 +4,8 @@ import java.io.File;
 
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
-import edu.wpi.cs.lmp.FileChooser.FileChooserFactory;
 import edu.wpi.cs.lmp.file.FileOpener;
+import edu.wpi.cs.lmp.fileChooser.FileChooserFactory;
 import edu.wpi.cs.lmp.objects.ObjectType;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;

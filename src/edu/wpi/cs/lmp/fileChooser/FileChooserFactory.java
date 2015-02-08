@@ -1,4 +1,4 @@
-package edu.wpi.cs.lmp.FileChooser;
+package edu.wpi.cs.lmp.fileChooser;
 
 import edu.wpi.cs.lmp.objects.ObjectType;
 import javafx.stage.FileChooser;
