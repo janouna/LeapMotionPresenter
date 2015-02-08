@@ -3,7 +3,7 @@ package edu.wpi.cs.lmp.objects.shapes;
 import edu.wpi.cs.lmp.objects.IObject;
 
 public class Square extends Shape implements IObject {
-	private static String path = "Shapes/Square.png";
+	private static final String path = "Shapes/Square.png";
 	
 	public Square() {
 		super(path);

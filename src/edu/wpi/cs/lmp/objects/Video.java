@@ -149,24 +149,24 @@ public class Video extends MediaView implements IObject {
 
 	@Override
 	public Element toXML(Document doc) {
-		Element vid = doc.createElement("Video");
+		final Element vid = doc.createElement("Video");
 		// Source field
-		File file = new File(media.getSource());
-		Element src = doc.createElement("src");
+		final File file = new File(media.getSource());
+		final Element src = doc.createElement("src");
 		src.appendChild(doc.createTextNode("Assets/" + file.getName()));
 		vid.appendChild(src);
 		// Position fields
-		Element x = doc.createElement("x");
+		final Element x = doc.createElement("x");
 		x.appendChild(doc.createTextNode(String.valueOf(vidX.doubleValue())));
 		vid.appendChild(x);
-		Element y = doc.createElement("y");
+		final Element y = doc.createElement("y");
 		y.appendChild(doc.createTextNode(String.valueOf(vidY.doubleValue())));
 		vid.appendChild(y);
 		// Size fields
-		Element width = doc.createElement("width");
+		final Element width = doc.createElement("width");
 		width.appendChild(doc.createTextNode(String.valueOf(vidWidth.doubleValue())));
 		vid.appendChild(width);
-		Element height = doc.createElement("height");
+		final Element height = doc.createElement("height");
 		height.appendChild(doc.createTextNode(String.valueOf(vidHeight.doubleValue())));
 		vid.appendChild(height);
 		
@@ -174,22 +174,22 @@ public class Video extends MediaView implements IObject {
 	}
 
 	public static Video fromXML(Element e, File directory) {
-		String file = e.getElementsByTagName("src").item(0).getTextContent();
+		final String file = e.getElementsByTagName("src").item(0).getTextContent();
 		
-		double x = (Double.parseDouble(e.getElementsByTagName("x").item(0).getTextContent()));
+		final double x = (Double.parseDouble(e.getElementsByTagName("x").item(0).getTextContent()));
 
-		double y = (Double.parseDouble(e.getElementsByTagName("y").item(0).getTextContent()));
+		final double y = (Double.parseDouble(e.getElementsByTagName("y").item(0).getTextContent()));
 
-		double width = (Double.parseDouble(e.getElementsByTagName("width").item(0).getTextContent()));
+		final double width = (Double.parseDouble(e.getElementsByTagName("width").item(0).getTextContent()));
 
-		double height = (Double.parseDouble(e.getElementsByTagName("height").item(0).getTextContent()));
+		final double height = (Double.parseDouble(e.getElementsByTagName("height").item(0).getTextContent()));
 
 		return new Video(directory.toString()+ "/" + file, x, y, width, height);
 	}
 	
 	public void copyTo(File to) {
-		File thisFile = new File(path);
-		File newFile = new File(to.toString() + "/" + thisFile.getName());
+		final File thisFile = new File(path);
+		final File newFile = new File(to.toString() + "/" + thisFile.getName());
 		try {
 			Files.copy(thisFile.toPath(), newFile.toPath());
 		} catch (FileAlreadyExistsException e) {

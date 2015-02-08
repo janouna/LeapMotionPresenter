@@ -16,9 +16,9 @@ public class TextInputFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(600,300);
 		setLocation(200,100);
-		JPanel main = new JPanel(new BorderLayout());
+		final JPanel main = new JPanel(new BorderLayout());
 		main.add(lbl,BorderLayout.CENTER);
-		JButton btn = new JButton("OK");
+		final JButton btn = new JButton("OK");
 		btn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				new JOptionTextAreaPane();

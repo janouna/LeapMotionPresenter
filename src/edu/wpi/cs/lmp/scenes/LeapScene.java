@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -16,6 +13,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import com.leapmotion.leap.Controller;
 
@@ -115,7 +115,7 @@ public class LeapScene extends Parent {
 	}
 
 	public void drawBounds(double x, double y, double width, double height) {
-		Rectangle bounds = new Rectangle(x, y, width, height);
+		final Rectangle bounds = new Rectangle(x, y, width, height);
 		bounds.setFill(Color.TRANSPARENT);
 		bounds.setStroke(Color.RED);
 		bounds.setStrokeWidth(2);
@@ -123,7 +123,7 @@ public class LeapScene extends Parent {
 	}
 	
 	public List<Element> toXML(Document doc) {
-		List<Element> xmlObjs = new ArrayList<Element>();
+		final List<Element> xmlObjs = new ArrayList<Element>();
 		for(int i=0; i < children.size(); i++) {
 			xmlObjs.add(children.get(i).toXML(doc));
 		}

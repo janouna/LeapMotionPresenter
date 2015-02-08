@@ -21,8 +21,8 @@ import com.leapmotion.leap.Vector;
  * @author johan Modified to track multiple hands
  */
 public class MouseController extends Listener {
-	private double SCREEN_HEIGHT;
-	private double SCREEN_WIDTH;
+	private final double screenHeight;
+	private final double screenWidth;
 
 	//private static final float HEIGHT_BOTTOM_CLAMP = 0.2f;
 	//private static final float HEIGHT_TOP_CLAMP = 0.8f;
@@ -34,8 +34,8 @@ public class MouseController extends Listener {
 	private Robot mouse;
 
 	public MouseController(double width, double height) {
-		this.SCREEN_HEIGHT = height;
-		this.SCREEN_WIDTH = width;
+		this.screenHeight = height;
+		this.screenWidth = width;
 	}
 
 	@Override
@@ -68,6 +68,8 @@ public class MouseController extends Listener {
 							mouse.mouseRelease(InputEvent.BUTTON1_MASK);
 							break;
 						case POINTING:
+							break;
+						default:
 							break;
 						}
 					}
@@ -115,8 +117,8 @@ public class MouseController extends Listener {
 					.stabilizedPalmPosition());
 			// Vector unstableIntersect = screen.normalizePoint(thisHand.palmPosition());
 
-			final double x = intersect.getX() * SCREEN_WIDTH;
-			final double y = (1 - intersect.getY()) * SCREEN_HEIGHT;
+			final double x = intersect.getX() * screenWidth;
+			final double y = (1 - intersect.getY()) * screenHeight;
 			// final double y = unstableIntersect.getZ() * SCREEN_HEIGHT;
 
 			mouse.mouseMove((int) x, (int) y);

@@ -25,10 +25,10 @@ public class TextBox extends Text implements IObject {
 
 	private static final float EXTRA_BOUNDS = 1.1f;
 
-	private DoubleProperty textX;
-	private DoubleProperty textY;
+	private final DoubleProperty textX;
+	private final DoubleProperty textY;
 
-	private TextBox instance;
+	private final TextBox instance;
 
 	public TextBox() {
 		// TODO: Text is an interesting problem with bounds perhaps layout
@@ -109,8 +109,8 @@ public class TextBox extends Text implements IObject {
 	public void resize(double percentageChangeWidth, double percentageChangeHeight) {
 		// textWidth.set((textWidth.doubleValue()*percentageChange)/100);
 		// textHeight.set((textHeight.doubleValue()*percentageChange)/100);
-		Double currentSize = this.getFont().getSize();
-		Font newFont = new Font(this.getFont().getName(),
+		final Double currentSize = this.getFont().getSize();
+		final Font newFont = new Font(this.getFont().getName(),
 				(currentSize * percentageChangeWidth) / 100);
 		this.setFont(newFont);
 	}
@@ -123,11 +123,11 @@ public class TextBox extends Text implements IObject {
 
 	@Override
 	public boolean inBounds(LeapScene parent, double x, double y) {
-		double xPos = textX.doubleValue();
+		final double xPos = textX.doubleValue();
 		double yPos = textY.doubleValue();
 
-		double width = this.getLayoutBounds().getWidth() * EXTRA_BOUNDS;
-		double height = this.getLayoutBounds().getHeight() * EXTRA_BOUNDS;
+		final double width = this.getLayoutBounds().getWidth() * EXTRA_BOUNDS;
+		final double height = this.getLayoutBounds().getHeight() * EXTRA_BOUNDS;
 
 		// Y as at the bottom left for text
 		yPos -= this.getLayoutBounds().getHeight()
@@ -145,7 +145,7 @@ public class TextBox extends Text implements IObject {
 	@Override
 	public void onScreenTap() {
 		if (PresenterStateObservable.getInstance().get() == PresenterState.CREATING) {
-			String newText = JOptionTextAreaPane.showInputDialog("Enter Text");
+			final String newText = JOptionTextAreaPane.showInputDialog("Enter Text");
 			if (newText != null) {
 				this.setText(newText);
 			}
@@ -166,29 +166,29 @@ public class TextBox extends Text implements IObject {
 
 	@Override
 	public Element toXML(Document doc) {
-		Element txt = doc.createElement("Text");
+		final Element txt = doc.createElement("Text");
 		// Source field
-		Element src = doc.createElement("string");
+		final Element src = doc.createElement("string");
 		src.appendChild(doc.createTextNode(this.getText()));
 		txt.appendChild(src);
 		// Position fields
-		Element x = doc.createElement("x");
+		final Element x = doc.createElement("x");
 		x.appendChild(doc.createTextNode(String.valueOf(textX.doubleValue())));
 		txt.appendChild(x);
-		Element y = doc.createElement("y");
+		final Element y = doc.createElement("y");
 		y.appendChild(doc.createTextNode(String.valueOf(textY.doubleValue())));
 		txt.appendChild(y);
 		// "Other" fields
-		Element fontSize = doc.createElement("fontSize");
+		final Element fontSize = doc.createElement("fontSize");
 		fontSize.appendChild(doc.createTextNode(String.valueOf(this.getFont()
 				.getSize())));
 		txt.appendChild(fontSize);
 
-		Element fontFamily = doc.createElement("fontFamily");
+		final Element fontFamily = doc.createElement("fontFamily");
 		fontFamily.appendChild(doc.createTextNode(this.getFont().getFamily()));
 		txt.appendChild(fontFamily);
 
-		Element fontColor = doc.createElement("fontColor");
+		final Element fontColor = doc.createElement("fontColor");
 		fontColor.appendChild(doc.createTextNode(this.getFill().toString()));
 		txt.appendChild(fontColor);
 
@@ -196,15 +196,15 @@ public class TextBox extends Text implements IObject {
 	}
 
 	public static TextBox fromXML(Element e, File directory) {
-		String text = e.getElementsByTagName("string").item(0).getTextContent();
+		final String text = e.getElementsByTagName("string").item(0).getTextContent();
 
-		double x = (Double.parseDouble(e.getElementsByTagName("x").item(0)
+		final double x = (Double.parseDouble(e.getElementsByTagName("x").item(0)
 				.getTextContent()));
 
-		double y = (Double.parseDouble(e.getElementsByTagName("y").item(0)
+		final double y = (Double.parseDouble(e.getElementsByTagName("y").item(0)
 				.getTextContent()));
 
-		double fontSize = (Double.parseDouble(e
+		final double fontSize = (Double.parseDouble(e
 				.getElementsByTagName("fontSize").item(0).getTextContent()));
 
 		return new TextBox(text, x, y, fontSize);

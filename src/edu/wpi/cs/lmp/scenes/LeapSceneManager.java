@@ -3,8 +3,6 @@ package edu.wpi.cs.lmp.scenes;
 import java.io.File;
 import java.util.List;
 
-import edu.wpi.cs.lmp.state.PresenterState;
-import edu.wpi.cs.lmp.state.PresenterStateObservable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -12,6 +10,8 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.Pane;
+import edu.wpi.cs.lmp.state.PresenterState;
+import edu.wpi.cs.lmp.state.PresenterStateObservable;
 
 public class LeapSceneManager {
 

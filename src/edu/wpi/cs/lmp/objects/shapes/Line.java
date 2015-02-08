@@ -3,7 +3,7 @@ package edu.wpi.cs.lmp.objects.shapes;
 import edu.wpi.cs.lmp.objects.IObject;
 
 public class Line extends Shape implements IObject {
-	private static String path = "Shapes/Line.png";
+	private static final String path = "Shapes/Line.png";
 	
 	public Line() {
 		super(path);

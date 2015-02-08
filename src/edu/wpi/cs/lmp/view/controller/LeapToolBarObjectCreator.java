@@ -16,7 +16,7 @@ public class LeapToolBarObjectCreator extends LeapToolBarSelectedHandler {
 
 	private final ObjectType object;
 	private final LeapToolBarGroup container;
-	private boolean useFileChooser;
+	private final boolean useFileChooser;
 
 	public LeapToolBarObjectCreator(ToggleButton mousedButton,
 			LeapToolBar mousedBar, LeapToolBarGroup container,
