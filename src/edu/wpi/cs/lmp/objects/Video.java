@@ -146,6 +146,12 @@ public class Video extends MediaView implements IObject {
 	public void onCounterCircle() {
 		mediaPlayer.seek(Duration.ZERO);
 	}
+	
+	@Override
+	public void radialMenuActions(int action) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public Element toXML(Document doc) {

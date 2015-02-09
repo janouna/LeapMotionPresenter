@@ -87,12 +87,15 @@ public class RadialOptionsMenu extends Group {
 	private Animation openTransition;
 	private final Map<RadialMenuItem, List<Text>> itemToTexts;
 	
+	private IObject caller;
+	
 	private RadialOptionsMenu thisInstance;
 
-	public RadialOptionsMenu(IObject caller, final String[] itemNames, final double innerRadius,
+	public RadialOptionsMenu(IObject caller, String title, final String[] itemNames, final double innerRadius,
 			final double radius, final double centerClosedRadius,
 			final double centerOpenedRadius) {
 		
+		this.caller = caller;
 		thisInstance = this;
 		menus = itemNames;
 		itemInnerRadius = innerRadius;
@@ -116,7 +119,8 @@ public class RadialOptionsMenu extends Group {
 
 		itemsGroup.getChildren().addAll(radiusStroke, innerRadiusStroke);
 
-		for (final String itemTitle : menus) {
+		for (int i=0; i < menus.length; i++) {
+			String itemTitle = menus[i];
 			final double length = 360.0 * (itemTitle.length() / menuLetterNumber);
 			final RadialMenuItem item = RadialMenuItemBuilder.create()
 					.backgroundFill(itemColor).innerRadius(0).radius(1)
@@ -150,7 +154,7 @@ public class RadialOptionsMenu extends Group {
 			item.setOnMouseClicked(itemEventHandler);
 			*/
 			final EventHandler<MouseEvent> mouseHandler = new ItemOnEventHandler(
-					item, item, item);
+					item, item, item, i);
 			item.setOnMouseEntered(mouseHandler);
 			item.setOnMouseExited(mouseHandler);
 			item.setOnMouseMoved(mouseHandler);
@@ -418,15 +422,17 @@ public class RadialOptionsMenu extends Group {
 		private final RadialMenuItem colorItemSel;
 		private final RadialMenuItem colorItem;
 		private final RadialMenuItem colorItemExt;
+		private final int action;
 		double offset = 0;
 		boolean enteredByInner = false;
 
 		private ItemOnEventHandler(final RadialMenuItem colorItemSel,
 				final RadialMenuItem colorItem,
-				final RadialMenuItem colorItemExt) {
+				final RadialMenuItem colorItemExt, int action) {
 			this.colorItemSel = colorItemSel;
 			this.colorItem = colorItem;
 			this.colorItemExt = colorItemExt;
+			this.action = action;
 		}
 
 		@Override
@@ -461,15 +467,14 @@ public class RadialOptionsMenu extends Group {
 											minOffset)));
 					outTransition.playFromStart();
 
-//					final double distanceToCenter = Point2D.distance(
-//							event.getX(), event.getY(), 0, 0);
-//					if (Math.abs(colorItem.getRadius() + colorItem.getOffset()
-//							- distanceToCenter) < 20) {
-//						// TODO Fill
-//						// Exiting by the external item of the menu
-//						selectedColor.set(colorItem.getBackgroundFill());
-//					}
-					LeapSceneManager.getInstance().getRoot().getChildren().remove(thisInstance);
+					final double distanceToCenter = Point2D.distance(
+							event.getX(), event.getY(), 0, 0);
+					if (Math.abs(colorItem.getRadius() + colorItem.getOffset()
+							- distanceToCenter) < 20) {
+						// This fires when a selection is made
+						caller.radialMenuActions(action);
+						LeapSceneManager.getInstance().getRoot().getChildren().remove(thisInstance);
+					}
 				}
 				enteredByInner = false;
 			} else if (event.getEventType() == MouseEvent.MOUSE_MOVED) {

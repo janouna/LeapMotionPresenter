@@ -27,7 +27,7 @@ public class RadialMenuFactory {
 			final String[] menus = new String[] { "FONT", "COLOR", "BOLD",
 					"ITALICS", "UNDERLINE" };
 
-			radialMenu = new RadialOptionsMenu(object, menus, itemInnerRadius, itemRadius,
+			radialMenu = new RadialOptionsMenu(object, "TEXT", menus, itemInnerRadius, itemRadius,
 					centerClosedRadius, centerOpenedRadius);
 			break;
 		default:

@@ -18,6 +18,8 @@ public interface IObject {
 	void onScreenTap();
 	void onCounterCircle();
 	
+	void radialMenuActions(int action);
+	
 	void copyTo(File to);
 
 	boolean inBounds(LeapScene parent, double x, double y);

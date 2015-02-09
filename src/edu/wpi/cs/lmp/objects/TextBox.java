@@ -7,6 +7,8 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -27,6 +29,9 @@ public class TextBox extends Text implements IObject {
 
 	private final DoubleProperty textX;
 	private final DoubleProperty textY;
+	
+	private FontPosture posture;
+	private FontWeight weight;
 
 	private final TextBox instance;
 
@@ -36,6 +41,9 @@ public class TextBox extends Text implements IObject {
 		super("TESTING TESTING");
 
 		instance = this;
+		
+		weight = FontWeight.NORMAL;
+		posture = FontPosture.REGULAR;
 
 		instance.setFont(new Font(45));
 
@@ -63,7 +71,11 @@ public class TextBox extends Text implements IObject {
 		super(text);
 
 		instance = this;
-
+		
+		//TODO: Fix this
+		weight = FontWeight.NORMAL;
+		posture = FontPosture.REGULAR;
+		
 		instance.setFont(new Font(fontSize));
 
 		textX = new SimpleDoubleProperty(x);
@@ -106,7 +118,8 @@ public class TextBox extends Text implements IObject {
 	}
 
 	@Override
-	public void resize(double percentageChangeWidth, double percentageChangeHeight) {
+	public void resize(double percentageChangeWidth,
+			double percentageChangeHeight) {
 		// textWidth.set((textWidth.doubleValue()*percentageChange)/100);
 		// textHeight.set((textHeight.doubleValue()*percentageChange)/100);
 		final Double currentSize = this.getFont().getSize();
@@ -114,11 +127,11 @@ public class TextBox extends Text implements IObject {
 				(currentSize * percentageChangeWidth) / 100);
 		this.setFont(newFont);
 	}
-	
+
 	@Override
 	public void rotate(double angle) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -145,12 +158,13 @@ public class TextBox extends Text implements IObject {
 	@Override
 	public void onScreenTap() {
 		if (PresenterStateObservable.getInstance().get() == PresenterState.CREATING) {
-			final String newText = JOptionTextAreaPane.showInputDialog("Enter Text");
+			final String newText = JOptionTextAreaPane
+					.showInputDialog("Enter Text");
 			if (newText != null) {
 				this.setText(newText);
 			}
 		} else {
-			if(this.getFill().equals(Color.BLACK)) {
+			if (this.getFill().equals(Color.BLACK)) {
 				this.setFill(Color.RED);
 			} else {
 				this.setFill(Color.BLACK);
@@ -160,8 +174,39 @@ public class TextBox extends Text implements IObject {
 
 	@Override
 	public void onCounterCircle() {
-		RadialOptionsMenu radialMenu = RadialMenuFactory.getInstance().createRadialMenu(this, ObjectType.TEXT);
+		RadialOptionsMenu radialMenu = RadialMenuFactory.getInstance()
+				.createRadialMenu(this, ObjectType.TEXT);
 		LeapSceneManager.getInstance().getRoot().getChildren().add(radialMenu);
+	}
+
+	@Override
+	public void radialMenuActions(int action) {
+		switch (action) {
+		case 0: // Font
+			break;
+		case 1: // Color
+			break;
+		case 2: // Bold menu item
+			if (weight == FontWeight.BOLD) {
+				weight = FontWeight.NORMAL;
+			} else {
+				weight = FontWeight.BOLD;
+			}
+			this.setFont(Font.font(this.getFont().getName(), weight, posture, this.getFont().getSize()));
+			break;
+		case 3: // Italics
+			if (posture == FontPosture.ITALIC) {
+				posture = FontPosture.REGULAR;
+			} else {
+				posture = FontPosture.ITALIC;
+			}
+			this.setFont(Font.font(this.getFont().getName(), weight, posture, this.getFont().getSize()));
+			break;
+		case 4: // Underline
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -196,20 +241,21 @@ public class TextBox extends Text implements IObject {
 	}
 
 	public static TextBox fromXML(Element e, File directory) {
-		final String text = e.getElementsByTagName("string").item(0).getTextContent();
+		final String text = e.getElementsByTagName("string").item(0)
+				.getTextContent();
 
-		final double x = (Double.parseDouble(e.getElementsByTagName("x").item(0)
-				.getTextContent()));
+		final double x = (Double.parseDouble(e.getElementsByTagName("x")
+				.item(0).getTextContent()));
 
-		final double y = (Double.parseDouble(e.getElementsByTagName("y").item(0)
-				.getTextContent()));
+		final double y = (Double.parseDouble(e.getElementsByTagName("y")
+				.item(0).getTextContent()));
 
 		final double fontSize = (Double.parseDouble(e
 				.getElementsByTagName("fontSize").item(0).getTextContent()));
 
 		return new TextBox(text, x, y, fontSize);
 	}
-	
+
 	public void copyTo(File to) {
 		// No need to copy
 	}

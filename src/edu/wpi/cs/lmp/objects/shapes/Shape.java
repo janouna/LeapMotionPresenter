@@ -181,6 +181,11 @@ public abstract class Shape extends ImageView implements IObject {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public void radialMenuActions(int action) {
+		
+	}
 
 	@Override
 	public Element toXML(Document doc) {

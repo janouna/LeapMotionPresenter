@@ -185,6 +185,12 @@ public class Image extends ImageView implements IObject {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public void radialMenuActions(int action) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public Element toXML(Document doc) {
