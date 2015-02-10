@@ -42,7 +42,9 @@ public class TextBox extends Text implements IObject {
 	public TextBox() {
 		// TODO: Text is an interesting problem with bounds perhaps layout
 		// container?
-		super("TESTING TESTING");
+		super();
+		
+		promptUserText("New Text Element");
 
 		instance = this;
 		
@@ -162,11 +164,7 @@ public class TextBox extends Text implements IObject {
 	@Override
 	public void onScreenTap() {
 		if (PresenterStateObservable.getInstance().get() == PresenterState.CREATING) {
-			Optional<String> userText = Dialogs.create()
-					.styleClass(Dialog.STYLE_CLASS_CROSS_PLATFORM)
-					.title("Edit Text")
-					.showTextInput(this.getText());
-			this.setText(userText.get());
+			promptUserText("Edit Text Element");
 		} else {
 			// We are presenting make no changes
 		}
@@ -258,6 +256,14 @@ public class TextBox extends Text implements IObject {
 
 	public void copyTo(File to) {
 		// No need to copy
+	}
+	
+	private void promptUserText(String promptText) {
+		Optional<String> userText = Dialogs.create()
+				.styleClass(Dialog.STYLE_CLASS_CROSS_PLATFORM)
+				.title(promptText)
+				.showTextInput(this.getText());
+		this.setText(userText.get());
 	}
 
 }
