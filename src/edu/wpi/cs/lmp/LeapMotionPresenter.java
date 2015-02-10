@@ -1,17 +1,24 @@
 package edu.wpi.cs.lmp;
 
+import org.controlsfx.control.Notifications;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import com.leapmotion.leap.Controller;
 
@@ -21,8 +28,11 @@ import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.leap.MouseController;
 import edu.wpi.cs.lmp.scenes.LeapScene;
 import edu.wpi.cs.lmp.scenes.LeapSceneManager;
+import edu.wpi.cs.lmp.state.PresenterState;
+import edu.wpi.cs.lmp.state.PresenterStateObservable;
 import edu.wpi.cs.lmp.view.LeapSceneBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
+import edu.wpi.cs.lmp.view.radialmenu.RadialOptionsMenuDemo;
 
 public class LeapMotionPresenter extends Application {
 
@@ -102,7 +112,17 @@ public class LeapMotionPresenter extends Application {
 */
 	     
 	    changeSceneObserver();
+	    changePresentObserver();
 	    
+	    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.ESCAPE && PresenterStateObservable.getInstance().get() == PresenterState.PRESENTING) {
+					PresenterStateObservable.getInstance().set(PresenterState.CREATING);
+				}
+			}
+		});
 		scene.getStylesheets().add("file:stylesheet.css");
 		stage.setTitle("Leap Motion Presenter");
 		stage.setScene(scene);
@@ -160,6 +180,37 @@ public class LeapMotionPresenter extends Application {
 					}
 				});
 			}
+		});
+	}
+	
+	private void changePresentObserver() {
+		PresenterStateObservable.getInstance().getPresenterState().addListener(new ChangeListener<PresenterState>() {
+
+			@Override
+			public void changed(ObservableValue<? extends PresenterState> observable,
+					PresenterState oldValue, PresenterState newValue) {
+				switch(newValue) {
+				case PRESENTING:
+					Notifications.create()
+						.title("PRESENTING")
+						.position(Pos.CENTER)
+						.hideCloseButton()
+						.hideAfter(Duration.seconds(2))
+						.text("You are now presenting!")
+						.showInformation();
+					break;
+				case CREATING:
+					Notifications.create()
+					.title("EXITING PRESENTATION")
+					.position(Pos.CENTER)
+					.hideCloseButton()
+					.hideAfter(Duration.seconds(2))
+					.text("You finished your presentation!")
+					.showInformation();
+					break;
+				}
+			}
+			
 		});
 	}
 
