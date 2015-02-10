@@ -81,7 +81,7 @@ public class ObjectGestureListener extends Listener {
 							} else {
 								// Testing acceptable circle
 								if (obj != null
-										&& circle.durationSeconds() >= 0.5) {
+										&& circle.durationSeconds() >= 0.4) {
 									obj.onCounterCircle();
 								}
 							}

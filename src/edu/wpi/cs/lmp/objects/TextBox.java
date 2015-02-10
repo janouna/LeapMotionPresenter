@@ -1,6 +1,7 @@
 package edu.wpi.cs.lmp.objects;
 
 import java.io.File;
+import java.util.Optional;
 
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
@@ -12,6 +13,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -158,17 +162,13 @@ public class TextBox extends Text implements IObject {
 	@Override
 	public void onScreenTap() {
 		if (PresenterStateObservable.getInstance().get() == PresenterState.CREATING) {
-			final String newText = JOptionTextAreaPane
-					.showInputDialog("Enter Text");
-			if (newText != null) {
-				this.setText(newText);
-			}
+			Optional<String> userText = Dialogs.create()
+					.styleClass(Dialog.STYLE_CLASS_CROSS_PLATFORM)
+					.title("Edit Text")
+					.showTextInput(this.getText());
+			this.setText(userText.get());
 		} else {
-			if (this.getFill().equals(Color.BLACK)) {
-				this.setFill(Color.RED);
-			} else {
-				this.setFill(Color.BLACK);
-			}
+			// We are presenting make no changes
 		}
 	}
 
