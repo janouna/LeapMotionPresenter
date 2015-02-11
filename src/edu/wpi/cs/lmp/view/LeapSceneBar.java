@@ -279,10 +279,10 @@ public class LeapSceneBar extends VBox {
 	}
 
 	public void transitionOut() {
-		if (!isAnimating) {
+		//if (!isAnimating) {
 			animationOut.play();
 			isAnimating = true;
-		}
+		//}
 	}
 
 	public Button getScene(int num) {
