@@ -204,15 +204,20 @@ public class ObjectGestureListener extends Listener {
 			});
 
 			initialRotation = degreeChange;
+		} else {
+			isRotating = false;
+			if (unbindRequest) {
+				setIObject(null);
+			}
 		}
 	}
 
 	public void setIObject(IObject obj) {
-		if (!isResizing && obj == null) {
+		if ((!isResizing && obj == null) && (!isRotating && obj == null)) {
 			// Not resizing, unbin object
 			unbindRequest = false;
 			this.obj = obj;
-		} else if (isResizing && obj == null) {
+		} else if ((isResizing && obj == null) || (isRotating && obj == null)) {
 			// Currently resizing, set object to null when finished
 			// unbindRequest is checked onFrame
 			unbindRequest = true;
