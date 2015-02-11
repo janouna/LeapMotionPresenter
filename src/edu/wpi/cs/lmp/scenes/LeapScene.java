@@ -29,8 +29,11 @@ public class LeapScene extends Parent {
 	private ObjectGestureListener resizer;
 	private Controller c;
 
+	private boolean objectMoving;
+
 	public LeapScene() {
 		c = new Controller();
+		objectMoving = false;
 		resizer = new ObjectGestureListener();
 		c.addListener(resizer);
 		children = new ArrayList<IObject>();
@@ -45,7 +48,10 @@ public class LeapScene extends Parent {
 				final List<IObject> clickedOn = getAt(event.getX(),
 						event.getY());
 				try {
-					clickedOn.get(0).startMove();
+					if (!objectMoving) {
+						objectMoving = true;
+						clickedOn.get(clickedOn.size()-1).startMove();
+					}
 				} catch (IndexOutOfBoundsException e) {
 					System.out.println("No object found: onPressed()");
 				}
@@ -57,6 +63,7 @@ public class LeapScene extends Parent {
 			public void handle(MouseEvent event) {
 				final List<IObject> objects = getObjects();
 				for (IObject i : objects) {
+					objectMoving = false;
 					i.endMove();
 				}
 			}
@@ -65,9 +72,10 @@ public class LeapScene extends Parent {
 		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				final List<IObject> mouseOver = getAt(event.getX(), event.getY());
-				try { 
-					resizer.setIObject(mouseOver.get(0));
+				final List<IObject> mouseOver = getAt(event.getX(),
+						event.getY());
+				try {
+					resizer.setIObject(mouseOver.get(mouseOver.size() - 1));
 				} catch (IndexOutOfBoundsException e) {
 					System.out.println("No object found: OnEntered()");
 				}
@@ -121,17 +129,17 @@ public class LeapScene extends Parent {
 		bounds.setStrokeWidth(2);
 		this.getChildren().add(bounds);
 	}
-	
+
 	public List<Element> toXML(Document doc) {
 		final List<Element> xmlObjs = new ArrayList<Element>();
-		for(int i=0; i < children.size(); i++) {
+		for (int i = 0; i < children.size(); i++) {
 			xmlObjs.add(children.get(i).toXML(doc));
 		}
 		return xmlObjs;
 	}
-	
+
 	public void copyTo(File to) {
-		for(int i=0; i < children.size(); i++) {
+		for (int i = 0; i < children.size(); i++) {
 			children.get(i).copyTo(to);
 		}
 	}
