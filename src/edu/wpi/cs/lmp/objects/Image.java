@@ -24,6 +24,9 @@ public class Image extends ImageView implements IObject {
 	private DoubleProperty imgX;
 	private DoubleProperty imgY;
 	
+	private DoubleProperty grabbedAtX;
+	private DoubleProperty grabbedAtY;
+	
 	private DoubleProperty imgAngle;
 	
 	private LeapScene container;
@@ -44,6 +47,8 @@ public class Image extends ImageView implements IObject {
 		imgHeight = new SimpleDoubleProperty();
 		imgX = new SimpleDoubleProperty();
 		imgY = new SimpleDoubleProperty();
+		grabbedAtX = new SimpleDoubleProperty();
+		grabbedAtY = new SimpleDoubleProperty();
 		imgAngle = new SimpleDoubleProperty();
 		Platform.runLater(new Runnable() {
 
@@ -70,6 +75,8 @@ public class Image extends ImageView implements IObject {
 		imgHeight = new SimpleDoubleProperty();
 		imgX = new SimpleDoubleProperty();
 		imgY = new SimpleDoubleProperty();
+		grabbedAtX = new SimpleDoubleProperty();
+		grabbedAtY = new SimpleDoubleProperty();
 		imgAngle = new SimpleDoubleProperty();
 		Platform.runLater(new Runnable() {
 
@@ -143,16 +150,20 @@ public class Image extends ImageView implements IObject {
 	public void startMove() {
 		instance.layoutXProperty().set(-instance.getX());
 		instance.layoutYProperty().set(-instance.getY());
-		this.translateXProperty().bind(HandStateObservable.getInstance().getObservableX());
-		this.translateYProperty().bind(HandStateObservable.getInstance().getObservableY());
-		imgX.bind(HandStateObservable.getInstance().getObservableX());
-		imgY.bind(HandStateObservable.getInstance().getObservableY());
+		grabbedAtX.bind(HandStateObservable.getInstance().getObservableX());
+		grabbedAtY.bind(HandStateObservable.getInstance().getObservableY());
+		this.translateXProperty().bind(grabbedAtX.add(imgX.doubleValue() - grabbedAtX.doubleValue()));
+		this.translateYProperty().bind(grabbedAtY.add(imgY.doubleValue() - grabbedAtY.doubleValue()));
+		imgX.bind(this.translateXProperty());
+		imgY.bind(this.translateYProperty());
 	}
 
 	@Override
 	public void endMove() {
 		this.translateXProperty().unbind();
 		this.translateYProperty().unbind();
+		grabbedAtX.unbind();
+		grabbedAtY.unbind();
 		imgX.unbind();
 		imgY.unbind();
 	}
