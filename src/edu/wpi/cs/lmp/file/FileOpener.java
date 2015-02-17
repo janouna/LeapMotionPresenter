@@ -1,3 +1,17 @@
+/*******************************************************************************
+* This file is part of James Anouna and Johnny Hernandez's MQP.
+* Leap Motion Presenter
+* Advised by Professor Gary Pollice
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* James Anouna
+* Johnny Hernandez
+*******************************************************************************/
 package edu.wpi.cs.lmp.file;
 
 import java.io.File;
@@ -18,7 +32,9 @@ import org.xml.sax.SAXException;
 import edu.wpi.cs.lmp.objects.Image;
 import edu.wpi.cs.lmp.objects.TextBox;
 import edu.wpi.cs.lmp.objects.Video;
+import edu.wpi.cs.lmp.objects.shapes.Shape;
 import edu.wpi.cs.lmp.scenes.LeapSceneManager;
+
 
 public abstract class FileOpener {
 	public static void openPresentation(File file) {
@@ -71,12 +87,12 @@ public abstract class FileOpener {
 									LeapSceneManager.getInstance()
 									.getCurrentScene()
 									.addObject(TextBox.fromXML(e, LeapSceneManager.getInstance().getProjectDirectory()));
-								} else {
-									// What is this thing?
+								}else if (e.getNodeName().equals("Shape")) {
+									LeapSceneManager.getInstance()
+									.getCurrentScene()
+									.addObject(Shape.fromXML(e, LeapSceneManager.getInstance().getProjectDirectory()));
 								}
-
 							}
-
 						}
 					}
 					

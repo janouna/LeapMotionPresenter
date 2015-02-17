@@ -1,6 +1,18 @@
+/*******************************************************************************
+* This file is part of James Anouna and Johnny Hernandez's MQP.
+* Leap Motion Presenter
+* Advised by Professor Gary Pollice
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* James Anouna
+* Johnny Hernandez
+*******************************************************************************/
 package edu.wpi.cs.lmp;
-
-import org.controlsfx.control.Notifications;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -20,6 +32,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import org.controlsfx.control.Notifications;
+
 import com.leapmotion.leap.Controller;
 
 import edu.wpi.cs.lmp.leap.HandState;
@@ -32,7 +46,6 @@ import edu.wpi.cs.lmp.state.PresenterState;
 import edu.wpi.cs.lmp.state.PresenterStateObservable;
 import edu.wpi.cs.lmp.view.LeapSceneBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
-import edu.wpi.cs.lmp.view.radialmenu.RadialOptionsMenuDemo;
 
 public class LeapMotionPresenter extends Application {
 
@@ -207,6 +220,8 @@ public class LeapMotionPresenter extends Application {
 					.hideAfter(Duration.seconds(2))
 					.text("You finished your presentation!")
 					.showInformation();
+					break;
+				default:
 					break;
 				}
 			}

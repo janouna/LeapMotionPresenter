@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.wpi.cs.lmp.objects.IObject;
-import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
@@ -51,6 +49,8 @@ import javafx.scene.text.FontSmoothingType;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import edu.wpi.cs.lmp.objects.IObject;
+import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
 public class RadialOptionsMenu extends Group {
 	
@@ -60,7 +60,7 @@ public class RadialOptionsMenu extends Group {
 	private double centerOpenedRadius = 40;
 	private final String[] menus;
 	
-	private static final double minOffset = 0;
+	private static final double MinOffset = 0;
 
 	private final Circle center;
 	private final List<RadialMenuItem> items;
@@ -83,13 +83,13 @@ public class RadialOptionsMenu extends Group {
 	final Font menuFont = Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD,
 			12);
 
-	private final double animDuration = 350;
+	private static final double animDuration = 350;
 	private Animation openTransition;
 	private final Map<RadialMenuItem, List<Text>> itemToTexts;
 	
-	private IObject caller;
+	private final IObject caller;
 	
-	private RadialOptionsMenu thisInstance;
+	private final RadialOptionsMenu thisInstance;
 
 	public RadialOptionsMenu(IObject caller, String title, final String[] itemNames, final double innerRadius,
 			final double radius, final double centerClosedRadius,
@@ -459,12 +459,12 @@ public class RadialOptionsMenu extends Group {
 											offset), new KeyValue(colorItemSel
 											.opacityProperty(), 1.0)),
 							new KeyFrame(Duration.millis(180), new KeyValue(
-									colorItem.offsetProperty(), minOffset),
+									colorItem.offsetProperty(), MinOffset),
 									new KeyValue(colorItemExt.offsetProperty(),
-											minOffset), new KeyValue(
+											MinOffset), new KeyValue(
 											colorItemSel.opacityProperty(), 1.0),
 									new KeyValue(colorItemSel.offsetProperty(),
-											minOffset)));
+											MinOffset)));
 					outTransition.playFromStart();
 
 					final double distanceToCenter = Point2D.distance(

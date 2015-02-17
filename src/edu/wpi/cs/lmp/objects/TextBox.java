@@ -1,3 +1,17 @@
+/*******************************************************************************
+* This file is part of James Anouna and Johnny Hernandez's MQP.
+* Leap Motion Presenter
+* Advised by Professor Gary Pollice
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* James Anouna
+* Johnny Hernandez
+*******************************************************************************/
 package edu.wpi.cs.lmp.objects;
 
 import java.io.File;
@@ -6,14 +20,11 @@ import java.util.Optional;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
-import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import org.w3c.dom.Document;
@@ -172,7 +183,7 @@ public class TextBox extends Text implements IObject {
 
 	@Override
 	public void onCounterCircle() {
-		RadialOptionsMenu radialMenu = RadialMenuFactory.getInstance()
+		final RadialOptionsMenu radialMenu = RadialMenuFactory.getInstance()
 				.createRadialMenu(this, ObjectType.TEXT);
 		LeapSceneManager.getInstance().addRadial(radialMenu);
 	}
@@ -259,7 +270,7 @@ public class TextBox extends Text implements IObject {
 	}
 	
 	private void promptUserText(String promptText) {
-		Optional<String> userText = Dialogs.create()
+		final Optional<String> userText = Dialogs.create()
 				.styleClass(Dialog.STYLE_CLASS_CROSS_PLATFORM)
 				.title(promptText)
 				.showTextInput(this.getText());
