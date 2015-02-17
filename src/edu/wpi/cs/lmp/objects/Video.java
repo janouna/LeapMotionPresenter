@@ -39,6 +39,9 @@ public class Video extends MediaView implements IObject {
 
 	private DoubleProperty vidX;
 	private DoubleProperty vidY;
+	
+	private DoubleProperty grabbedAtX;
+	private DoubleProperty grabbedAtY;
 
 	private boolean isPlaying;
 
@@ -56,6 +59,8 @@ public class Video extends MediaView implements IObject {
 		this.path = path;
 		instance = this;
 		isPlaying = false;
+		grabbedAtX = new SimpleDoubleProperty();
+		grabbedAtY = new SimpleDoubleProperty();
 		// Modify the media variable to take in desired URL or FILE
 		media = new Media(new File(path).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
@@ -82,6 +87,8 @@ public class Video extends MediaView implements IObject {
 		// Modify the media variable to take in desired URL or FILE
 		media = new Media(new File(file).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
+		grabbedAtX = new SimpleDoubleProperty();
+		grabbedAtY = new SimpleDoubleProperty();
 		this.setMediaPlayer(mediaPlayer);
 
 		mediaPlayer.setOnReady(new Runnable() {
@@ -105,16 +112,20 @@ public class Video extends MediaView implements IObject {
 	public void startMove() {
 		instance.layoutXProperty().set(-instance.getX());
 		instance.layoutYProperty().set(-instance.getY());
-		this.translateXProperty().bind(HandStateObservable.getInstance().getObservableX());
-		this.translateYProperty().bind(HandStateObservable.getInstance().getObservableY());
-		vidX.bind(HandStateObservable.getInstance().getObservableX());
-		vidY.bind(HandStateObservable.getInstance().getObservableY());
+		grabbedAtX.bind(HandStateObservable.getInstance().getObservableX());
+		grabbedAtY.bind(HandStateObservable.getInstance().getObservableY());
+		this.translateXProperty().bind(grabbedAtX.add(vidX.doubleValue() - grabbedAtX.doubleValue()));
+		this.translateYProperty().bind(grabbedAtY.add(vidY.doubleValue() - grabbedAtY.doubleValue()));
+		vidX.bind(this.translateXProperty());
+		vidY.bind(this.translateYProperty());
 	}
 
 	@Override
 	public void endMove() {
 		this.translateXProperty().unbind();
 		this.translateYProperty().unbind();
+		grabbedAtX.unbind();
+		grabbedAtY.unbind();
 		vidX.unbind();
 		vidY.unbind();
 	}

@@ -40,6 +40,9 @@ public abstract class Shape extends ImageView implements IObject {
 	private final DoubleProperty shapeX;
 	private final DoubleProperty shapeY;
 	
+	private DoubleProperty grabbedAtX;
+	private DoubleProperty grabbedAtY;
+	
 	private final DoubleProperty shapeAngle;
 	
 	private String path;
@@ -54,6 +57,8 @@ public abstract class Shape extends ImageView implements IObject {
 		shapeHeight = new SimpleDoubleProperty();
 		shapeX = new SimpleDoubleProperty();
 		shapeY = new SimpleDoubleProperty();
+		grabbedAtX = new SimpleDoubleProperty();
+		grabbedAtY = new SimpleDoubleProperty();
 		shapeAngle = new SimpleDoubleProperty();
 		Platform.runLater(new Runnable() {
 
@@ -80,6 +85,8 @@ public abstract class Shape extends ImageView implements IObject {
 		shapeHeight = new SimpleDoubleProperty();
 		shapeX = new SimpleDoubleProperty();
 		shapeY = new SimpleDoubleProperty();
+		grabbedAtX = new SimpleDoubleProperty();
+		grabbedAtY = new SimpleDoubleProperty();
 		shapeAngle = new SimpleDoubleProperty();
 		Platform.runLater(new Runnable() {
 
@@ -153,16 +160,20 @@ public abstract class Shape extends ImageView implements IObject {
 	public void startMove() {
 		instance.layoutXProperty().set(-instance.getX());
 		instance.layoutYProperty().set(-instance.getY());
-		this.translateXProperty().bind(HandStateObservable.getInstance().getObservableX());
-		this.translateYProperty().bind(HandStateObservable.getInstance().getObservableY());
-		shapeX.bind(HandStateObservable.getInstance().getObservableX());
-		shapeY.bind(HandStateObservable.getInstance().getObservableY());
+		grabbedAtX.bind(HandStateObservable.getInstance().getObservableX());
+		grabbedAtY.bind(HandStateObservable.getInstance().getObservableY());
+		this.translateXProperty().bind(grabbedAtX.add(shapeX.doubleValue() - grabbedAtX.doubleValue()));
+		this.translateYProperty().bind(grabbedAtY.add(shapeY.doubleValue() - grabbedAtY.doubleValue()));
+		shapeX.bind(this.translateXProperty());
+		shapeY.bind(this.translateYProperty());
 	}
 
 	@Override
 	public void endMove() {
 		this.translateXProperty().unbind();
 		this.translateYProperty().unbind();
+		grabbedAtX.unbind();
+		grabbedAtY.unbind();
 		shapeX.unbind();
 		shapeY.unbind();
 	}
