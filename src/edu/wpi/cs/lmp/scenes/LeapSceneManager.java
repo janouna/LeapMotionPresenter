@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.layout.Pane;
 import edu.wpi.cs.lmp.state.PresenterState;
 import edu.wpi.cs.lmp.state.PresenterStateObservable;
+import edu.wpi.cs.lmp.view.radialmenu.RadialOptionsMenu;
 
 public class LeapSceneManager {
 
@@ -104,6 +105,12 @@ public class LeapSceneManager {
 	
 	public Pane getRoot() {
 		return root;
+	}
+	
+	public void addRadial(RadialOptionsMenu radial) {
+		if (!root.getChildren().contains(radial)) {
+			root.getChildren().add(radial);
+		}
 	}
 
 }

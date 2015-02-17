@@ -507,5 +507,16 @@ public class RadialOptionsMenu extends Group {
 		final double rotate = 90 - angle;
 		return rotate;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		} else if (o instanceof RadialOptionsMenu) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }

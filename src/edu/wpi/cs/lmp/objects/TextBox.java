@@ -174,7 +174,7 @@ public class TextBox extends Text implements IObject {
 	public void onCounterCircle() {
 		RadialOptionsMenu radialMenu = RadialMenuFactory.getInstance()
 				.createRadialMenu(this, ObjectType.TEXT);
-		LeapSceneManager.getInstance().getRoot().getChildren().add(radialMenu);
+		LeapSceneManager.getInstance().addRadial(radialMenu);
 	}
 
 	@Override
