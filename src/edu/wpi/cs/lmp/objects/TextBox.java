@@ -34,6 +34,9 @@ public class TextBox extends Text implements IObject {
 	private final DoubleProperty textX;
 	private final DoubleProperty textY;
 	
+	private DoubleProperty grabbedAtX;
+	private DoubleProperty grabbedAtY;
+	
 	private FontPosture posture;
 	private FontWeight weight;
 
@@ -50,6 +53,9 @@ public class TextBox extends Text implements IObject {
 		
 		weight = FontWeight.NORMAL;
 		posture = FontPosture.REGULAR;
+		
+		grabbedAtX = new SimpleDoubleProperty();
+		grabbedAtY = new SimpleDoubleProperty();
 
 		instance.setFont(new Font(45));
 
@@ -107,18 +113,22 @@ public class TextBox extends Text implements IObject {
 	public void startMove() {
 		instance.layoutXProperty().set(-instance.getX());
 		instance.layoutYProperty().set(-instance.getY());
+		grabbedAtX.bind(HandStateObservable.getInstance().getObservableX());
+		grabbedAtY.bind(HandStateObservable.getInstance().getObservableY());
 		this.translateXProperty().bind(
-				HandStateObservable.getInstance().getObservableX());
+				grabbedAtX.add(textX.doubleValue() - grabbedAtX.doubleValue()));
 		this.translateYProperty().bind(
-				HandStateObservable.getInstance().getObservableY());
-		textX.bind(HandStateObservable.getInstance().getObservableX());
-		textY.bind(HandStateObservable.getInstance().getObservableY());
+				grabbedAtY.add(textY.doubleValue() - grabbedAtY.doubleValue()));
+		textX.bind(this.translateXProperty());
+		textY.bind(this.translateYProperty());
 	}
 
 	@Override
 	public void endMove() {
 		this.translateXProperty().unbind();
 		this.translateYProperty().unbind();
+		grabbedAtX.unbind();
+		grabbedAtY.unbind();
 		textX.unbind();
 		textY.unbind();
 	}
