@@ -93,6 +93,13 @@ public class TextBox extends Text implements IObject {
 		});
 	}
 
+	/**
+	 * Creates a new Text Box
+	 * @param text The text in the text box
+	 * @param x The X position of the text box
+	 * @param y The Y position of the text box
+	 * @param fontSize The size of the text box
+	 */
 	public TextBox(String text, final double x, final double y,
 			final double fontSize) {
 		// TODO: Text is an interesting problem with bounds perhaps layout
@@ -265,6 +272,12 @@ public class TextBox extends Text implements IObject {
 		return txt;
 	}
 
+	/**
+	 * Creates a text box from an XML file
+	 * @param e The top-level XML element
+	 * @param directory The location of the XML file
+	 * @return The text box
+	 */
 	public static TextBox fromXML(Element e, File directory) {
 		final String text = e.getElementsByTagName("string").item(0)
 				.getTextContent();
@@ -285,6 +298,10 @@ public class TextBox extends Text implements IObject {
 		// No need to copy
 	}
 	
+	/**
+	 * The text prompt for the user
+	 * @param promptText The text displayed to the user in the prompt
+	 */
 	private void promptUserText(String promptText) {
 		final Optional<String> userText = Dialogs.create()
 				.styleClass(Dialog.STYLE_CLASS_CROSS_PLATFORM)

@@ -31,6 +31,11 @@ public class ShapeFactory {
 		return INSTANCE;
 	}
 
+	/**
+	 * Creates a new shape of the given type
+	 * @param type The type of the shape
+	 * @return The new shape
+	 */
 	public IObject createShape(ShapeType type){
 		IObject o = null;
 

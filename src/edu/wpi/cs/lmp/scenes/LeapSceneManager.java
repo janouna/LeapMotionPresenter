@@ -59,6 +59,11 @@ public class LeapSceneManager {
 		return scenes.get(currentScene.intValue());
 	}
 
+	/**
+	 * Sets the current scene
+	 * @param i The index of the new current scene
+	 * @return The new current scene
+	 */
 	public LeapScene setCurrentScene(int i) {
 		if (i >= scenes.size()) {
 			PresenterStateObservable.getInstance().set(PresenterState.CREATING);
@@ -80,23 +85,42 @@ public class LeapSceneManager {
 		return currentScene.intValue();
 	}
 
+	/**
+	 * Adds a new empty scene
+	 */
 	public void addScene() {
 		scenes.add(new LeapScene());
 	}
 
+	/**
+	 * Adds a new empty scene
+	 * @param i The index of the new scene in the scene list
+	 */
 	public void addScene(int i) {
 		scenes.add(i, new LeapScene());
 	}
 
+	/**
+	 * Removes the given scene
+	 * @param i The index of the scene to remove
+	 */
 	public void removeScene(int i) {
 		scenes.remove(i);
 	}
 	
+	/**
+	 * Removes all scenes
+	 */
 	public void removeAllScenes() {
 		scenes.clear();
 		currentScene.set(-1);
 	}
 
+	/**
+	 * Moves a scene to another location in the scene list
+	 * @param from The original location of the scene
+	 * @param to The new location of the scene
+	 */
 	public void moveScene(int from, int to) {
 		final LeapScene temp = scenes.get(from);
 		removeScene(from);
@@ -119,6 +143,10 @@ public class LeapSceneManager {
 		return projectDir;
 	}
 	
+	/**
+	 * Sets the root Pane object
+	 * @param root The root Pane object
+	 */
 	public void addRoot(Pane root) {
 		this.root = root;
 	}
@@ -127,6 +155,10 @@ public class LeapSceneManager {
 		return root;
 	}
 	
+	/**
+	 * Adds a RadialOptionsMenu to the scene
+	 * @param radial The RadialOptionsMenu to add
+	 */
 	public void addRadial(RadialOptionsMenu radial) {
 		if (!root.getChildren().contains(radial)) {
 			root.getChildren().add(radial);

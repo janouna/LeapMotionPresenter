@@ -291,6 +291,10 @@ public class LeapMotionPresenter extends Application {
 		return root;
 	}
 
+	/**
+	 * The main method of the Leap Motion Presenter application
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

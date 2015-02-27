@@ -47,6 +47,11 @@ public class MouseController extends Listener {
 
 	private Robot mouse;
 
+	/**
+	 * Creates a new MouseController
+	 * @param width The width of the screen
+	 * @param height The height of the sceen
+	 */
 	public MouseController(double width, double height) {
 		this.screenHeight = height;
 		this.screenWidth = width;

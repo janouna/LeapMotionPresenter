@@ -125,6 +125,10 @@ public class ObjectGestureListener extends Listener {
 		});
 	}
 
+	/**
+	 * Handles the resizing of objects
+	 * @param hands The current hands list
+	 */
 	private void resizeObject(HandList hands) {
 		if (hands.count() == 2
 				&& hands.get(0).fingers().extended().count() <= 2
@@ -192,6 +196,10 @@ public class ObjectGestureListener extends Listener {
 		}
 	}
 
+	/**
+	 * Handles rotating objects
+	 * @param hands The current hands list
+	 */
 	private void rotateObject(HandList hands) {
 		if (hands.count() == 1 && hands.get(0).fingers().extended().count() == 2) {
 			
@@ -226,6 +234,10 @@ public class ObjectGestureListener extends Listener {
 		}
 	}
 
+	/**
+	 * Sets the current IObject 
+	 * @param obj The current IObject
+	 */
 	public void setIObject(IObject obj) {
 		if ((!isResizing && obj == null) && (!isRotating && obj == null)) {
 			// Not resizing, unbin object

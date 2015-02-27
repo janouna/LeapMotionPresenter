@@ -60,6 +60,10 @@ public class Video extends MediaView implements IObject {
 	
 	private String path;
 
+	/**
+	 * Creates a new Video object
+	 * @param path The path to the video, relative or absolute
+	 */
 	public Video (String path) {
 		super();
 		this.path = path;
@@ -86,6 +90,14 @@ public class Video extends MediaView implements IObject {
 		});
 	}
 
+	/**
+	 * Creates an video IObject
+	 * @param file The path to the video file, local or relative
+	 * @param x The x coordinate of the video
+	 * @param y The y coordinate of the video
+	 * @param width The width of the video
+	 * @param height The height of the video
+	 */
 	public Video(String file, final double x, final double y, final double width, final double height) {
 		super();
 		instance = this;
@@ -208,6 +220,12 @@ public class Video extends MediaView implements IObject {
 		return vid;
 	}
 
+	/**
+	 * Creates a video from an XML file
+	 * @param e The top-level XML element
+	 * @param directory The location of the XML file
+	 * @return The video
+	 */
 	public static Video fromXML(Element e, File directory) {
 		final String file = e.getElementsByTagName("src").item(0).getTextContent();
 		

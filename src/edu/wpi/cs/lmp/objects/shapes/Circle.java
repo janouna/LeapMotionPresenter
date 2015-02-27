@@ -29,6 +29,14 @@ public class Circle extends Shape implements IObject {
 		super(PATH);
 	}
 
+	/**
+	 * Creates a new circle shape
+	 * @param x The x coordinate of the circle
+	 * @param y The y coordinate of the circle
+	 * @param width The width of the circle
+	 * @param height The height of the circle
+	 * @param angle The rotation angle of the circle
+	 */
 	public Circle(double x, double y, double width, double height,
 			double angle) {
 		super(PATH, x, y, width, height, angle);
