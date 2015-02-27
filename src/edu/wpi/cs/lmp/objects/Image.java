@@ -287,7 +287,7 @@ public class Image extends ImageView implements IObject {
 	 * Creates an image from an XML file
 	 * @param e The top-level XML element
 	 * @param directory The location of the XML file
-	 * @return The image file
+	 * @return The image
 	 */
 	public static Image fromXML(Element e, File directory) {
 		final String file = e.getElementsByTagName("src").item(0).getTextContent();

@@ -29,6 +29,14 @@ public class Arrow extends Shape implements IObject {
 		super(PATH);
 	}
 
+	/**
+	 * Creates a new Arrow shape
+	 * @param x The x coordinate of the arrow
+	 * @param y The y coordinate of the arrow
+	 * @param width The width of the arrow
+	 * @param height The height of the arrow
+	 * @param angle The rotation angle of the arrow
+	 */
 	public Arrow(double x, double y, double width, double height,
 			double angle) {
 		super(PATH, x, y, width, height, angle);

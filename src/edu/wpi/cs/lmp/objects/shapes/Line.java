@@ -29,6 +29,14 @@ public class Line extends Shape implements IObject {
 		super(PATH);
 	}
 
+	/**
+	 * Creates a new line shape
+	 * @param x The x coordinate of the line
+	 * @param y The y coordinate of the line
+	 * @param width The width of the line
+	 * @param height The height of the line
+	 * @param angle The rotation angle of the line
+	 */
 	public Line(double x, double y, double width, double height,
 			double angle) {
 		super(PATH, x, y, width, height, angle);

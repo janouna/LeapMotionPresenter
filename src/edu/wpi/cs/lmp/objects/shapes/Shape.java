@@ -83,6 +83,15 @@ public abstract class Shape extends ImageView implements IObject {
 		});
 	}
 	
+	/**
+	 * Creates a new shape
+	 * @param path The path to the shape file
+	 * @param x The x coordinate of the shape
+	 * @param y The y coordinate of the shape
+	 * @param width The width of the shape
+	 * @param height The height of the shape
+	 * @param angle The rotation angle of the shape
+	 */
 	protected Shape(String path, final double x, final double y, final double width, final double height, final double angle) {
 		super("file:" + path);
 		this.path = path;
@@ -119,6 +128,10 @@ public abstract class Shape extends ImageView implements IObject {
 		return shapeWidth.doubleValue();
 	}
 
+	/**
+	 * Sets the width of the shape
+	 * @param imgWidth The width of the shape
+	 */
 	public void setShapeWidth(double imgWidth) {
 		this.shapeWidth.set(imgWidth);
 	}
@@ -127,6 +140,10 @@ public abstract class Shape extends ImageView implements IObject {
 		return shapeHeight.doubleValue();
 	}
 
+	/**
+	 * Sets the height of the shape
+	 * @param imgHeight The height of the shape
+	 */
 	public void setShapeHeight(double imgHeight) {
 		this.shapeHeight.set(imgHeight);
 	}
@@ -135,14 +152,22 @@ public abstract class Shape extends ImageView implements IObject {
 		return shapeX.doubleValue();
 	}
 
+	/**
+	 * Sets the X coordinate of the shape
+	 * @param imgX The X coordinate of the shape
+	 */
 	public void setShapeX(double imgX) {
 		this.shapeX.set(imgX);
 	}
-
+	
 	public double getShapeY() {
 		return shapeY.doubleValue();
 	}
 
+	/**
+	 * Sets the Y coordinate of the shape
+	 * @param imgY The Y coordinate of the shape
+	 */
 	public void setShapeY(double imgY) {
 		this.shapeY.set(imgY);
 	}
@@ -247,6 +272,12 @@ public abstract class Shape extends ImageView implements IObject {
 		return img;
 	}
 
+	/**
+	 * Creates a shape from an XML file
+	 * @param e The top-level XML element
+	 * @param directory The location of the XML file
+	 * @return The shape
+	 */
 	public static Image fromXML(Element e, File directory) {
 		final String file = e.getElementsByTagName("src").item(0).getTextContent();
 		

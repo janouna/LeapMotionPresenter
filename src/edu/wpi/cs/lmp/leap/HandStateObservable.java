@@ -40,10 +40,18 @@ public class HandStateObservable {
 		return INSTANCE;
 	}
 
+	/**
+	 * Sets the Hand State
+	 * @param state The new hand state
+	 */
 	public void set(HandState state){
 		handState.set(state);
 	}
 
+	/**
+	 * Gets the current Hand State
+	 * @return The current Hand State
+	 */
 	public HandState get() {
 		return handState.get();
 	}
@@ -52,10 +60,18 @@ public class HandStateObservable {
 		return handState;
 	}
 
+	/**
+	 * Sets the X position of the hand
+	 * @param x The x position
+	 */
 	public void setX(double x) {
 		handX.set(x);
 	}
 
+	/**
+	 * Sets the Y position of the hand
+	 * @param y The y position
+	 */
 	public void setY(double y) {
 		handY.set(y);
 	}

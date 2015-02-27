@@ -29,6 +29,14 @@ public class Square extends Shape implements IObject {
 		super(PATH);
 	}
 
+	/**
+	 * Creates a new square shape
+	 * @param x The x coordinate of the square
+	 * @param y The y coordinate of the square
+	 * @param width The width of the square
+	 * @param height The height of the square
+	 * @param angle The rotation angle of the square
+	 */
 	public Square(double x, double y, double width, double height,
 			double angle) {
 		super(PATH, x, y, width, height, angle);

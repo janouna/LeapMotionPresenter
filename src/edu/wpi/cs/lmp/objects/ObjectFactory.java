@@ -29,6 +29,11 @@ public class ObjectFactory {
 		return INSTANCE;
 	}
 
+	/**
+	 * Creates an IObject of the specified type
+	 * @param type The type of the IObject to be created
+	 * @return The new IObject
+	 */
 	public IObject createObject(ObjectType type){
 		IObject o = null;
 
@@ -49,6 +54,12 @@ public class ObjectFactory {
 		return o;
 	}
 
+	/**
+	 * Creates an IObject of the specified type
+	 * @param type The type of the IObject to be created
+	 * @param path The path to the object data in the file system
+	 * @return The new IObject
+	 */
 	public IObject createObject(ObjectType type, String path){
 		IObject o = null;
 

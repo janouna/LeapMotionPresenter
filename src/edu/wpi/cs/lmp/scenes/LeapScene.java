@@ -110,6 +110,10 @@ public class LeapScene extends Parent {
 		});
 	}
 
+	/**
+	 * Creates a new scene
+	 * @param bgFile The background image of the scene
+	 */
 	public LeapScene(String bgFile) {
 		children = new ArrayList<IObject>();
 		background = new ImageView("file:" + bgFile);
@@ -120,17 +124,31 @@ public class LeapScene extends Parent {
 		return children;
 	}
 
+	/**
+	 * Adds a new object to the current scene
+	 * @param newObject The object to add
+	 */
 	public void addObject(IObject newObject) {
 		children.add(newObject);
 		// TODO Fix Node cast
 		this.getChildren().add((Node) newObject);
 	}
 
+	/**
+	 * Removes an object from the current scene
+	 * @param removeObject The object to remove
+	 */
 	public void removeObject(IObject removeObject) {
 		children.remove(removeObject);
 		this.getChildren().remove(removeObject);
 	}
 
+	/**
+	 * Gets a list of all IObjects that are present at the given coordinate
+	 * @param x The x position
+	 * @param y The y position
+	 * @return The list of objects
+	 */
 	public List<IObject> getAt(double x, double y) {
 		final List<IObject> atList = new LinkedList<IObject>();
 		for (IObject i : children) {
@@ -142,6 +160,13 @@ public class LeapScene extends Parent {
 		return atList;
 	}
 
+	/**
+	 * For debugging purposes, draws an empty red box with the given dimensions
+	 * @param x The X position of the box
+	 * @param y The Y position of the box
+	 * @param width The width of the box
+	 * @param height The height of the box
+	 */
 	public void drawBounds(double x, double y, double width, double height) {
 		final Rectangle bounds = new Rectangle(x, y, width, height);
 		bounds.setFill(Color.TRANSPARENT);
@@ -150,6 +175,11 @@ public class LeapScene extends Parent {
 		this.getChildren().add(bounds);
 	}
 
+	/**
+	 * Stores the scene data in an XML file
+	 * @param doc The document to store the data in
+	 * @return The document with the scene data stored in it
+	 */
 	public List<Element> toXML(Document doc) {
 		final List<Element> xmlObjs = new ArrayList<Element>();
 		for (int i = 0; i < children.size(); i++) {
@@ -158,6 +188,10 @@ public class LeapScene extends Parent {
 		return xmlObjs;
 	}
 
+	/**
+	 * Copies all of the scene's children to a given location
+	 * @param to The location to copy to
+	 */
 	public void copyTo(File to) {
 		for (int i = 0; i < children.size(); i++) {
 			children.get(i).copyTo(to);
