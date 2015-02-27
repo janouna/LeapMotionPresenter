@@ -54,18 +54,20 @@ import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
 /**
  * The main class for the radial menu.
+ * 
  * @author James Anouna
  * @author Johnny Hernandez
+ * @author Laurent Nicolas
  *
  */
 public class RadialOptionsMenu extends Group {
-	
+
 	private double itemInnerRadius = 60;
 	private double itemRadius = 95;
 	private double centerClosedRadius = 28;
 	private double centerOpenedRadius = 40;
 	private final String[] menus;
-	
+
 	private static final double MinOffset = 0;
 
 	private final Circle center;
@@ -92,15 +94,16 @@ public class RadialOptionsMenu extends Group {
 	private static final double animDuration = 350;
 	private Animation openTransition;
 	private final Map<RadialMenuItem, List<Text>> itemToTexts;
-	
+
 	private final IObject caller;
-	
+
 	private final RadialOptionsMenu thisInstance;
 
-	public RadialOptionsMenu(IObject caller, String title, final String[] itemNames, final double innerRadius,
+	public RadialOptionsMenu(IObject caller, String title,
+			final String[] itemNames, final double innerRadius,
 			final double radius, final double centerClosedRadius,
 			final double centerOpenedRadius) {
-		
+
 		this.caller = caller;
 		thisInstance = this;
 		menus = itemNames;
@@ -125,7 +128,7 @@ public class RadialOptionsMenu extends Group {
 
 		itemsGroup.getChildren().addAll(radiusStroke, innerRadiusStroke);
 
-		for (int i=0; i < menus.length; i++) {
+		for (int i = 0; i < menus.length; i++) {
 			String itemTitle = menus[i];
 			final double length = 360.0 * (itemTitle.length() / menuLetterNumber);
 			final RadialMenuItem item = RadialMenuItemBuilder.create()
@@ -137,28 +140,7 @@ public class RadialOptionsMenu extends Group {
 			final List<Text> texts = getTextNodes(itemTitle, startAngle);
 			textsGroup.getChildren().addAll(texts);
 			itemToTexts.put(item, texts);
-			/*
-			final EventHandler<? super MouseEvent> itemEventHandler = new EventHandler<MouseEvent>() {
 
-				@Override
-				public void handle(final MouseEvent event) {
-					if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-						for (final Text charText : texts) {
-							charText.setFill(Color.BLACK);
-							charText.setFont(textFontBold);
-						}
-					} else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-						for (final Text charText : texts) {
-							charText.setFill(textColor);
-							charText.setFont(textFont);
-						}
-					}
-				}
-			};
-			item.setOnMouseEntered(itemEventHandler);
-			item.setOnMouseExited(itemEventHandler);
-			item.setOnMouseClicked(itemEventHandler);
-			*/
 			final EventHandler<MouseEvent> mouseHandler = new ItemOnEventHandler(
 					item, item, item, i);
 			item.setOnMouseEntered(mouseHandler);
@@ -421,11 +403,15 @@ public class RadialOptionsMenu extends Group {
 
 		return texts;
 	}
-	
+
 	/**
-	 * Called when a radial menu item is selected.
+	 * Makes the necessary calculations to animate radial items as they are
+	 * being selected or make method calls in the IObject when an item is
+	 * selected.
+	 * 
 	 * @author James Anouna
 	 * @author Johnny Hernandez
+	 * @author Laurent Nicolas
 	 *
 	 */
 	private final class ItemOnEventHandler implements EventHandler<MouseEvent> {
@@ -470,10 +456,13 @@ public class RadialOptionsMenu extends Group {
 									new KeyValue(colorItemSel.offsetProperty(),
 											offset), new KeyValue(colorItemSel
 											.opacityProperty(), 1.0)),
-							new KeyFrame(Duration.millis(180), new KeyValue(
-									colorItem.offsetProperty(), MinOffset),
+							new KeyFrame(
+									Duration.millis(180),
+									new KeyValue(colorItem.offsetProperty(),
+											MinOffset),
 									new KeyValue(colorItemExt.offsetProperty(),
-											MinOffset), new KeyValue(
+											MinOffset),
+									new KeyValue(
 											colorItemSel.opacityProperty(), 1.0),
 									new KeyValue(colorItemSel.offsetProperty(),
 											MinOffset)));
@@ -485,7 +474,9 @@ public class RadialOptionsMenu extends Group {
 							- distanceToCenter) < 20) {
 						// This fires when a selection is made
 						caller.radialMenuActions(action);
-						LeapSceneManager.getInstance().getRoot().getChildren().remove(thisInstance);
+						// Remove this menu from the screen
+						LeapSceneManager.getInstance().getRoot().getChildren()
+								.remove(thisInstance);
 					}
 				}
 				enteredByInner = false;
@@ -519,7 +510,7 @@ public class RadialOptionsMenu extends Group {
 		final double rotate = 90 - angle;
 		return rotate;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) {

@@ -23,11 +23,9 @@ import javafx.scene.Node;
 import javafx.scene.paint.Paint;
 
 /**
- * The builder for adding items to a radial menu
- * @author James Anouna
- * @author Johnny Hernandez
+ * The builder for adding radial item menus
  *
- * @param <B> The type of the menu item
+ * @author Mr LoNee - (Laurent NICOLAS) - www.mrlonee.com
  */
 public class RadialMenuItemBuilder<B extends RadialMenuItemBuilder<B>> {
 

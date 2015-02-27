@@ -27,12 +27,25 @@ import edu.wpi.cs.lmp.objects.ObjectType;
 public class RadialMenuFactory {
 	private static final RadialMenuFactory INSTANCE = new RadialMenuFactory();
 	
+	/**
+	 * Empty constructor. This is a singleton factory.
+	 */
 	private RadialMenuFactory() {};
 	
+	/**
+	 * Gets instance of the Radial Menu Factory
+	 * @return The RadialMenuFactory instance
+	 */
 	public static RadialMenuFactory getInstance() {
 		return INSTANCE;
 	}
 	
+	/**
+	 * Creates the radial menu object for an object type and attached that object to the radial menu for manipulation
+	 * @param object The IObject that that this radial menu belongs to
+	 * @param type The type of the object that the radial menu item is being created for
+	 * @return The radial menu object
+	 */
 	public RadialOptionsMenu createRadialMenu(IObject object, ObjectType type) {
 		RadialOptionsMenu radialMenu = null;
 		switch(type) {
