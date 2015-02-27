@@ -1,7 +1,27 @@
+/*******************************************************************************
+* This file is part of James Anouna and Johnny Hernandez's MQP.
+* Leap Motion Presenter
+* Advised by Professor Gary Pollice
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* James Anouna
+* Johnny Hernandez
+*******************************************************************************/
 package edu.wpi.cs.lmp.objects.shapes;
 
 import edu.wpi.cs.lmp.objects.IObject;
 
+/**
+ * A factory for creating Shape objects
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class ShapeFactory {
 	private static final ShapeFactory INSTANCE = new ShapeFactory();
 

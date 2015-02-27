@@ -1,3 +1,17 @@
+/*******************************************************************************
+* This file is part of James Anouna and Johnny Hernandez's MQP.
+* Leap Motion Presenter
+* Advised by Professor Gary Pollice
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* James Anouna
+* Johnny Hernandez
+*******************************************************************************/
 package edu.wpi.cs.lmp.objects;
 
 import java.io.File;
@@ -18,6 +32,12 @@ import org.w3c.dom.Element;
 import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.scenes.LeapScene;
 
+/**
+ * The Video presentation object for the Leap Motion Presenter
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class Video extends MediaView implements IObject {
 
 	private DoubleProperty vidWidth;
@@ -25,10 +45,11 @@ public class Video extends MediaView implements IObject {
 
 	private DoubleProperty vidX;
 	private DoubleProperty vidY;
+	
+	private DoubleProperty grabbedAtX;
+	private DoubleProperty grabbedAtY;
 
 	private boolean isPlaying;
-	
-	private LeapScene container;
 
 	// Video source
 	private final Media media;
@@ -44,6 +65,8 @@ public class Video extends MediaView implements IObject {
 		this.path = path;
 		instance = this;
 		isPlaying = false;
+		grabbedAtX = new SimpleDoubleProperty();
+		grabbedAtY = new SimpleDoubleProperty();
 		// Modify the media variable to take in desired URL or FILE
 		media = new Media(new File(path).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
@@ -70,6 +93,8 @@ public class Video extends MediaView implements IObject {
 		// Modify the media variable to take in desired URL or FILE
 		media = new Media(new File(file).toURI().toString());
 		mediaPlayer = new MediaPlayer(media);
+		grabbedAtX = new SimpleDoubleProperty();
+		grabbedAtY = new SimpleDoubleProperty();
 		this.setMediaPlayer(mediaPlayer);
 
 		mediaPlayer.setOnReady(new Runnable() {
@@ -93,16 +118,20 @@ public class Video extends MediaView implements IObject {
 	public void startMove() {
 		instance.layoutXProperty().set(-instance.getX());
 		instance.layoutYProperty().set(-instance.getY());
-		this.translateXProperty().bind(HandStateObservable.getInstance().getObservableX());
-		this.translateYProperty().bind(HandStateObservable.getInstance().getObservableY());
-		vidX.bind(HandStateObservable.getInstance().getObservableX());
-		vidY.bind(HandStateObservable.getInstance().getObservableY());
+		grabbedAtX.bind(HandStateObservable.getInstance().getObservableX());
+		grabbedAtY.bind(HandStateObservable.getInstance().getObservableY());
+		this.translateXProperty().bind(grabbedAtX.add(vidX.doubleValue() - grabbedAtX.doubleValue()));
+		this.translateYProperty().bind(grabbedAtY.add(vidY.doubleValue() - grabbedAtY.doubleValue()));
+		vidX.bind(this.translateXProperty());
+		vidY.bind(this.translateYProperty());
 	}
 
 	@Override
 	public void endMove() {
 		this.translateXProperty().unbind();
 		this.translateYProperty().unbind();
+		grabbedAtX.unbind();
+		grabbedAtY.unbind();
 		vidX.unbind();
 		vidY.unbind();
 	}

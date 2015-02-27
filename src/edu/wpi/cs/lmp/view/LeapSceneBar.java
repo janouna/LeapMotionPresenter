@@ -1,3 +1,17 @@
+/*******************************************************************************
+* This file is part of James Anouna and Johnny Hernandez's MQP.
+* Leap Motion Presenter
+* Advised by Professor Gary Pollice
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* James Anouna
+* Johnny Hernandez
+*******************************************************************************/
 package edu.wpi.cs.lmp.view;
 
 import java.util.ArrayList;
@@ -33,6 +47,12 @@ import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 import edu.wpi.cs.lmp.state.PresenterState;
 import edu.wpi.cs.lmp.state.PresenterStateObservable;
 
+/**
+ * The main class for the leap scene bar
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapSceneBar extends VBox {
 
 	private static final double THUMBNAIL_WIDTH = 0.10;
@@ -297,6 +317,12 @@ public class LeapSceneBar extends VBox {
 		return buttons;
 	}
 
+	/**
+	 * Facilitates selecting current slide by clicking on a slide in the tool bar.
+	 * @author James Anouna
+	 * @author Johnny Hernandez
+	 *
+	 */
 	private class SceneButtonHandler implements EventHandler<MouseEvent> {
 		int position;
 

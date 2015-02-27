@@ -1,3 +1,17 @@
+/*******************************************************************************
+* This file is part of James Anouna and Johnny Hernandez's MQP.
+* Leap Motion Presenter
+* Advised by Professor Gary Pollice
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* James Anouna
+* Johnny Hernandez
+*******************************************************************************/
 package edu.wpi.cs.lmp.objects.shapes;
 
 import java.io.File;
@@ -18,6 +32,12 @@ import edu.wpi.cs.lmp.objects.IObject;
 import edu.wpi.cs.lmp.objects.Image;
 import edu.wpi.cs.lmp.scenes.LeapScene;
 
+/**
+ * The top level shape class.  Contains everything from Image, but change resize a bit.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public abstract class Shape extends ImageView implements IObject {
 
 	private final DoubleProperty shapeWidth;
@@ -25,6 +45,9 @@ public abstract class Shape extends ImageView implements IObject {
 
 	private final DoubleProperty shapeX;
 	private final DoubleProperty shapeY;
+	
+	private DoubleProperty grabbedAtX;
+	private DoubleProperty grabbedAtY;
 	
 	private final DoubleProperty shapeAngle;
 	
@@ -40,6 +63,8 @@ public abstract class Shape extends ImageView implements IObject {
 		shapeHeight = new SimpleDoubleProperty();
 		shapeX = new SimpleDoubleProperty();
 		shapeY = new SimpleDoubleProperty();
+		grabbedAtX = new SimpleDoubleProperty();
+		grabbedAtY = new SimpleDoubleProperty();
 		shapeAngle = new SimpleDoubleProperty();
 		Platform.runLater(new Runnable() {
 
@@ -66,6 +91,8 @@ public abstract class Shape extends ImageView implements IObject {
 		shapeHeight = new SimpleDoubleProperty();
 		shapeX = new SimpleDoubleProperty();
 		shapeY = new SimpleDoubleProperty();
+		grabbedAtX = new SimpleDoubleProperty();
+		grabbedAtY = new SimpleDoubleProperty();
 		shapeAngle = new SimpleDoubleProperty();
 		Platform.runLater(new Runnable() {
 
@@ -139,16 +166,20 @@ public abstract class Shape extends ImageView implements IObject {
 	public void startMove() {
 		instance.layoutXProperty().set(-instance.getX());
 		instance.layoutYProperty().set(-instance.getY());
-		this.translateXProperty().bind(HandStateObservable.getInstance().getObservableX());
-		this.translateYProperty().bind(HandStateObservable.getInstance().getObservableY());
-		shapeX.bind(HandStateObservable.getInstance().getObservableX());
-		shapeY.bind(HandStateObservable.getInstance().getObservableY());
+		grabbedAtX.bind(HandStateObservable.getInstance().getObservableX());
+		grabbedAtY.bind(HandStateObservable.getInstance().getObservableY());
+		this.translateXProperty().bind(grabbedAtX.add(shapeX.doubleValue() - grabbedAtX.doubleValue()));
+		this.translateYProperty().bind(grabbedAtY.add(shapeY.doubleValue() - grabbedAtY.doubleValue()));
+		shapeX.bind(this.translateXProperty());
+		shapeY.bind(this.translateYProperty());
 	}
 
 	@Override
 	public void endMove() {
 		this.translateXProperty().unbind();
 		this.translateYProperty().unbind();
+		grabbedAtX.unbind();
+		grabbedAtY.unbind();
 		shapeX.unbind();
 		shapeY.unbind();
 	}

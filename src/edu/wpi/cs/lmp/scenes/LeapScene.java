@@ -1,3 +1,17 @@
+/*******************************************************************************
+* This file is part of James Anouna and Johnny Hernandez's MQP.
+* Leap Motion Presenter
+* Advised by Professor Gary Pollice
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* James Anouna
+* Johnny Hernandez
+*******************************************************************************/
 package edu.wpi.cs.lmp.scenes;
 
 import java.io.File;
@@ -22,6 +36,12 @@ import com.leapmotion.leap.Controller;
 import edu.wpi.cs.lmp.leap.ObjectGestureListener;
 import edu.wpi.cs.lmp.objects.IObject;
 
+/**
+ * The primary container for all objects in the presentation.  Different scenes hold different sets of objects.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapScene extends Parent {
 
 	private final List<IObject> children;

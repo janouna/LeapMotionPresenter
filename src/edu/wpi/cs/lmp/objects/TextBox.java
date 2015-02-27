@@ -1,3 +1,17 @@
+/*******************************************************************************
+* This file is part of James Anouna and Johnny Hernandez's MQP.
+* Leap Motion Presenter
+* Advised by Professor Gary Pollice
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* James Anouna
+* Johnny Hernandez
+*******************************************************************************/
 package edu.wpi.cs.lmp.objects;
 
 import java.io.File;
@@ -6,14 +20,11 @@ import java.util.Optional;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
-import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import org.w3c.dom.Document;
@@ -27,12 +38,21 @@ import edu.wpi.cs.lmp.state.PresenterStateObservable;
 import edu.wpi.cs.lmp.view.radialmenu.RadialMenuFactory;
 import edu.wpi.cs.lmp.view.radialmenu.RadialOptionsMenu;
 
+/**
+ * The TextBox object for the Leap Motion Presenter
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class TextBox extends Text implements IObject {
 
 	private static final float EXTRA_BOUNDS = 1.1f;
 
 	private final DoubleProperty textX;
 	private final DoubleProperty textY;
+	
+	private DoubleProperty grabbedAtX;
+	private DoubleProperty grabbedAtY;
 	
 	private FontPosture posture;
 	private FontWeight weight;
@@ -50,6 +70,9 @@ public class TextBox extends Text implements IObject {
 		
 		weight = FontWeight.NORMAL;
 		posture = FontPosture.REGULAR;
+		
+		grabbedAtX = new SimpleDoubleProperty();
+		grabbedAtY = new SimpleDoubleProperty();
 
 		instance.setFont(new Font(45));
 
@@ -107,18 +130,22 @@ public class TextBox extends Text implements IObject {
 	public void startMove() {
 		instance.layoutXProperty().set(-instance.getX());
 		instance.layoutYProperty().set(-instance.getY());
+		grabbedAtX.bind(HandStateObservable.getInstance().getObservableX());
+		grabbedAtY.bind(HandStateObservable.getInstance().getObservableY());
 		this.translateXProperty().bind(
-				HandStateObservable.getInstance().getObservableX());
+				grabbedAtX.add(textX.doubleValue() - grabbedAtX.doubleValue()));
 		this.translateYProperty().bind(
-				HandStateObservable.getInstance().getObservableY());
-		textX.bind(HandStateObservable.getInstance().getObservableX());
-		textY.bind(HandStateObservable.getInstance().getObservableY());
+				grabbedAtY.add(textY.doubleValue() - grabbedAtY.doubleValue()));
+		textX.bind(this.translateXProperty());
+		textY.bind(this.translateYProperty());
 	}
 
 	@Override
 	public void endMove() {
 		this.translateXProperty().unbind();
 		this.translateYProperty().unbind();
+		grabbedAtX.unbind();
+		grabbedAtY.unbind();
 		textX.unbind();
 		textY.unbind();
 	}
@@ -172,7 +199,7 @@ public class TextBox extends Text implements IObject {
 
 	@Override
 	public void onCounterCircle() {
-		RadialOptionsMenu radialMenu = RadialMenuFactory.getInstance()
+		final RadialOptionsMenu radialMenu = RadialMenuFactory.getInstance()
 				.createRadialMenu(this, ObjectType.TEXT);
 		LeapSceneManager.getInstance().addRadial(radialMenu);
 	}
@@ -259,7 +286,7 @@ public class TextBox extends Text implements IObject {
 	}
 	
 	private void promptUserText(String promptText) {
-		Optional<String> userText = Dialogs.create()
+		final Optional<String> userText = Dialogs.create()
 				.styleClass(Dialog.STYLE_CLASS_CROSS_PLATFORM)
 				.title(promptText)
 				.showTextInput(this.getText());

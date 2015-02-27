@@ -1,9 +1,29 @@
+/*******************************************************************************
+* This file is part of James Anouna and Johnny Hernandez's MQP.
+* Leap Motion Presenter
+* Advised by Professor Gary Pollice
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* James Anouna
+* Johnny Hernandez
+*******************************************************************************/
 package edu.wpi.cs.lmp.leap;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+/**
+ * Holds the HandState ObjectProperty and makes it available to observers.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class HandStateObservable {
 	private static final HandStateObservable INSTANCE = new HandStateObservable();
 	private final ObjectProperty<HandState> handState = new SimpleObjectProperty<>();

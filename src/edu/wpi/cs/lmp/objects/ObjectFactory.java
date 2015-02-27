@@ -1,5 +1,25 @@
+/*******************************************************************************
+* This file is part of James Anouna and Johnny Hernandez's MQP.
+* Leap Motion Presenter
+* Advised by Professor Gary Pollice
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* James Anouna
+* Johnny Hernandez
+*******************************************************************************/
 package edu.wpi.cs.lmp.objects;
 
+/**
+ * Factory for creating new presentation objects, all in the form of IObjects
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class ObjectFactory {
 	private static final ObjectFactory INSTANCE = new ObjectFactory();
 
