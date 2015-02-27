@@ -1,17 +1,17 @@
 /*******************************************************************************
-* This file is part of James Anouna and Johnny Hernandez's MQP.
-* Leap Motion Presenter
-* Advised by Professor Gary Pollice
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-* James Anouna
-* Johnny Hernandez
-*******************************************************************************/
+ * This file is part of James Anouna and Johnny Hernandez's MQP.
+ * Leap Motion Presenter
+ * Advised by Professor Gary Pollice
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * James Anouna
+ * Johnny Hernandez
+ *******************************************************************************/
 package edu.wpi.cs.lmp.view;
 
 import java.util.ArrayList;
@@ -48,7 +48,9 @@ import edu.wpi.cs.lmp.state.PresenterState;
 import edu.wpi.cs.lmp.state.PresenterStateObservable;
 
 /**
- * The main class for the leap scene bar
+ * The main class for the leap scene bar. This bar is responsible for displaying
+ * the scenes in the presentation.
+ * 
  * @author James Anouna
  * @author Johnny Hernandez
  *
@@ -81,6 +83,9 @@ public class LeapSceneBar extends VBox {
 
 	private boolean isActive;
 
+	/**
+	 * Constructs the LeapSceneBar
+	 */
 	public LeapSceneBar() {
 		// Do all the VBox standard stuff and set the sizes
 		super();
@@ -116,6 +121,11 @@ public class LeapSceneBar extends VBox {
 		});
 	}
 
+	/**
+	 * This method creates the necessary JavaFX elements found in the
+	 * LeapSceneBar. All visual elements and dividers are created and populated
+	 * here.
+	 */
 	private void setupBarChildren() {
 		// The actual scene stuff:
 		// sceneControlContainer: contains all of the scenes, the back button
@@ -174,6 +184,11 @@ public class LeapSceneBar extends VBox {
 		this.getChildren().add(sceneControlContainer);
 	}
 
+	/**
+	 * This sets the listeners for the bar as a whole to react to. Currently for
+	 * hiding when the cursor is away and coming back to the scene when moused
+	 * over.
+	 */
 	private void setupListeners() {
 		// Instantiate main bar and behavior
 		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -194,6 +209,10 @@ public class LeapSceneBar extends VBox {
 		});
 	}
 
+	/**
+	 * This creates the animation objects that are used for transitioning in and
+	 * out of the scene when the bar is needed/not needed.
+	 */
 	private void setupAnimations() {
 		animationIn = new TranslateTransition();
 		animationIn.setDuration(new Duration(ANIMATION_TIME * 1000));
@@ -221,6 +240,10 @@ public class LeapSceneBar extends VBox {
 		});
 	}
 
+	/**
+	 * This creates the observers that will change the LeapSceneBar when slides
+	 * are changed/added/removed
+	 */
 	private void createObservers() {
 		// Observer for the list of scenes, any changes made and the onChange is
 		// fired
@@ -261,6 +284,11 @@ public class LeapSceneBar extends VBox {
 				});
 	}
 
+	/**
+	 * This method will be called when an update to the view of the LeapSceneBar
+	 * is needed. This will pull all the Scenes and create thumbnails for each
+	 * one. Then these thumbnails are added to the bar.
+	 */
 	private void updateScenes() {
 		// Ideally have a method to update the contents of the scene bar
 		// onChanged gives variable that can be looped through to see what
@@ -290,6 +318,9 @@ public class LeapSceneBar extends VBox {
 		sceneLabel.setText("Scene: " + (currentScene + 1) + " / " + numScenes);
 	}
 
+	/**
+	 * Method that will cause the bar to transition in to view
+	 */
 	public void transitionIn() {
 		if (!isAnimating) {
 			instance.setOpacity(1);
@@ -298,17 +329,29 @@ public class LeapSceneBar extends VBox {
 		}
 	}
 
+	/**
+	 * Method that will cause the bar to transition out of view
+	 */
 	public void transitionOut() {
-		//if (!isAnimating) {
-			animationOut.play();
-			isAnimating = true;
-		//}
+		// if (!isAnimating) {
+		animationOut.play();
+		isAnimating = true;
+		// }
 	}
 
+	/**
+	 * Obtains the button for a scene object in the LeapSceneBar
+	 * @param num The index into the list of scene buttons. Starts at 0.
+	 * @return The Button in the LeapSceneBar that represents a particular scene in the presentation
+	 */
 	public Button getScene(int num) {
 		return (Button) sceneContainer.getChildren().get(num);
 	}
 
+	/**
+	 * Obtains all the buttons for a scene object in the LeapSceneBar
+	 * @return A list of Button for every scene in the LeapSceneBar
+	 */
 	public List<Button> getAllScenes() {
 		final List<Button> buttons = new ArrayList<Button>();
 		for (int i = 0; i < sceneContainer.getChildren().size(); i++) {
@@ -318,7 +361,9 @@ public class LeapSceneBar extends VBox {
 	}
 
 	/**
-	 * Facilitates selecting current slide by clicking on a slide in the tool bar.
+	 * Facilitates selecting current slide by clicking on a slide in the tool
+	 * bar.
+	 * 
 	 * @author James Anouna
 	 * @author Johnny Hernandez
 	 *

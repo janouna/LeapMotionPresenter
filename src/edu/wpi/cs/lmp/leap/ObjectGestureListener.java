@@ -1,17 +1,17 @@
 /*******************************************************************************
-* This file is part of James Anouna and Johnny Hernandez's MQP.
-* Leap Motion Presenter
-* Advised by Professor Gary Pollice
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-* James Anouna
-* Johnny Hernandez
-*******************************************************************************/
+ * This file is part of James Anouna and Johnny Hernandez's MQP.
+ * Leap Motion Presenter
+ * Advised by Professor Gary Pollice
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * James Anouna
+ * Johnny Hernandez
+ *******************************************************************************/
 package edu.wpi.cs.lmp.leap;
 
 import javafx.application.Platform;
@@ -30,8 +30,12 @@ import com.leapmotion.leap.Vector;
 import edu.wpi.cs.lmp.objects.IObject;
 
 /**
+ * The leap listener responsible for listening for gestures on objects and
+ * passing the appropriate information to the objects to react to
  * 
- * @author johan Modified to track multiple hands
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
  */
 public class ObjectGestureListener extends Listener {
 
@@ -193,15 +197,16 @@ public class ObjectGestureListener extends Listener {
 	}
 
 	private void rotateObject(HandList hands) {
-		if (hands.count() == 1 && hands.get(0).fingers().extended().count() == 2) {
-			
+		if (hands.count() == 1
+				&& hands.get(0).fingers().extended().count() == 2) {
+
 			final Vector handNormal = hands.get(0).palmNormal();
-			
+
 			if (!isRotating) {
 				initialRotation = Math.toDegrees(handNormal.roll());
 				isRotating = true;
 			}
-			
+
 			// Possible options for rotation detection: roll and yaw
 			final double degreeChange = Math.toDegrees(handNormal.roll());
 
@@ -210,7 +215,7 @@ public class ObjectGestureListener extends Listener {
 				@Override
 				public void run() {
 					if (obj != null) {
-						//System.out.println("Rotating: " + degreeChange);
+						// System.out.println("Rotating: " + degreeChange);
 						obj.rotate(degreeChange);
 					}
 				}

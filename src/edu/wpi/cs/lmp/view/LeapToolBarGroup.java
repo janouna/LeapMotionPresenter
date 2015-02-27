@@ -1,17 +1,17 @@
 /*******************************************************************************
-* This file is part of James Anouna and Johnny Hernandez's MQP.
-* Leap Motion Presenter
-* Advised by Professor Gary Pollice
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-* James Anouna
-* Johnny Hernandez
-*******************************************************************************/
+ * This file is part of James Anouna and Johnny Hernandez's MQP.
+ * Leap Motion Presenter
+ * Advised by Professor Gary Pollice
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * James Anouna
+ * Johnny Hernandez
+ *******************************************************************************/
 package edu.wpi.cs.lmp.view;
 
 import java.util.ArrayList;
@@ -40,6 +40,7 @@ import edu.wpi.cs.lmp.view.controller.LeapToolBarSubMenuHandler;
 
 /**
  * Contains the multiple toolbar rows for the main tool bar
+ * 
  * @author James Anouna
  * @author Johnny Hernandez
  *
@@ -56,6 +57,10 @@ public class LeapToolBarGroup extends VBox {
 
 	private boolean isActive;
 
+	/**
+	 * Creates the LeapToolBar group used in the application. Instantiates all
+	 * tool bars and their controls
+	 */
 	public LeapToolBarGroup() {
 		super();
 		instance = this;
@@ -134,7 +139,7 @@ public class LeapToolBarGroup extends VBox {
 		fileBar.getButton("Exit").setOnMouseExited(
 				new LeapToolBarExitProgramHandler(fileBar.getButton("Exit"),
 						fileBar));
-		
+
 		shapesBar.getButton("Line").setOnMouseExited(
 				new LeapToolBarShapeCreator(shapesBar.getButton("Line"),
 						shapesBar, this, ShapeType.LINE));
@@ -151,6 +156,15 @@ public class LeapToolBarGroup extends VBox {
 		createObservers();
 	}
 
+	/**
+	 * Gets the LeapToolBar at a specified level in the hierarchy.
+	 * 
+	 * @param level
+	 *            The level of the tool bar int he hierarchy. 0 for the root
+	 *            tool bar, 1 for one menu under the root, 2 for two menus under
+	 *            the root
+	 * @return The LeapToolBar found at that level or Null if none were found
+	 */
 	public LeapToolBar getMenuAt(int level) {
 		final ObservableList<Node> children = this.getChildren();
 		for (int i = 0; i < children.size(); i++) {
@@ -163,6 +177,12 @@ public class LeapToolBarGroup extends VBox {
 		return null;
 	}
 
+	/**
+	 * Removes the specified menu at a certain level
+	 * 
+	 * @param level
+	 *            The level of the toolbar one wishes to remove
+	 */
 	public void removeMenuAt(int level) {
 		if (level == 0) {
 			mainBar.transitionOut();
@@ -173,6 +193,12 @@ public class LeapToolBarGroup extends VBox {
 		}
 	}
 
+	/**
+	 * Removes all of the menus with a level greater than the one supplied
+	 * 
+	 * @param level
+	 *            The cut off point for removal.
+	 */
 	public void removeMenuAbove(int level) {
 		final ObservableList<Node> children = this.getChildren();
 		final List<LeapToolBar> toRemove = new ArrayList<LeapToolBar>();
@@ -186,11 +212,19 @@ public class LeapToolBarGroup extends VBox {
 		this.getChildren().removeAll(toRemove);
 	}
 
+	/**
+	 * Removes all of the menus in the tool bar group
+	 */
 	public void removeMenuAll() {
 		this.removeMenuAbove(0);
 		this.removeMenuAt(0);
 	}
 
+	/**
+	 * Creates the observes used in the LeapToolBar group. Observes whether the
+	 * user is presenting (to disable the tool bar) or not (enable the tool
+	 * bar).
+	 */
 	private void createObservers() {
 		PresenterStateObservable.getInstance().getPresenterState()
 				.addListener(new ChangeListener<PresenterState>() {

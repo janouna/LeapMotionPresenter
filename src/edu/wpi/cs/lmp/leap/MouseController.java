@@ -55,12 +55,15 @@ public class MouseController extends Listener {
 	@Override
 	public void onConnect(Controller controller) {
 		// Enable the gestures you intend to use onConnect
+		
+		// Instantiating the Robot for cursor controls
 		try {
 			mouse = new Robot();
 		} catch (AWTException e) {
 			e.printStackTrace();
 		}
 
+		// Setting up the listener to respond to changing hand states in the mouse controller
 		HandStateObservable.getInstance().getHandState().addListener(new ChangeListener<HandState>() {
 			@Override
 			public void changed(ObservableValue<? extends HandState> observable,
