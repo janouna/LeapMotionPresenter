@@ -20,13 +20,21 @@ import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
 public abstract class FileSaver {
 
+	/**
+	 * This method attempts to save the current presentation to the chosen file
+	 * directory. This includes the generation of a *.lmp file and the copying
+	 * of assets into the project direcotry's assets folder
+	 * 
+	 * @param file
+	 *            The project will be saved to this directory
+	 */
 	public static void savePresentation(File file) {
 		try {
-			
+
 			// Make the directory
 			file.mkdir();
-			
-			// Make assets folder	
+
+			// Make assets folder
 			final File assets = new File(file.toString() + "/Assets");
 			assets.mkdir();
 
@@ -58,7 +66,9 @@ public abstract class FileSaver {
 					.newInstance();
 			final Transformer transformer = transformerFactory.newTransformer();
 			final DOMSource source = new DOMSource(doc);
-			final StreamResult result = new StreamResult(new File(file.toString() + "/" + file.getName()) + ".lmp");
+			final StreamResult result = new StreamResult(new File(
+					file.toString() + "/" + file.getName())
+					+ ".lmp");
 
 			// Output to console for testing
 			// StreamResult result = new StreamResult(System.out);

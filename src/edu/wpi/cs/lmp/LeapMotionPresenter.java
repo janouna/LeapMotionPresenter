@@ -57,8 +57,8 @@ public class LeapMotionPresenter extends Application {
 
 		// Binding leap controls to the mouse
 		c = new Controller();
-		mouseController = new MouseController(Screen.getPrimary().getBounds().getWidth(),
-				Screen.getPrimary().getBounds().getHeight());
+		mouseController = new MouseController(Screen.getPrimary().getBounds()
+				.getWidth(), Screen.getPrimary().getBounds().getHeight());
 		handController = new HandStateController();
 		c.addListener(mouseController);
 		c.addListener(handController);
@@ -77,10 +77,11 @@ public class LeapMotionPresenter extends Application {
 		// Scene building
 		scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(),
 				Screen.getPrimary().getBounds().getHeight());
-		
+
 		// Setting cursor
-		scene.setCursor(new ImageCursor(new Image("file:icons/hand_cursor_open.png")));
-		
+		scene.setCursor(new ImageCursor(new Image(
+				"file:icons/hand_cursor_open.png")));
+
 		// Hand cursor placement, this should be its own object that chnages
 		// icon based on state (Open palm, closed palm, finger pointed, etc)
 		changeHandObserver();
@@ -98,28 +99,30 @@ public class LeapMotionPresenter extends Application {
 				}
 			}
 		});
-		
+
 		/*
-		final String content_Url = "<iframe width=\"560\" height=\"315\" src=\"http://www.youtube.com/embed/C0DPdy98e4c\" frameborder=\"0\" allowfullscreen></iframe>";
+		 * final String content_Url =
+		 * "<iframe width=\"560\" height=\"315\" src=\"http://www.youtube.com/embed/C0DPdy98e4c\" frameborder=\"0\" allowfullscreen></iframe>"
+		 * ;
+		 * 
+		 * final WebView webView = new WebView(); final WebEngine webEngine =
+		 * webView.getEngine(); webEngine.loadContent(content_Url);
+		 * webView.setPrefHeight(315); webView.setPrefWidth(560);
+		 * 
+		 * // root.getChildren().add(webView);
+		 */
 
-		final WebView webView = new WebView();
-		final WebEngine webEngine = webView.getEngine();
-		webEngine.loadContent(content_Url);
-		webView.setPrefHeight(315);
-		webView.setPrefWidth(560);
+		changeSceneObserver();
+		changePresentObserver();
 
-		// root.getChildren().add(webView);
-*/
-	     
-	    changeSceneObserver();
-	    changePresentObserver();
-	    
-	    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
 			public void handle(KeyEvent event) {
-				if (event.getCode() == KeyCode.ESCAPE && PresenterStateObservable.getInstance().get() == PresenterState.PRESENTING) {
-					PresenterStateObservable.getInstance().set(PresenterState.CREATING);
+				if (event.getCode() == KeyCode.ESCAPE
+						&& PresenterStateObservable.getInstance().get() == PresenterState.PRESENTING) {
+					PresenterStateObservable.getInstance().set(
+							PresenterState.CREATING);
 				}
 			}
 		});
@@ -132,102 +135,141 @@ public class LeapMotionPresenter extends Application {
 		stage.show();
 
 	}
-	
+
+	/**
+	 * This method handles the addition of an observer that responds to slide
+	 * transitions in the LeapSceneManager
+	 */
 	private void changeSceneObserver() {
-		LeapSceneManager.getInstance().getCurrentSceneProperty().addListener(new ChangeListener<Number>() {
+		LeapSceneManager.getInstance().getCurrentSceneProperty()
+				.addListener(new ChangeListener<Number>() {
 
-			@Override
-			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-				System.out.println("SLIDE CHANGING");
-				// Get information of current slide
-				LeapScene currentScene = instance.getSlide();
-				final int position = instance.getRoot().getChildren().indexOf(currentScene);
-
-				// Remove, replace, and readd the current slide with the new slide
-				instance.getRoot().getChildren().remove(position);
-				currentScene = LeapSceneManager.getInstance().getCurrentScene();
-				instance.setSlide(currentScene);
-				instance.getRoot().getChildren().add(position, currentScene);
-			}
-
-		});
-	}
-	
-	private void changeHandObserver(){
-		HandStateObservable.getInstance().getHandState().addListener(new ChangeListener<HandState>() {
-			@Override
-			public void changed(ObservableValue<? extends HandState> observable,
-					HandState oldValue, final HandState newValue) {
-				Platform.runLater(new Runnable() {
 					@Override
-					public void run() {
-						switch(newValue) {
-						case OPEN:
-							scene.setCursor(new ImageCursor(new Image("file:icons/hand_cursor_open.png")));
+					public void changed(ObservableValue<? extends Number> arg0,
+							Number arg1, Number arg2) {
+						System.out.println("SLIDE CHANGING");
+						// Get information of current slide
+						LeapScene currentScene = instance.getSlide();
+						final int position = instance.getRoot().getChildren()
+								.indexOf(currentScene);
+
+						// Remove, replace, and readd the current slide with the
+						// new slide
+						instance.getRoot().getChildren().remove(position);
+						currentScene = LeapSceneManager.getInstance()
+								.getCurrentScene();
+						instance.setSlide(currentScene);
+						instance.getRoot().getChildren()
+								.add(position, currentScene);
+					}
+
+				});
+	}
+
+	/**
+	 * This method handles the addition of an observer that responds to the hand
+	 * state (open, closed, etc). This handles the changing of icons based on
+	 * the users hand sate.
+	 */
+	private void changeHandObserver() {
+		HandStateObservable.getInstance().getHandState()
+				.addListener(new ChangeListener<HandState>() {
+					@Override
+					public void changed(
+							ObservableValue<? extends HandState> observable,
+							HandState oldValue, final HandState newValue) {
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								switch (newValue) {
+								case OPEN:
+									scene.setCursor(new ImageCursor(new Image(
+											"file:icons/hand_cursor_open.png")));
+									break;
+								case CLOSED:
+									scene.setCursor(new ImageCursor(
+											new Image(
+													"file:icons/hand_cursor_closed.png")));
+									break;
+								case GONE:
+									scene.setCursor(Cursor.NONE);
+									break;
+								case POINTING:
+									scene.setCursor(new ImageCursor(
+											new Image(
+													"file:icons/hand_cursor_point1.png")));
+									break;
+								default:
+									break;
+								}
+							}
+						});
+					}
+				});
+	}
+
+	/**
+	 * This method handles the addition of an observer that responds to the
+	 * presenter state (Presenting or Creating). This method will trigger the
+	 * notifications for switching to presenting mode.
+	 */
+	private void changePresentObserver() {
+		PresenterStateObservable.getInstance().getPresenterState()
+				.addListener(new ChangeListener<PresenterState>() {
+
+					@Override
+					public void changed(
+							ObservableValue<? extends PresenterState> observable,
+							PresenterState oldValue, PresenterState newValue) {
+						switch (newValue) {
+						case PRESENTING:
+							Notifications.create().title("PRESENTING")
+									.position(Pos.CENTER).hideCloseButton()
+									.hideAfter(Duration.seconds(2))
+									.text("You are now presenting!")
+									.showInformation();
 							break;
-						case CLOSED:
-							scene.setCursor(new ImageCursor(new Image("file:icons/hand_cursor_closed.png")));
-							break;
-						case GONE:
-							scene.setCursor(Cursor.NONE);
-							break;
-						case POINTING:
-							scene.setCursor(new ImageCursor(new Image("file:icons/hand_cursor_point1.png")));
-							break;
-						default:
+						case CREATING:
+							Notifications.create()
+									.title("EXITING PRESENTATION")
+									.position(Pos.CENTER).hideCloseButton()
+									.hideAfter(Duration.seconds(2))
+									.text("You finished your presentation!")
+									.showInformation();
 							break;
 						}
 					}
+
 				});
-			}
-		});
-	}
-	
-	private void changePresentObserver() {
-		PresenterStateObservable.getInstance().getPresenterState().addListener(new ChangeListener<PresenterState>() {
-
-			@Override
-			public void changed(ObservableValue<? extends PresenterState> observable,
-					PresenterState oldValue, PresenterState newValue) {
-				switch(newValue) {
-				case PRESENTING:
-					Notifications.create()
-						.title("PRESENTING")
-						.position(Pos.CENTER)
-						.hideCloseButton()
-						.hideAfter(Duration.seconds(2))
-						.text("You are now presenting!")
-						.showInformation();
-					break;
-				case CREATING:
-					Notifications.create()
-					.title("EXITING PRESENTATION")
-					.position(Pos.CENTER)
-					.hideCloseButton()
-					.hideAfter(Duration.seconds(2))
-					.text("You finished your presentation!")
-					.showInformation();
-					break;
-				}
-			}
-			
-		});
 	}
 
+	/**
+	 * This method handles getting the currently displayed scene
+	 * 
+	 * @return The LeapScene objects currently being displayed
+	 */
 	public LeapScene getSlide() {
 		return leapScene;
 	}
 
+	/**
+	 * This method sets the currently displayed scene
+	 * 
+	 * @param scene
+	 *            The scene that you would like to display
+	 */
 	public void setSlide(LeapScene scene) {
 		this.leapScene = scene;
 	}
 
+	/**
+	 * This method obtains the container Pane for all JavaFX elements in the
+	 * application (including UI and Scenes)
+	 * 
+	 * @return Returns the root Pane container
+	 */
 	public Pane getRoot() {
 		return root;
-	}
-
-	public void setRoot(Pane root) {
-		this.root = root;
 	}
 
 	public static void main(String[] args) {

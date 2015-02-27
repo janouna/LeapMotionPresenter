@@ -21,11 +21,23 @@ import edu.wpi.cs.lmp.objects.Video;
 import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
 public abstract class FileOpener {
+
+	/**
+	 * This method will attempt to open a LeapMotionPresenter presentation file
+	 * using the given file object.
+	 * 
+	 * @param file
+	 *            The file object to open. This file object should point to an
+	 *            *.lmp file to obtain the references in a presentation
+	 *            
+	 */
 	public static void openPresentation(File file) {
-		try {			
-			LeapSceneManager.getInstance().setProjectDirectory(file.getParentFile());
-			
-			final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+			LeapSceneManager.getInstance().setProjectDirectory(
+					file.getParentFile());
+
+			final DocumentBuilderFactory dbf = DocumentBuilderFactory
+					.newInstance();
 			final DocumentBuilder db = dbf.newDocumentBuilder();
 			final Document doc = db.parse(file);
 
@@ -59,27 +71,45 @@ public abstract class FileOpener {
 								Element e = (Element) object;
 
 								if (e.getNodeName().equals("Image")) {
-									LeapSceneManager.getInstance()
+									LeapSceneManager
+											.getInstance()
 											.getCurrentScene()
-											.addObject(Image.fromXML(e, LeapSceneManager.getInstance().getProjectDirectory()));
+											.addObject(
+													Image.fromXML(
+															e,
+															LeapSceneManager
+																	.getInstance()
+																	.getProjectDirectory()));
 
 								} else if (e.getNodeName().equals("Video")) {
-									LeapSceneManager.getInstance()
-									.getCurrentScene()
-									.addObject(Video.fromXML(e, LeapSceneManager.getInstance().getProjectDirectory()));
+									LeapSceneManager
+											.getInstance()
+											.getCurrentScene()
+											.addObject(
+													Video.fromXML(
+															e,
+															LeapSceneManager
+																	.getInstance()
+																	.getProjectDirectory()));
 								} else if (e.getNodeName().equals("Text")) {
-									LeapSceneManager.getInstance()
-									.getCurrentScene()
-									.addObject(TextBox.fromXML(e, LeapSceneManager.getInstance().getProjectDirectory()));
+									LeapSceneManager
+											.getInstance()
+											.getCurrentScene()
+											.addObject(
+													TextBox.fromXML(
+															e,
+															LeapSceneManager
+																	.getInstance()
+																	.getProjectDirectory()));
 								} else {
-									// What is this thing?
+									// We didn't recognize the object reference, ignore it.
 								}
 
 							}
 
 						}
 					}
-					
+
 					LeapSceneManager.getInstance().setCurrentScene(1);
 				}
 

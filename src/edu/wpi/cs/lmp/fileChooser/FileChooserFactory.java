@@ -7,16 +7,32 @@ public class FileChooserFactory {
 
 	private static final FileChooserFactory INSTANCE = new FileChooserFactory();
 
+	/**
+	 * Blank constructor, this is a singleton factory
+	 */
 	private FileChooserFactory() {}
 
+	/**
+	 * Get the instance of the FileChooserFactory to make use of it
+	 * @return The singleton instance of FileChooserFactory
+	 */
 	public static FileChooserFactory getInstance() {
 		return INSTANCE;
 	}
 
+	/**
+	 * Makes a standard FileChooser object with no modifications (No title bar name, No filters for extensions, etc)
+	 * @return The FileChooser object
+	 */
 	public FileChooser makeFileChooser() {
 		return new FileChooser();
 	}
 
+	/**
+	 * Makes a file chooser tailored for the given object. A specific name is given and extension filters are created for each file
+	 * @param object The object type that you wish to make a file chooser window for
+	 * @return The FileChooser object 
+	 */
 	public FileChooser makeFileChooser(ObjectType object) {
 		FileChooser fileChooser = new FileChooser();
 
