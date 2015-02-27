@@ -29,6 +29,12 @@ public class LeapToolBarExitMenuHandler extends LeapToolBarSelectedHandler {
 	
 	private final LeapToolBarGroup container;
 
+	/**
+	 * Creates a new Exit Menu Handler
+	 * @param mousedNode The button
+	 * @param container The toolbar group
+	 * @param mousedBar The toolbar
+	 */
 	public LeapToolBarExitMenuHandler(ToggleButton mousedNode,
 			LeapToolBarGroup container, LeapToolBar mousedBar) {
 		super(mousedNode, mousedBar);

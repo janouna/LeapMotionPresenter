@@ -35,10 +35,18 @@ public class PresenterStateObservable {
 		return INSTANCE;
 	}
 	
+	/**
+	 * Sets the current presenter state
+	 * @param state The new presenter state
+	 */
 	public void set(PresenterState state) {
 		presenterState.set(state);
 	}
 	
+	/**
+	 * Gets the current presenter state
+	 * @return The current presenter state
+	 */
 	public PresenterState get() {
 		return presenterState.get();
 	}
