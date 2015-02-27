@@ -26,6 +26,12 @@ import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
+/**
+ * Communicates between the main tool bar and the rest of the Presentation application.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapToolBarObjectCreator extends LeapToolBarSelectedHandler {
 
 	private final ObjectType object;

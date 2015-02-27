@@ -18,6 +18,12 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 
+/**
+ * The handler for the main toolbar exit program button.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapToolBarExitProgramHandler extends LeapToolBarSelectedHandler {
 
 	public LeapToolBarExitProgramHandler(ToggleButton mousedButton, LeapToolBar mousedBar) {

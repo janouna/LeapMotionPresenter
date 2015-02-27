@@ -47,6 +47,12 @@ import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 import edu.wpi.cs.lmp.state.PresenterState;
 import edu.wpi.cs.lmp.state.PresenterStateObservable;
 
+/**
+ * The main class for the leap scene bar
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapSceneBar extends VBox {
 
 	private static final double THUMBNAIL_WIDTH = 0.10;
@@ -311,6 +317,12 @@ public class LeapSceneBar extends VBox {
 		return buttons;
 	}
 
+	/**
+	 * Facilitates selecting current slide by clicking on a slide in the tool bar.
+	 * @author James Anouna
+	 * @author Johnny Hernandez
+	 *
+	 */
 	private class SceneButtonHandler implements EventHandler<MouseEvent> {
 		int position;
 

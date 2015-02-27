@@ -52,6 +52,12 @@ import javafx.util.Duration;
 import edu.wpi.cs.lmp.objects.IObject;
 import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
+/**
+ * The main class for the radial menu.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class RadialOptionsMenu extends Group {
 	
 	private double itemInnerRadius = 60;
@@ -416,6 +422,12 @@ public class RadialOptionsMenu extends Group {
 		return texts;
 	}
 	
+	/**
+	 * Called when a radial menu item is selected.
+	 * @author James Anouna
+	 * @author Johnny Hernandez
+	 *
+	 */
 	private final class ItemOnEventHandler implements EventHandler<MouseEvent> {
 
 		private Timeline outTransition;

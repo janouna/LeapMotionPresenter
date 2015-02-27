@@ -28,6 +28,12 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 
+/**
+ * Main class for the tool bars
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapToolBar extends HBox {
 	
 	// Size of the button based on percentage of the screen height

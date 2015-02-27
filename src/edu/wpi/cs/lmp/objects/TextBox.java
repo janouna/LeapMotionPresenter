@@ -38,6 +38,12 @@ import edu.wpi.cs.lmp.state.PresenterStateObservable;
 import edu.wpi.cs.lmp.view.radialmenu.RadialMenuFactory;
 import edu.wpi.cs.lmp.view.radialmenu.RadialOptionsMenu;
 
+/**
+ * The TextBox object for the Leap Motion Presenter
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class TextBox extends Text implements IObject {
 
 	private static final float EXTRA_BOUNDS = 1.1f;

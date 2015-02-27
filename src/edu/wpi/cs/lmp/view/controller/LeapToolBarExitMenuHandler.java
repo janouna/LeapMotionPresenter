@@ -19,6 +19,12 @@ import javafx.scene.input.MouseEvent;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
+/**
+ * The handler for the main toolbar exit menu button.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapToolBarExitMenuHandler extends LeapToolBarSelectedHandler {
 	
 	private final LeapToolBarGroup container;

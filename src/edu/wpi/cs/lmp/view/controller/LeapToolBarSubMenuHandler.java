@@ -19,6 +19,12 @@ import javafx.scene.input.MouseEvent;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
+/**
+ * Creates submenus for the main tool bar
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapToolBarSubMenuHandler extends LeapToolBarSelectedHandler {
 
 	private final LeapToolBarGroup container;

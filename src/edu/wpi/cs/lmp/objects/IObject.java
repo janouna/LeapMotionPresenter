@@ -21,6 +21,12 @@ import org.w3c.dom.Element;
 
 import edu.wpi.cs.lmp.scenes.LeapScene;
 
+/**
+ * All presentation objects implement the IObject interface.  It contains methods for moving, resizing, and other gestures, as well as saving and opening.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public interface IObject {
 	void startMove();
 	void endMove();

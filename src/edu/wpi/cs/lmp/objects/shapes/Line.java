@@ -16,6 +16,12 @@ package edu.wpi.cs.lmp.objects.shapes;
 
 import edu.wpi.cs.lmp.objects.IObject;
 
+/**
+ * The Line shape for the Leap Motion Presenter
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class Line extends Shape implements IObject {
 	private static final String PATH = "Shapes/Line.png";
 	

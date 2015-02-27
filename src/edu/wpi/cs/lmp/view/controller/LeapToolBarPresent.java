@@ -21,6 +21,12 @@ import edu.wpi.cs.lmp.state.PresenterStateObservable;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
+/**
+ * The handler for the main toolbar present button.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapToolBarPresent extends LeapToolBarSelectedHandler {
 
 	private final LeapToolBarGroup container;

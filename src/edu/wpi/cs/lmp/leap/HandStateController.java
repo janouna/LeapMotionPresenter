@@ -28,6 +28,12 @@ import com.leapmotion.leap.SwipeGesture;
 
 import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
+/**
+ * The controller for the Hand State property. Changes the hand state variable in the HandStateObservable.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class HandStateController extends Listener {
 
 	// Used for ignoring swipe gestures recognized immediately after another

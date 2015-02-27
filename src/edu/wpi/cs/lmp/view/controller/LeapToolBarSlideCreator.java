@@ -20,6 +20,12 @@ import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
+/**
+ * The handler for the main toolbar Add Slide button.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapToolBarSlideCreator extends LeapToolBarSelectedHandler {
 	
 	private final LeapToolBarGroup container;

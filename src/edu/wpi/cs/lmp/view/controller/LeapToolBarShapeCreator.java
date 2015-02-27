@@ -23,6 +23,12 @@ import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
+/**
+ * Creates the 3rd-level shape menu
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapToolBarShapeCreator extends LeapToolBarSelectedHandler {
 
 	private final LeapToolBarGroup container;

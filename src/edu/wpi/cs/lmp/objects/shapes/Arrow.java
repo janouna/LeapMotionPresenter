@@ -16,6 +16,12 @@ package edu.wpi.cs.lmp.objects.shapes;
 
 import edu.wpi.cs.lmp.objects.IObject;
 
+/**
+ * The Arrow shape for the Leap Motion Presenter
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class Arrow extends Shape implements IObject {
 	private static final String PATH = "Shapes/Arrow.png";	
 	

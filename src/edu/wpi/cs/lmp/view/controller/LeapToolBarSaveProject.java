@@ -23,6 +23,12 @@ import edu.wpi.cs.lmp.file.FileSaver;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
+/**
+ * The handler for the main toolbar save button.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapToolBarSaveProject extends LeapToolBarSelectedHandler {
 
 	private final LeapToolBarGroup container;

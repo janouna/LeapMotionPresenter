@@ -35,7 +35,11 @@ import edu.wpi.cs.lmp.objects.Video;
 import edu.wpi.cs.lmp.objects.shapes.Shape;
 import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
-
+/**
+ * An abstract class to handle opening presentations from .lmp files
+ * @author James Anouna
+ * @author Johnny Hernandez
+ */
 public abstract class FileOpener {
 	public static void openPresentation(File file) {
 		try {			

@@ -16,6 +16,12 @@ package edu.wpi.cs.lmp.objects.shapes;
 
 import edu.wpi.cs.lmp.objects.IObject;
 
+/**
+ * A factory for creating Shape objects
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class ShapeFactory {
 	private static final ShapeFactory INSTANCE = new ShapeFactory();
 

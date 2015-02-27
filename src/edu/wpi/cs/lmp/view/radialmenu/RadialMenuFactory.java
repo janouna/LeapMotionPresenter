@@ -18,6 +18,12 @@ import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.objects.IObject;
 import edu.wpi.cs.lmp.objects.ObjectType;
 
+/**
+ * Creates radial menus based on the object pointed to
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class RadialMenuFactory {
 	private static final RadialMenuFactory INSTANCE = new RadialMenuFactory();
 	

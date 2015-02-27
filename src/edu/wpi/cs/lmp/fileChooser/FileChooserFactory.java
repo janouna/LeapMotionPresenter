@@ -17,6 +17,12 @@ package edu.wpi.cs.lmp.fileChooser;
 import javafx.stage.FileChooser;
 import edu.wpi.cs.lmp.objects.ObjectType;
 
+/**
+ * Facilitates choosing files for Images or Videos to be imported.  Also used for saving and opening files.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class FileChooserFactory {
 
 	private static final FileChooserFactory INSTANCE = new FileChooserFactory();

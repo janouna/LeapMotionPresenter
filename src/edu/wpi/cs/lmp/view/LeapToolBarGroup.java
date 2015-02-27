@@ -38,6 +38,12 @@ import edu.wpi.cs.lmp.view.controller.LeapToolBarShapeCreator;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSlideCreator;
 import edu.wpi.cs.lmp.view.controller.LeapToolBarSubMenuHandler;
 
+/**
+ * Contains the multiple toolbar rows for the main tool bar
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapToolBarGroup extends VBox {
 
 	private final LeapToolBarGroup instance;

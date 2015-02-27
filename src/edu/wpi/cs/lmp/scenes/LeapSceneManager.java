@@ -28,6 +28,12 @@ import edu.wpi.cs.lmp.state.PresenterState;
 import edu.wpi.cs.lmp.state.PresenterStateObservable;
 import edu.wpi.cs.lmp.view.radialmenu.RadialOptionsMenu;
 
+/**
+ * The manager for all the scene objects.  Holds the current scene, and facilitates adding scenes and changing the current scene.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapSceneManager {
 
 	private static final LeapSceneManager INSTANCE = new LeapSceneManager();

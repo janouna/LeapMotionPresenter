@@ -18,6 +18,12 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+/**
+ * Holds the HandState ObjectProperty and makes it available to observers.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class HandStateObservable {
 	private static final HandStateObservable INSTANCE = new HandStateObservable();
 	private final ObjectProperty<HandState> handState = new SimpleObjectProperty<>();

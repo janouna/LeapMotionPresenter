@@ -22,6 +22,13 @@ import javafx.beans.property.ObjectProperty;
 import javafx.scene.Node;
 import javafx.scene.paint.Paint;
 
+/**
+ * The builder for adding items to a radial menu
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ * @param <B> The type of the menu item
+ */
 public class RadialMenuItemBuilder<B extends RadialMenuItemBuilder<B>> {
 
     private final RadialMenuItem item;

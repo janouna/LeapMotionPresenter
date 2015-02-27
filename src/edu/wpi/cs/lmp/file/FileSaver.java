@@ -32,6 +32,12 @@ import org.w3c.dom.Element;
 import edu.wpi.cs.lmp.scenes.LeapScene;
 import edu.wpi.cs.lmp.scenes.LeapSceneManager;
 
+/**
+ * An abstract class to handle saving presentations as .lmp files
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public abstract class FileSaver {
 
 	public static void savePresentation(File file) {

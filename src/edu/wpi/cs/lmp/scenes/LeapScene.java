@@ -36,6 +36,12 @@ import com.leapmotion.leap.Controller;
 import edu.wpi.cs.lmp.leap.ObjectGestureListener;
 import edu.wpi.cs.lmp.objects.IObject;
 
+/**
+ * The primary container for all objects in the presentation.  Different scenes hold different sets of objects.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapScene extends Parent {
 
 	private final List<IObject> children;

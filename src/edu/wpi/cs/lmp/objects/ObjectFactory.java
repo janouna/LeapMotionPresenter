@@ -14,6 +14,12 @@
 *******************************************************************************/
 package edu.wpi.cs.lmp.objects;
 
+/**
+ * Factory for creating new presentation objects, all in the form of IObjects
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class ObjectFactory {
 	private static final ObjectFactory INSTANCE = new ObjectFactory();
 

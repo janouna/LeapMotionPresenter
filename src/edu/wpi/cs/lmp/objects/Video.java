@@ -32,6 +32,12 @@ import org.w3c.dom.Element;
 import edu.wpi.cs.lmp.leap.HandStateObservable;
 import edu.wpi.cs.lmp.scenes.LeapScene;
 
+/**
+ * The Video presentation object for the Leap Motion Presenter
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class Video extends MediaView implements IObject {
 
 	private DoubleProperty vidWidth;

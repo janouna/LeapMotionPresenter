@@ -47,6 +47,12 @@ import edu.wpi.cs.lmp.state.PresenterStateObservable;
 import edu.wpi.cs.lmp.view.LeapSceneBar;
 import edu.wpi.cs.lmp.view.LeapToolBarGroup;
 
+/**
+ * The main class for the Leap Motion Presenter.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class LeapMotionPresenter extends Application {
 
 	private Controller c;

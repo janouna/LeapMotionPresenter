@@ -19,6 +19,12 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import edu.wpi.cs.lmp.view.LeapToolBar;
 
+/**
+ * Base class for the tool bar menu button handlers.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public abstract class LeapToolBarSelectedHandler implements
 		EventHandler<MouseEvent> {
 

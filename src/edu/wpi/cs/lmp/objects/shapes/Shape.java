@@ -32,6 +32,12 @@ import edu.wpi.cs.lmp.objects.IObject;
 import edu.wpi.cs.lmp.objects.Image;
 import edu.wpi.cs.lmp.scenes.LeapScene;
 
+/**
+ * The top level shape class.  Contains everything from Image, but change resize a bit.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public abstract class Shape extends ImageView implements IObject {
 
 	private final DoubleProperty shapeWidth;

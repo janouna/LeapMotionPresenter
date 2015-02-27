@@ -17,6 +17,12 @@ package edu.wpi.cs.lmp.state;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+/**
+ * An observable class for the presentation mode ObjectProperty.
+ * @author James Anouna
+ * @author Johnny Hernandez
+ *
+ */
 public class PresenterStateObservable {
 	private static final PresenterStateObservable INSTANCE = new PresenterStateObservable();
 	private final ObjectProperty<PresenterState> presenterState = new SimpleObjectProperty<>();
