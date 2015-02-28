@@ -53,6 +53,7 @@ public abstract class FileOpener {
 	 */
 	public static void openPresentation(File file) {
 		try {
+			LeapSceneManager.getInstance().removeAllScenes();
 			LeapSceneManager.getInstance().setProjectDirectory(
 					file.getParentFile());
 
@@ -131,8 +132,7 @@ public abstract class FileOpener {
 							}
 						}
 					}
-
-					LeapSceneManager.getInstance().setCurrentScene(1);
+					LeapSceneManager.getInstance().setCurrentScene(0);
 				}
 
 			});

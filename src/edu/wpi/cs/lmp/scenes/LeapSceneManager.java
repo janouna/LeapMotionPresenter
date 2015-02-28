@@ -56,7 +56,14 @@ public class LeapSceneManager {
 	}
 
 	public LeapScene getCurrentScene() {
-		return scenes.get(currentScene.intValue());
+		LeapScene scene;
+		try {
+			scene = scenes.get(currentScene.intValue());
+		} catch(IndexOutOfBoundsException e) {
+			scene = null;
+		}
+		
+		return scene;
 	}
 
 	/**
@@ -113,7 +120,7 @@ public class LeapSceneManager {
 	 */
 	public void removeAllScenes() {
 		scenes.clear();
-		currentScene.set(-1);
+		currentScene.set(0);
 	}
 
 	/**

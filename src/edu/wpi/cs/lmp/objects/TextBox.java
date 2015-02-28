@@ -113,6 +113,9 @@ public class TextBox extends Text implements IObject {
 		posture = FontPosture.REGULAR;
 		
 		instance.setFont(new Font(fontSize));
+		
+		grabbedAtX = new SimpleDoubleProperty();
+		grabbedAtY = new SimpleDoubleProperty();
 
 		textX = new SimpleDoubleProperty(x);
 		textY = new SimpleDoubleProperty(y);
