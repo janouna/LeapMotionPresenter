@@ -85,7 +85,7 @@ public class LeapToolBarGroup extends VBox {
 		});
 
 		// Instantiate other bars
-		addBar = new LeapToolBar(new String[] { "Slide", "Text", "Image",
+		addBar = new LeapToolBar(new String[] { "Scene", "Text", "Image",
 				"Video", "Shapes" }, 1, false);
 		addBar.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
@@ -123,8 +123,8 @@ public class LeapToolBarGroup extends VBox {
 		addBar.getButton("Text").setOnMouseExited(
 				new LeapToolBarObjectCreator(addBar.getButton("Text"), addBar,
 						this, ObjectType.TEXT, false));
-		addBar.getButton("Slide").setOnMouseExited(
-				new LeapToolBarSlideCreator(addBar.getButton("Slide"), addBar,
+		addBar.getButton("Scene").setOnMouseExited(
+				new LeapToolBarSlideCreator(addBar.getButton("Scene"), addBar,
 						this));
 		addBar.getButton("Shapes").setOnMouseExited(
 				new LeapToolBarSubMenuHandler(addBar.getButton("Shapes"), this,

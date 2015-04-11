@@ -73,7 +73,7 @@ public class ObjectGestureListener extends Listener {
 		final GestureList gestures = frame.gestures();
 
 		resizeObject(hands);
-		rotateObject(hands);
+		//rotateObject(hands);
 
 		// This portion resizes with the both hands, the reason I use two
 		// fingers is due to how bad the extended check is
@@ -205,7 +205,7 @@ public class ObjectGestureListener extends Listener {
 	 * @param hands The current hands list
 	 */
 	private void rotateObject(HandList hands) {
-		if (hands.count() == 1
+		if (hands.count() == 2
 				&& hands.get(0).fingers().extended().count() == 2) {
 
 			final Vector handNormal = hands.get(0).palmNormal();
@@ -244,11 +244,7 @@ public class ObjectGestureListener extends Listener {
 	 * @param obj The current IObject
 	 */
 	public void setIObject(IObject obj) {
-		if ((!isResizing && obj == null) && (!isRotating && obj == null)) {
-			// Not resizing, unbin object
-			unbindRequest = false;
-			this.obj = obj;
-		} else if ((isResizing && obj == null) || (isRotating && obj == null)) {
+		if ((isResizing && obj == null) || (isRotating && obj == null)) {
 			// Currently resizing, set object to null when finished
 			// unbindRequest is checked onFrame
 			unbindRequest = true;

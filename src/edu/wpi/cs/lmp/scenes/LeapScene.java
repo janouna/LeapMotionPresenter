@@ -88,6 +88,20 @@ public class LeapScene extends Parent {
 				}
 			}
 		});
+		
+		this.setOnMouseMoved(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				final List<IObject> mouseOver = getAt(event.getX(),
+						event.getY());
+				try {
+					resizer.setIObject(mouseOver.get(mouseOver.size() - 1));
+				} catch (IndexOutOfBoundsException e) {
+					System.out.println("No object found: OnEntered()");
+				}
+			}
+		});
+		/*
 		// Bind resizer to object the cursor is ontop of
 		this.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
@@ -95,6 +109,7 @@ public class LeapScene extends Parent {
 				final List<IObject> mouseOver = getAt(event.getX(),
 						event.getY());
 				try {
+					System.out.println("SWITCH HERE");
 					resizer.setIObject(mouseOver.get(mouseOver.size() - 1));
 				} catch (IndexOutOfBoundsException e) {
 					System.out.println("No object found: OnEntered()");
@@ -108,6 +123,8 @@ public class LeapScene extends Parent {
 				resizer.setIObject(null);
 			}
 		});
+		
+		*/
 	}
 
 	/**
